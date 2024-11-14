@@ -1,0 +1,90 @@
+_schema-version: 3.3.0
+ID: capacity
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: capacity-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: capacity-db
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    readiness-health-check-http-endpoint: /health
+    readiness-health-check-type: http
+  build-parameters:
+    builder: npm
+- name: capacity-db-deployer
+  type: hdb
+  path: db
+  requires:
+  - name: capacity-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: capacity-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: capacity-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comappcapacitymangement.zip
+      name: comappcapacitymangement
+      target-path: resources/
+- name: comappcapacitymangement
+  type: html5
+  path: app/capacitymangement
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: capacity-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: capacity-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: capacity-html5-srv
+    service-plan: app-host
+- name: capacity-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: capacity-destination-service
+    service-plan: lite
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

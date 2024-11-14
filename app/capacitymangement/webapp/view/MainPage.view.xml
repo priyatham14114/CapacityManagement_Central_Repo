@@ -1,0 +1,1161 @@
+<mvc:View
+    controllerName="com.app.capacitymangement.controller.MainPage"
+    xmlns:unified="sap.ui.unified"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:ndc="sap.ndc"
+    xmlns:cssgrid="sap.ui.layout.cssgrid"
+    xmlns:vbm="sap.ui.vbm"
+    xmlns:controls="sap.viz.ui5.controls"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:simple="sap.gantt.simple"
+    xmlns:launchpad="sap.ushell.ui.launchpad"
+    xmlns:uxap="sap.uxap"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+    displayBlock="true"
+    xmlns:tnt="sap.tnt"
+>
+    <Page
+        id="_IDGenPage1"
+        showHeader="false"
+        class="PageBackground"
+    >
+        <tnt:ToolHeader
+            id="shellLikeToolHeader"
+            visible="true"
+            class="header"
+        >
+            <Image
+                id="idArthcusIn_Mainpage"
+                height="1.5rem"
+                class="sapUiTinyMarginBegin"
+                src="https://artihcus.com/assets/img/AG-logo.png"
+            />
+            <Title
+                level="H1"
+                text="Capacity Management"
+                wrapping="false"
+                class="TitleMain"
+                id="parkinglotallotment"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData"
+                        priority="Disappear"
+                    />
+                </layoutData>
+            </Title>
+
+            <Text
+                text="By Artihcus Global"
+                wrapping="false"
+                id="secondTitle"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData1"
+                        priority="Disappear"
+                    />
+                </layoutData>
+            </Text>
+
+            <ToolbarSpacer
+                id="_IDGenToolbarSpacer"
+                width="1.125rem"
+            />
+
+            <ToolbarSpacer id="spacer">
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData2"
+                        priority="NeverOverflow"
+                        minWidth="20px"
+                    />
+                </layoutData>
+            </ToolbarSpacer>
+
+            <Button
+                id="idNotification"
+                icon="sap-icon://bell"
+                type="Transparent"
+                press="onNotificationPress"
+                tooltip="Notification"
+                class="line-md--bell-alert-loop"
+            >
+                <customData>
+                    <BadgeCustomData
+                        id="idbadge"
+                        class="badge"
+                        visible="true"
+                    />
+                </customData>
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData3"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </Button>
+            <Button
+                id="idTextName"
+                text="Kalyani"
+                type="Transparent"
+                press=".handleUserNamePress"
+                ariaHasPopup="Menu"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData4"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </Button>
+            <Avatar
+                id="_IDGenAvatar"
+                src="test-resources/sap/tnt/images/Woman_avatar_01.png"
+                displaySize="XS"
+                press="onAvatarPressed"
+                tooltip="Profile"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData5"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </Avatar>
+        </tnt:ToolHeader>
+
+        <content>
+            <IconTabBar
+                expanded="true"
+                id="IconTabBar"
+                class="iconTabBar"
+            >
+                <items>
+
+                    <!-- add product -->
+                    <IconTabFilter
+                        id="IdpageScanning1"
+                        visible="true"
+                        key="info"
+                       icon="Image/ProductInIconTabBar.png"
+                        iconColor="Positive"
+                        text="Add product"
+                    >
+                        <HBox id="_IDGenHBox8">
+                            <VBox
+                                class="vboxAdd"
+                                id="idConfigSapSysVbox_InitialView"
+                                visible="true"
+                            >
+                                <HBox id="idhboxDescription">
+                                    <Label
+                                        id="idLableDescription_InitialView"
+                                        text="EAN/UPC:"
+                                        width="125px"
+                                        required="true"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <Input
+                                        id="idDescriptionInput_InitialView"
+                                        value=""
+                                        placeholder="EAN/UPC..."
+                                        required="true"
+                                        class="customInput"
+                                        width="100%"
+                                    />
+                                </HBox>
+
+                                <HBox id="idhboxvghDesdfrghcription">
+                                    <Label
+                                        id="idLabvbnleDescription_InitialView"
+                                        text="SAP Pr. Code:"
+                                        width="125px"
+                                        required="true"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <Input
+                                        id="idDesvbncriptionInput_InitialView"
+                                        value=""
+                                        placeholder="SAP Pr. Code..."
+                                        required="true"
+                                        class="customInput"
+                                        width="100%"
+                                    />
+                                </HBox>
+
+                                <HBox id="iDhboxSystem_InitialView">
+                                    <Label
+                                        id="idLableSystemId_InitweialView"
+                                        text="Length:"
+                                        width="125px"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <Input
+                                        id="idSystemIdInput_InitialView"
+                                        value=""
+                                        placeholder="Length"
+                                        maxLength="3"
+                                        width="100%"
+                                        liveChange="ongetSAPPress"
+                                    />
+                                </HBox>
+
+                                <HBox id="ighboxInstanceNumber_initialView">
+                                    <Label
+                                        id="idLableInstanceNumber_InitialView"
+                                        text="Width:"
+                                        width="125px"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <Input
+                                        id="idInstanceNumberInput_InitialView"
+                                        value=""
+                                        placeholder="Width"
+                                        maxLength="2"
+                                        width="100%"
+                                    />
+                                </HBox>
+
+                                <HBox id="idhboxClient_InitialView">
+                                    <Label
+                                        id="idLableClient_InitialView"
+                                        text="Volume:"
+                                        width="125px"
+                                        required="true"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <Input
+                                        id="idClientInput_InitialView"
+                                        value=""
+                                        required="true"
+                                        placeholder="Volume"
+                                        maxLength="3"
+                                        width="100%"
+                                        editable="true"
+                                    />
+                                </HBox>
+
+                                <HBox id="idhboxApplicationServer_InitialView">
+                                    <Label
+                                        id="idLableApplicationServer_InitialView"
+                                        text="Gross Weight:"
+                                        width="125px"
+                                        required="true"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <Input
+                                        id="idApplicationServerInput_InitialView"
+                                        value=""
+                                        required="true"
+                                        placeholder="Gross Weight..."
+                                        class="customInput"
+                                        width="100%"
+                                        maxLength="200"
+                                    />
+                                </HBox>
+
+                                <HBox id="idhboxRouterString_InitialView">
+                                    <Label
+                                        id="idLableRouterString_InitialView"
+                                        text="Net Weight:"
+                                        width="125px"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <Input
+                                        id="idRouterStringInput_InitialView"
+                                        value=""
+                                        placeholder="Net Weight"
+                                        class="customInput"
+                                        width="100%"
+                                    />
+                                </HBox>
+
+                                <HBox id="idhboxService_InitialView">
+                                    <Label
+                                        id="idLableService_InitialView"
+                                        text="Simulation:"
+                                        width="125px"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <Input
+                                        id="idServiceInput_InitialView"
+                                        value=""
+                                        placeholder="Simulation..."
+                                        class="customInput"
+                                        width="100%"
+                                    />
+                                </HBox>
+
+                                <HBox
+                                    id="iDgenhboxcontainer_InitialView"
+                                    class=""
+                                    width="85%"
+                                >
+                                    <Button
+                                        id="idconnectsapcancelButton_InitialView"
+                                        text="save"
+                                        press="onClearconnectSAPPress"
+                                        type="Emphasized"
+                                        class="dialogButton_sapconnect sapUiSmallMarginEnd"
+                                    />
+                                </HBox>
+                            </VBox>
+                            <!-- sample -->
+                            <HBox
+                                id="_IDGenHBox9"
+                                width="20%"
+                            >
+                                <Label
+                                    id="_IDGenLabel14"
+                                    width="20%"
+                                />
+                            </HBox>
+                            <!-- real -->
+                            <HBox
+                                id="_IDGenHBox10"
+                                width="5%"
+                            >
+                                <VBox id="_IDGenVBox5">
+                                    <Label
+                                        id="_IDGenLabel15"
+                                        text="Product"
+                                        class="ProductTextInAddProduct"
+                                    />
+                                    <Image
+                                        id="_IDGenImage2"
+                                        src="Image/sampleProduct1.png"
+                                    />
+                                    <Label
+                                        id="_IDGenLabel16"
+                                        text=""
+                                    />
+                                    <Image
+                                        id="_IDGenImage3"
+                                        src="Image/prodsamp.png"
+                                    />
+                                    <Text
+                                        id="_IDGenText"
+                                        text="EWMS4-06"
+                                    />
+                                </VBox>
+                            </HBox>
+                            <!-- 22 -->
+                            <HBox
+                                id="_IDGenHBox11"
+                                width="8%"
+                            >
+                                <VBox id="_IDGenVBox6">
+                                    <Label
+                                        id="_IDGenLabel17"
+                                        text="Product Code"
+                                        class="ProductTextInAddProduct"
+                                    />
+                                    <Text
+                                        id="_IDGenText1"
+                                        text="9783836214230"
+                                        class="sapUiSmallMarginTop"
+                                    />
+                                    <Label id="_IDGenLabel18" />
+                                    <Label id="_IDGenLabel19" />
+                                    <Label id="_IDGenLabel20" />
+                                    <Text
+                                        id="_IDGenText2"
+                                        text="8888888830"
+                                        class="sapUiSmallMarginTop"
+                                    />
+                                </VBox>
+                            </HBox>
+                            <!-- 33 -->
+                            <HBox
+                                id="_IDGenHBox12"
+                                width="7%"
+                            >
+                                <VBox id="_IDGenVBox7">
+                                    <Label
+                                        id="_IDGenLabel21"
+                                        text="Dimensions"
+                                        class="ProductTextInAddProduct"
+                                    />
+                                    <Text
+                                        id="_IDGenText3"
+                                        text="2Lx2Hx2B"
+                                        class="sapUiSmallMarginTop"
+                                    />
+                                    <Label id="_IDGenLabel22" />
+                                    <Label id="_IDGenLabel23" />
+                                    <Label id="_IDGenLabel24" />
+                                    <Text
+                                        id="_IDGenText4"
+                                        text="3Lx4Hx3B"
+                                        class="sapUiSmallMarginTop"
+                                    />
+                                </VBox>
+                            </HBox>
+                            <!-- 44 -->
+                            <HBox
+                                id="_IDGenHBox13"
+                                width="5%"
+                            >
+                                <VBox id="_IDGenVBox8">
+                                    <Label
+                                        id="_IDGenLabel25"
+                                        text="Weights"
+                                        class="ProductTextInAddProduct"
+                                    />
+                                    <Text
+                                        id="_IDGenText5"
+                                        text="5kg"
+                                        class="sapUiSmallMarginTop"
+                                    />
+                                    <Label id="_IDGenLabel26" />
+                                    <Label id="_IDGenLabel27" />
+                                    <Label id="_IDGenLabel28" />
+                                    <Label id="_IDGenLabel29" />
+                                    <Text
+                                        id="_IDGenText6"
+                                        text="10kg"
+                                        class="sapUSmallMarginTop"
+                                    />
+                                </VBox>
+                            </HBox>
+
+                            <!-- ghjk -->
+                        </HBox>
+                           <Table
+                            id="ProductsTable"
+                            mode="MultiSelect"
+                            inset="false"
+                            items="{/Materials}"
+                            width="80%"
+                            growing="true"
+                            growingScrollToLoad="true"
+                        >
+                            <headerToolbar>
+                                <OverflowToolbar id="_IDGenOverflowToolbar">
+                                    <Title
+                                        id="Titlesd1455896_AHUOBQ"
+                                        text="Products Table:"
+                                    />
+
+                                    <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+
+                                    <layoutData>
+                                        <OverflowToolbarLayoutData
+                                            id="_IDGenOverflowToolbarLayoutData6"
+                                            priority="NeverOverflow"
+                                        />
+                                    </layoutData>
+
+                                    <ToolbarSpacer
+                                        id="IDGenTooedlbar345_AHUOBQ"
+                                    />
+
+                                    <SearchField
+                                        id="idSearchFieldBinnumberTable_AHUOBQ"
+                                        liveChange="onLiveBinNumberTAble"
+                                        placeholder="Search Anything..."
+                                        width="25%"
+                                    />
+
+                                    <Button
+                                        id="idBtnHUContentBtn_AHUOBQ"
+                                        text="Add"
+                                        press="onPressAddInProductsTable"
+                                        tooltip="Add"
+                                        icon="sap-icon://add"
+                                    />
+                                    <Button
+                                        id="idBtghjnHUContentBtn_AHUOBQ"
+                                        text="Edit"
+                                        press="onPressEditInProductsTable"
+                                        class="line-md--pencil"
+                                        tooltip="Edit"
+                                    />
+                                    <Button
+                                        id="idBtnProductDescription_AHUOBQ"
+                                        text="Delete"
+                                        press="onPressProductDescriptionBtn"
+                                        tooltip="Delete"
+                                        icon="sap-icon://delete"
+                                    />
+                                    <Button
+                                        id="idBtfghnHUContentBtn_AHUOBQ"
+                                        text="Print"
+                                        press="onPrintPressInProductsTable"
+                                        tooltip="Print"
+                                        class="line-md--download-outline-loop"
+                                    />
+                                    <Button
+                                        id="idBtfghjfghnHUContentBtn_AHUOBQ"
+                                        text="Upload"
+                                        press="onPressHUContentBtn"
+                                        tooltip="Upload"
+                                        icon="sap-icon://upload"
+                                    />
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column id="_IDGenn2">
+                                    <Text
+                                        id="_IDGnText2"
+                                        text="sapProductno"
+                                    />
+                                </Column>
+                                <Column id="_IDGenCumn3">
+                                    <Text
+                                        id="_IDGet3"
+                                        text="description"
+                                    />
+                                </Column>
+                                <Column id="_IDGenColun4">
+                                    <Text
+                                        id="_IDGe4"
+                                        text="EANUPC"
+                                    />
+                                </Column>
+                               
+                                <Column id="_IDGenCcvbnmo">
+                                    <Text
+                                        id="_IDGenxcvj"
+                                        text="mCategory"
+                                    />
+                                </Column>
+                                <Column id="_IDGenCrtyuo">
+                                    <Text
+                                        id="_IDGecvn"
+                                        text="length"
+                                    />
+                                </Column>
+
+                                <Column id="_IDGenCo">
+                                    <Text
+                                        id="_IDGen"
+                                        text="width"
+                                    />
+                                </Column>
+
+                                <Column id="_IDvbnGenCo">
+                                    <Text
+                                        id="_IDbnGen"
+                                        text="height"
+                                    />
+                                </Column>
+                                <Column id="_IDGenC">
+                                    <Text
+                                        id="_IDGe1"
+                                        text="volume"
+                                    />
+                                </Column>
+                                <Column id="_IDGenC1">
+                                    <Text
+                                        id="_IDGe21"
+                                        text="uom"
+                                    />
+                                </Column>
+                                <Column id="_IDGenC2">
+                                    <Text
+                                        id="_IDGe12"
+                                        text="weight"
+                                    />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem id="_IDGColumnListItem1">
+                                    <cells>
+                                      
+                                        <Text
+                                            id="_ID"
+                                            text="{sapProductno}"
+                                        />
+                                        <Text
+                                            id="_Iexte8"
+                                            text="{description}"
+                                        />
+                                        <Text
+                                            id="_Iedfxte8"
+                                            text="{EANUPC}"
+                                        />
+                                        <Text
+                                            id="_Iext8"
+                                            text="{mCategory}"
+                                        />
+
+                                        <Text
+                                            id="_IDGt9"
+                                            text="{length}"
+                                        />
+                                        <Text
+                                            id="_IDG10"
+                                            text="{width}"
+                                        />
+                                        <Text
+                                            id="_IDG3310"
+                                            text="{height}"
+                                        />
+                                        <Text
+                                            id="_ID23Gt9"
+                                            text="{volume}"
+                                        />
+                                        <Text
+                                            id="idkjlee"
+                                            text="{uom}"
+                                        />
+                                        <Text
+                                            id="okd"
+                                            text="{weight}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+
+                    <!-- Add vehicle -->
+
+                    <IconTabFilter
+                        id="icon2"
+                        text="vehicle Type"
+                        iconColor="Critical"
+                        visible="true"
+                        key="info1"
+                        icon="Image/TruckInIconTabBar.png"
+                    >
+                        <Toolbar
+                            id="TB4ertdf_AHUOBQ"
+                            class="HeaderToolBar"
+                            width="80%"
+                        >
+                            <Title
+                                id="Titzxdfglfghe1455896_AHUOBQ"
+                                text="Adding New vehicle:"
+                            />
+                            <ToolbarSpacer id="IDGevbnnTfghjoolbar345_AHUOBQ" />
+                            <SearchField
+                                id="idSearchFieldcvbnvhjBinnumberTable_AHUOBQ"
+                                liveChange="onLiveBinNumberTAble"
+                                placeholder="Search Anything..."
+                                width="25%"
+                            />
+
+                            <Button
+                                id="idBtnxcfvgHUCovbnntentBtn_AHUOBQ"
+                                text="Add"
+                                press="onPressInAddEquipment"
+                                tooltip="Add"
+                                icon="sap-icon://add"
+                            />
+                            <Button
+                                id="idBtghcvbnjnHUvbnContentBtn_AHUOBQ"
+                                text="Edit"
+                                press="onPressEditInAddEquipmentTable"
+                                tooltip="Edit"
+                                class="line-md--pencil"
+                            />
+                            <Button
+                                id="idBtncvbProduccvbnmtDescription_AHUOBQ"
+                                text="Delete"
+                                press="onPressProductDescriptionBtn"
+                                tooltip="Delete"
+                                icon="sap-icon://delete"
+                            />
+                            <Button
+                                id="idBtbnmfghnHUCcvbnontentBtn_AHUOBQ"
+                                text="Print"
+                                press="onPressDownloadInAddVehicleTable"
+                                tooltip="Print"
+                                class="line-md--download-outline-loop"
+                            />
+                            <Button
+                                id="idBtdfghfghjfghjkghnHUContentBtn_AHUOBQ"
+                                text="Upload"
+                                press="onPressUploadInAddVehicleTable"
+                                tooltip="Upload"
+                                icon="sap-icon://upload"
+                            />
+                        </Toolbar>
+                        <Table
+                            id="idProductsTableEdit"
+                            inset="false"
+                            growing="true"
+                            items="{/TruckTypes}"
+                            growingScrollToLoad="true"
+                            mode="MultiSelect"
+                        >
+                            <columns>
+                                <Column id="_IcvbnmvbnDGenC">
+                                    <Text
+                                        id="_IghjklDcvbnGe1"
+                                        text="truckType"
+                                    />
+                                </Column>
+                                <Column id="_IcfgvbgbnmhnDGenC">
+                                    <Text
+                                        id="_IvbhcfvghDcvbvbnnGe1"
+                                        text="length"
+                                    />
+                                </Column>
+                                <Column id="_IcvbgbnmhnDGenC">
+                                    <Text
+                                        id="_IvbhDcvbvbnnGe1"
+                                        text="width"
+                                    />
+                                </Column>
+
+                                <Column id="_IDvbnvgbnmGenCo">
+                                    <Text
+                                        id="_IDvghjbnmGen"
+                                        text="height"
+                                    />
+                                </Column>
+                                <Column id="_IDvbnmvbnmGenCrtyuo">
+                                    <Text
+                                        id="_IDvbnmvbnGecvn"
+                                        text="Volume"
+                                    />
+                                </Column>
+                                <Column id="_IvbnDbnmvbnGenCo">
+                                    <Text
+                                        id="_IcvbnmDbvbnmnGen"
+                                        text="truckWeight"
+                                    />
+                                </Column>
+                                <Column id="_IvbnDGbnmenCcvbnmo">
+                                    <Text
+                                        id="_IvbnmDwedfGenxcvj"
+                                        text="Capacity"
+                                    />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem
+                                    id="_IwedrfgDvbnGColumnListItem1"
+                                >
+                                    <cells>
+                                        <Text
+                                            id="_IasdghfDG6"
+                                            text="{truckType}"
+                                        />
+                                        <Text
+                                            id="_IasdghffgDG6"
+                                            text="{length}"
+                                        />
+                                        <Text
+                                            id="_IasdvbnffghDG6"
+                                            text="{width}"
+                                        />
+
+                                        <Text
+                                            id="_IsdxcffDGt9"
+                                            text="{height}"
+                                        />
+
+                                        <Text
+                                            id="_ID2vghsdfv3Gt9"
+                                            text="{volume}"
+                                        />
+                                        <Text
+                                            id="_IDsvbdfvG10"
+                                            text="{truckWeight}"
+                                        />
+                                        <Text
+                                            id="_IDsvcvbnmdfG3310"
+                                            text="{capacity}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+
+               <!-- simulation -->
+
+                <IconTabFilter
+                        id="iconTabBarSimulate"
+                        visible="true"
+                        key="info21"
+                        icon="Image/SimulateIconTabBar.gif"
+                        text="Simulate"
+                        class="iconTabBar"
+                    >
+                       
+                         
+
+                            <!-- Overlay content (Label + Input + Centered Image) -->
+                            <VBox
+                                id="_IDGenVBox3"
+                                class="sapUiTinyMargin"
+                            >
+                                <HBox id="idhboxDebnscription">
+                                    <Label
+                                        id="idLableDvbnmescription_InitialView"
+                                        text="Vehicle Type:"
+                                        width="125px"
+                                        required="true"
+                                        class="sapUiTinyMarginTop overlayLabel"
+                                    />
+
+                                    <MultiInput
+                                        required="true"
+                                        class="customInput"
+                                        width="100%"
+                                        id="idDesvbnvbnnmmcriptionInput_InitialView"
+                                        suggestionItems="{
+                path: '',
+                sorter: { path: 'Name' }
+            }"
+                                        valueHelpRequest="handleValueHelpProductType"
+                                    >
+                                        <core:Item
+                                            id="_IDGenItem"
+                                            key="fghjk"
+                                            text="fghj"
+                                        />
+                                    </MultiInput>
+                                </HBox>
+                                <HBox id="idhboxvghDescription">
+                                    <Label
+                                        id="idLabvbnbhnjkleDescription_InitialView"
+                                        text="Product"
+                                        width="125px"
+                                        required="true"
+                                        class="sapUiTinyMarginTop overlayLabel"
+                                    />
+                                    <MultiInput
+                                        required="true"
+                                        class="customInput"
+                                        width="100%"
+                                        id="idDesvbnvbnmcriptionInput_InitialView"
+                                        suggestionItems="{
+                path: '',
+                sorter: { path: 'Name' }
+            }"
+                                        valueHelpRequest="handleValueHelp"
+                                    >
+                                        <core:Item
+                                            id="_IDGenItem1"
+                                            key="fghjk"
+                                            text="fghj"
+                                        />
+                                    </MultiInput>
+                                </HBox>
+                                <HBox id="iDhboxSystemghjk_InitialView">
+                                    <Label
+                                        id="idLableSystemId_InitialView"
+                                        text="Quantity"
+                                        width="125px"
+                                        class="sapUiTinyMarginTop overlayLabel"
+                                    />
+                                    <Input
+                                        id="idSystemvghjkIdInput_InitialView"
+                                        value=""
+                                        placeholder=""
+                                        maxLength="3"
+                                        width="100px"
+                                        editable="false"
+                                    />
+                                    <Input
+                                        id="idSystemvghjdfghkIdIhjnput_InitialView"
+                                        value=""
+                                        placeholder=""
+                                        maxLength="3"
+                                        width="100px"
+                                    />
+                                </HBox>
+                                <VBox
+                                    id="_IDGenVBox4"
+                                    alignContent="Center"
+                                    alignItems="Center"
+                                >
+                                    <HBox
+                                        id="iDgenhboghjxcontainer_InitialView"
+                                    >
+                                        <Button
+                                            id="idconnecghjktsapcancelButton_InitialView"
+                                            text="save"
+                                            press="onClearconnectSAPPress"
+                                            type="Emphasized"
+                                            class="dialogButton_sapconnect sapUiSmallMarginEnd"
+                                        />
+                                        <Button
+                                            id="idconnechjktsapeditButton_InitialView"
+                                            text="Simulate"
+                                            press="onEditconnectSAPPress"
+                                            type="Emphasized"
+                                            visible="true"
+                                            class="dialogButton_sapconnect sapUiSmallMarginEnd"
+                                        />
+                                    </HBox>
+                                     <!-- New HBox for the table and container -->
+                            <HBox
+                                id="_IDGenHBox1"
+                                class="sapUiSmallMarginTop"
+                            >
+                                <VBox
+                                    id="_IDGenVBox2"
+                                    class="leftContainer"
+                                    width="50%"
+                                >
+                                    <Table
+                                        id="myTable"
+                                        mode="SingleSelect"
+                                    >
+                                        <columns>
+                                            <Column id="_IDGenColumn1">
+                                                <Text
+                                                    id="_IDGensdfText"
+                                                    text="Item ID"
+                                                />
+                                            </Column>
+                                            <Column id="_IDGenColumn2">
+                                                <Text
+                                                    id="_IDGensdfText1"
+                                                    text="Material Description"
+                                                />
+                                            </Column>
+                                            <Column id="_IDGenColumn3">
+                                                <Text
+                                                    id="_IDGesdfnText2"
+                                                    text="Order ID"
+                                                />
+                                            </Column>
+                                            <Column id="_IDGenColumn4">
+                                                <Text
+                                                    id="_IDGsdfenText3"
+                                                    text="Quantity"
+                                                />
+                                            </Column>
+
+                                            <Column id="_IDGenColumn5">
+                                                <Text
+                                                    id="_IDGasdenText4"
+                                                    text="Material No"
+                                                />
+                                            </Column>
+                                        </columns>
+                                        <items />
+                                    </Table>
+                                </VBox>
+                                <VBox
+                                    id="_IDGenVdfgBox3"
+                                    width="3%"
+                                />
+                                <VBox
+                                    id="_IDGenVBoasdx4"
+                                    class="rightContainer"
+                                    width="67%"
+                                >
+                                    <TextArea
+                                        id="_IDGenTextArea"
+                                        rows="22"
+                                        cols="130"
+                                    />
+                                </VBox>
+                            </HBox>
+                                </VBox>
+                            <!-- </VBox> -->
+
+                         
+                        </VBox>
+                    </IconTabFilter>
+
+
+
+                    <!-- list table -->
+                    <IconTabFilter
+                        id="icon3"
+                        visible="true"
+                        icon="Image/listIcon.png"
+                        iconColor="Negative"
+                      
+                        text="List"
+                    >
+                        <Toolbar
+                            id="TB4ert_AHUOBQ"
+                            class="HeaderToolBar"
+                            width="80%"
+                        >
+                            <Title
+                                id="Titlfghe1455896_AHUOBQ"
+                                text="List Table:"
+                            />
+                            <ToolbarSpacer id="IDGevbnnToolbar345_AHUOBQ" />
+                            <SearchField
+                                id="idSearchFieldcvbnBinnumberTable_AHUOBQ"
+                                liveChange="onLiveBinNumberTAble"
+                                placeholder="Search Anything..."
+                                width="25%"
+                            />
+
+                            <Button
+                                id="idBtnxcfvgHUContentBtn_AHUOBQ"
+                                text="Add"
+                                press="onPressAddInListTable"
+                                tooltip="Add"
+                                icon="sap-icon://add"
+                            />
+                            <Button
+                                id="idBtghcvbnjnHUContentBtn_AHUOBQ"
+                                text="Edit"
+                                press="onPressEditInListTable"
+                                tooltip="Edit"
+                                class="line-md--pencil"
+                            />
+                            <Button
+                                id="idBtncvbProductDescription_AHUOBQ"
+                                text="Delete"
+                                press="onPressProductDescriptionBtn"
+                                tooltip="Delete"
+                                icon="sap-icon://delete"
+                            />
+                            <Button
+                                id="idBtbnmfghnHUContentBtn_AHUOBQ"
+                                text="Print"
+                                press="onPressPrintInListTable"
+                                tooltip="Print"
+                                class="line-md--download-outline-loop"
+                            />
+                            <Button
+                                id="idBtdfghfghjfghnHUContentBtn_AHUOBQ"
+                                text="Upload"
+                                press="onPressHUContentBtn"
+                                tooltip="Upload"
+                                icon="sap-icon://upload"
+                            />
+                        </Toolbar>
+                        <Table
+                            id="idListTable"
+                            inset="false"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            mode="MultiSelect"
+                        >
+                            <columns>
+                                <Column id="_IcvbnDGenC">
+                                    <Text
+                                        id="_IDcvbnGe1"
+                                        text="S.No"
+                                    />
+                                </Column>
+                                <Column id="_IcvvbnbnDGenC">
+                                    <Text
+                                        id="_IDvfghjcvbnGe1"
+                                        text="Vehicle"
+                                    />
+                                </Column>
+                                <Column id="_IcvbghnDGenC">
+                                    <Text
+                                        id="_IDcvbvbnnGe1"
+                                        text="Veh Type"
+                                    />
+                                </Column>
+                                <Column id="_IcvbnDGenn2">
+                                    <Text
+                                        id="_IDGnvbnText2"
+                                        text="Product"
+                                    />
+                                </Column>
+                                <Column id="_IDGevbnmnCumn3">
+                                    <Text
+                                        id="_IDvbnGet3"
+                                        text="Product Type"
+                                    />
+                                </Column>
+                                <Column id="_IDGvbnmenColun4">
+                                    <Text
+                                        id="_IDvbnGe4"
+                                        text="Product Description"
+                                    />
+                                </Column>
+                                <Column id="_IDvgbnmGenCo">
+                                    <Text
+                                        id="_IDvbnmGen"
+                                        text="Dimensions"
+                                    />
+                                </Column>
+                                <Column id="_IDvbnmGenCrtyuo">
+                                    <Text
+                                        id="_IDvbnGecvn"
+                                        text="Volume"
+                                    />
+                                </Column>
+                                <Column id="_IDbnmvbnGenCo">
+                                    <Text
+                                        id="_IDbvbnmnGen"
+                                        text="Weights"
+                                    />
+                                </Column>
+                                <Column id="_IDGbnmenCcvbnmo">
+                                    <Text
+                                        id="_IDwedfGenxcvj"
+                                        text="Capacity Used"
+                                    />
+                                </Column>
+                                <Column id="_IDGbnmbnmenCcvbnmo">
+                                    <Text
+                                        id="_IDwedbnmfGenxcvj"
+                                        text="Rem. Capacity"
+                                    />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem id="_IwedrfgDGColumnListItem1">
+                                    <cells>
+                                        <Text
+                                            id="_IasdfDG6"
+                                            text="1"
+                                        />
+                                        <Text
+                                            id="_IasdfghfDG6"
+                                            text="14Ft"
+                                        />
+                                        <Text
+                                            id="_IasdffghDG6"
+                                            text="cargo"
+                                        />
+                                        <Text
+                                            id="_IasdfD"
+                                            text="EWMS4-01"
+                                        />
+                                        <Text
+                                            id="_Iasdfext8"
+                                            text="small part"
+                                        />
+                                        <Text
+                                            id="_IsdfDGt9"
+                                            text="2lx2bx2h"
+                                        />
+                                        <Text
+                                            id="_IDsdfG3310"
+                                            text="2 m3"
+                                        />
+                                        <Text
+                                            id="_ID2sdfv3Gt9"
+                                            text="5kg"
+                                        />
+                                        <Text
+                                            id="_IDsdfvG10"
+                                            text="5kg"
+                                        />
+                                        <Text
+                                            id="_IDsdvbnfvG10"
+                                            text="2950kg"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>
