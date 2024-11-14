@@ -197,7 +197,7 @@
                                     />
                                     <Input
                                         id="idInputDes_InitialView"
-                                      value="{ProductModel>/description}"
+                                        value="{ProductModel>/description}"
                                         required="true"
                                         placeholder="Enter Description"
                                         class="customInput"
@@ -215,7 +215,7 @@
                                     />
                                     <Input
                                         id="idSystemIdInput_InitialView"
-                                      value="{ProductModel>/mCategory}"
+                                        value="{ProductModel>/mCategory}"
                                         placeholder="Material Category"
                                         maxLength="3"
                                         width="100%"
@@ -232,7 +232,7 @@
                                     />
                                     <Input
                                         id="idInstanceNumberInput_InitialView"
-                                      value="{ProductModel>/length}"
+                                        value="{ProductModel>/length}"
                                         placeholder="Enter Length"
                                         maxLength="2"
                                         width="100%"
@@ -249,7 +249,7 @@
                                     />
                                     <Input
                                         id="idClientInput_InitialView"
-                                   value="{ProductModel>/width}"
+                                        value="{ProductModel>/width}"
                                         required="true"
                                         placeholder="Enter Width"
                                         maxLength="3"
@@ -268,7 +268,7 @@
                                     />
                                     <Input
                                         id="idApplicationServerInput_InitialView"
-                                     value="{ProductModel>/height}"
+                                        value="{ProductModel>/height}"
                                         required="true"
                                         placeholder="Enter Height"
                                         class="customInput"
@@ -277,21 +277,7 @@
                                     />
                                 </HBox>
 
-                                <HBox id="idhboxRouterString_InitialView">
-                                    <Label
-                                        id="idLableRouterString_InitialView"
-                                        text="Volume"
-                                        width="125px"
-                                        class="sapUiTinyMarginTop"
-                                    />
-                                    <Input
-                                        id="idRouterStringInput_InitialView"
-                                  value="{ProductModel>/volume}"
-                                        placeholder="Enter Volume"
-                                        class="customInput"
-                                        width="100%"
-                                    />
-                                </HBox>
+                            
 
                                 <HBox id="idhboxService_InitialView">
                                     <Label
@@ -302,7 +288,7 @@
                                     />
                                     <Input
                                         id="idServiceInput_InitialView"
-                                     value="{ProductModel>/uom}"
+                                        value="{ProductModel>/uom}"
                                         placeholder="Enter UOM"
                                         class="customInput"
                                         width="100%"
@@ -319,7 +305,7 @@
                                     />
                                     <Input
                                         id="idWeightinput_InitialView"
-                                    value="{ProductModel>/weight}"
+                                        value="{ProductModel>/weight}"
                                         required="true"
                                         placeholder="Enter Weight"
                                         class="customInput"
@@ -463,6 +449,7 @@
 
                             <!-- ghjk -->
                         </HBox>
+                        <!-- Materials Table in the Creation Screen -->
                         <Table
                             id="ProductsTable"
                             mode="MultiSelect"
@@ -516,7 +503,7 @@
                                     <Button
                                         id="idBtnProductDescription_AHUOBQ"
                                         text="Delete"
-                                        press="onPressProductDescriptionBtn"
+                                        press="onProductDel"
                                         tooltip="Delete"
                                         icon="sap-icon://delete"
                                     />
@@ -696,7 +683,7 @@
                             <Button
                                 id="idBtncvbProduccvbnmtDescription_AHUOBQ"
                                 text="Delete"
-                                press="onPressProductDescriptionBtn"
+                                press="onProductDel"
                                 tooltip="Delete"
                                 icon="sap-icon://delete"
                             />
@@ -715,6 +702,7 @@
                                 icon="sap-icon://upload"
                             />
                         </Toolbar>
+                        <!-- Vehicle types table -->
                         <Table
                             id="idProductsTableEdit"
                             inset="false"
@@ -1036,7 +1024,7 @@
                             <Button
                                 id="idBtncvbProductDescription_AHUOBQ"
                                 text="Delete"
-                                press="onPressProductDescriptionBtn"
+                                press="onProductDel"
                                 tooltip="Delete"
                                 icon="sap-icon://delete"
                             />

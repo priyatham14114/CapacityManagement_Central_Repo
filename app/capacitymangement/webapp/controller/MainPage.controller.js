@@ -6,9 +6,11 @@ sap.ui.define(
     "sap/m/IconTabBar",
     "sap/m/IconTabFilter",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageToast"
+    "sap/m/MessageToast",
+    "sap/ui/model/odata/v2/ODataModel",
+    "sap/m/MessageBox"
   ],
-  function (Controller, Fragment, Filter, IconTabBar, IconTabFilter,JSONModel,MessageToast) {
+  function (Controller, Fragment, Filter, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel,MessageBox) {
     "use strict";
 
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
@@ -45,13 +47,6 @@ sap.ui.define(
         }
 
         this._pValueHelpDialog.then(function (oValueHelpDialog) {
-          // create a filter for the binding
-          // oValueHelpDialog.getBinding("items").filter([new Filter(
-          //   "Name",
-          //   FilterOperator.Contains,
-          //   sInputValue
-          // )]);
-          // open value help dialog filtered by the input value
           oValueHelpDialog.open(sInputValue);
         });
       },
@@ -81,14 +76,7 @@ sap.ui.define(
 
         var oTable = this.byId("ProductsTable");
         var aItems = oTable.getItems();
-
-        // if (aItems.length === 0) {
-        //     MessageToast.show("No data available to export.");
-        //     return;
-        // }
-
         var aData = [];
-
         // Push column headers as the first row
         var aHeaders = [
           "S.No",
@@ -126,12 +114,6 @@ sap.ui.define(
 
         var oTable = this.byId("idProductsTableEdit");
         var aItems = oTable.getItems();
-
-        // if (aItems.length === 0) {
-        //     MessageToast.show("No data available to export.");
-        //     return;
-        // }
-
         var aData = [];
 
         // Push column headers as the first row
@@ -171,12 +153,6 @@ sap.ui.define(
 
         var oTable = this.byId("idListTable");
         var aItems = oTable.getItems();
-
-        // if (aItems.length === 0) {
-        //     MessageToast.show("No data available to export.");
-        //     return;
-        // }
-
         var aData = [];
 
         // Push column headers as the first row
@@ -281,33 +257,63 @@ sap.ui.define(
 
       /** Creating New Product  */
       onCreateProduct: async function () {
-        const oPayload = this.getView().getModel("ProductModel").getProperty("/"),
-          oModel = this.getOwnerComponent().getModel("ModelV2"),
+        const oPayloadModel = this.getView().getModel("ProductModel"),
+          oPayload = oPayloadModel.getProperty("/"),
+          oModel = this.getView().getModel("ModelV2"),
           oPath = '/Materials';
-        var that = this;
+        var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
+        oPayload.volume = String(oVolume);
+        try {
+          await this.createData(oModel, oPayload, oPath);
+          debugger
+          this.getView().byId("ProductsTable").getBinding("items").refresh();
+          this.ClearingModel(true);
+          MessageToast.show("Successfully Created!");
+        } catch (error) {
+          MessageToast.show("Error at the time of creation");
+        }
+      },
 
-        oModel.create(oPath, oPayload, {
-          success: function (odata) {
-            that.getView().byId("ProductsTable").getBinding("items").refresh();
-            that.onCancelInCreateProductDialog();
-            MessageToast.show("Successfully Create!");
-          }, error: function (oError) {
-            that.onCancelInCreateProductDialog();
-            MessageToast.show("Error at the time of creation");
-          }
+      /**Clearing Properties after creation */
+      ClearingModel: function () {
+        const oPayloadModel = this.getView().getModel("ProductModel");
+        oPayloadModel.setProperty("/", {
+          sapProductno: "",
+          length: "",
+          width: "",
+          height: "",
+          volume: "",
+          uom: "",
+          mCategory: "",
+          description: "",
+          EANUPC: "",
+          weight: "",
         })
-        // try {
-        //   await this.createData(oModel, oPayload, oPath);
-        //   debugger
-        //   this.getView().byId("ProductsTable").getBinding("items").refresh();
-        //   this.onCancelInCreateProductDialog();
-        //   MessageToast.show("Successfully Create!");
-
-        // } catch (error) {
-        //   this.onCancelInCreateProductDialog();
-        //   MessageToast.show("Error at the time of creation");
-        // }
+      },
+      onProductDel: async function () {
+        const oTable = this.byId("ProductsTable"),
+        aSelectedItems  = oTable.getSelectedItems(),
+          oModel = this.getView().getModel("ModelV2");
+          if (aSelectedItems.length === 0) {
+             MessageBox.information("Please select at least one product to delete.");
+            return; // Exit the function if no items are selected
+        }
+        try {
+          await Promise.all(aSelectedItems.map(async (oItem) => {
+            const oPath = oItem.getBindingContext().getPath();
+            await this.deleteData(oModel, oPath);
+        }));
+          this.getView().byId("ProductsTable").getBinding("items").refresh();
+          MessageToast.show('Successfully Deleted')
+        } catch (error) {
+          MessageToast.show('Error Occurs');
+        }
 
       }
     });
   });
+
+
+
+
+
