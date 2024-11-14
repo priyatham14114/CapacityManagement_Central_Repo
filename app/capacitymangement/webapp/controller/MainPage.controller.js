@@ -4,14 +4,28 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     "sap/m/IconTabBar",
-    "sap/m/IconTabFilter"
+    "sap/m/IconTabFilter",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast"
   ],
-  function (BaseController, Fragment, Filter, IconTabBar, IconTabFilter) {
+  function (Controller, Fragment, Filter, IconTabBar, IconTabFilter,JSONModel,MessageToast) {
     "use strict";
 
-    return BaseController.extend("com.app.capacitymangement.controller.MainPage", {
+    return Controller.extend("com.app.capacitymangement.controller.MainPage", {
       onInit: function () {
-
+        const oJsonModel = new JSONModel({
+          sapProductno: "",
+          length: "",
+          width: "",
+          height: "",
+          volume: "",
+          uom: "",
+          mCategory: "",
+          description: "",
+          EANUPC: "",
+          weight: "",
+        })
+        this.getView().setModel(oJsonModel, "ProductModel");
 
       },
       handleValueHelp: function (oEvent) {
@@ -264,6 +278,36 @@ sap.ui.define(
       onCancelInListEditDialog: function () {
         this.byId("idListEdiwtDialog").close();
       },
+
+      /** Creating New Product  */
+      onCreateProduct: async function () {
+        const oPayload = this.getView().getModel("ProductModel").getProperty("/"),
+          oModel = this.getOwnerComponent().getModel("ModelV2"),
+          oPath = '/Materials';
+        var that = this;
+
+        oModel.create(oPath, oPayload, {
+          success: function (odata) {
+            that.getView().byId("ProductsTable").getBinding("items").refresh();
+            that.onCancelInCreateProductDialog();
+            MessageToast.show("Successfully Create!");
+          }, error: function (oError) {
+            that.onCancelInCreateProductDialog();
+            MessageToast.show("Error at the time of creation");
+          }
+        })
+        // try {
+        //   await this.createData(oModel, oPayload, oPath);
+        //   debugger
+        //   this.getView().byId("ProductsTable").getBinding("items").refresh();
+        //   this.onCancelInCreateProductDialog();
+        //   MessageToast.show("Successfully Create!");
+
+        // } catch (error) {
+        //   this.onCancelInCreateProductDialog();
+        //   MessageToast.show("Error at the time of creation");
+        // }
+
+      }
     });
-  }
-);
+  });
