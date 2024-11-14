@@ -156,7 +156,7 @@
                                 <HBox id="idhboxDescription">
                                     <Label
                                         id="idLableDescription_InitialView"
-                                        text="EAN/UPC:"
+                                        text="EAN/UPC"
                                         width="125px"
                                         required="true"
                                         class="sapUiTinyMarginTop"
