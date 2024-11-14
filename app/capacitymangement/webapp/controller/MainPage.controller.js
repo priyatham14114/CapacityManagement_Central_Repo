@@ -15,6 +15,8 @@ sap.ui.define(
 
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
       onInit: function () {
+
+        /**Constructing Product Model */
         const oJsonModel = new JSONModel({
           sapProductno: "",
           length: "",
@@ -28,6 +30,19 @@ sap.ui.define(
           weight: "",
         })
         this.getView().setModel(oJsonModel, "ProductModel");
+
+        /**Constructing JSON Model */
+        const oJsonModelVeh = new JSONModel({
+          truckType: "",
+          length: "",
+          width: "",
+          height: "",
+          uom: "",
+          volume: "",
+          truckWeight: "",
+          capacity: "",
+        });
+        this.getView().setModel(oJsonModelVeh,"VehModel");
 
       },
       handleValueHelp: function (oEvent) {
@@ -312,7 +327,52 @@ sap.ui.define(
         } catch (error) {
           MessageToast.show('Error Occurs');
         }
+      },
+      onCreateVeh:async function(){
+        const oPayloadModel = this.getView().getModel("VehModel"),
+        oPayload = oPayloadModel.getProperty("/"),
+        oModel = this.getView().getModel("ModelV2"),
+        oPath = '/TruckTypes';
+        var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
+        oPayload.volume = String(oVolume);
+        // Get the selected item from the event parameters
+        var oSelectedItem = this.byId("idvehtypeUOM").getSelectedItem();
+        oPayload.uom = oSelectedItem ? oSelectedItem.getKey() : "";
+        try {
+          await this.createData(oModel, oPayload, oPath);
+          debugger
+          this.getView().byId("idTruckTypeTable").getBinding("items").refresh();
+          this.onCancelInCreateVehicleDialog();
+          this.byId("idvehtypeUOM").setSelectedKey("");
+          this.ClearVeh(true);
+         
+          MessageToast.show("Successfully Created!");
+        } catch (error) {
+          this.onCancelInCreateVehicleDialog();
+          MessageToast.show("Error at the time of creation");
+        }
+      },
+      /**Clearing Vehicle Model */
+      ClearVeh:function(){
+        const oPayloadModel = this.getView().getModel("VehModel");
+        oPayloadModel.setProperty("/", {
+          truckType: "",
+          length: "",
+          width: "",
+          height: "",
+          uom: "",
+          volume: "",
+          truckWeight: "",
+          capacity: "",
+        })
+      
 
+      },
+      onVehDel:function(oEvent){
+        var path = oEvent.getSource();
+      },
+      onRow:function(oEvent){
+        var path = oEvent.getSource();
       }
     });
   });

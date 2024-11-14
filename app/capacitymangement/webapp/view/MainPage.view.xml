@@ -712,7 +712,7 @@
                             <Button
                                 id="idBtncvbProduccvbnmtDescription_AHUOBQ"
                                 text="Delete"
-                                press="onProductDel"
+                                press="onVehDel"
                                 tooltip="Delete"
                                 icon="sap-icon://delete"
                             />
@@ -733,9 +733,10 @@
                         </Toolbar>
                         <!-- Vehicle types table -->
                         <Table
-                            id="idProductsTableEdit"
-                            inset="false"
+                            id="idTruckTypeTable"
+                            
                             growing="true"
+                        selectionChange="onRow"
                             items="{/TruckTypes}"
                             growingScrollToLoad="true"
                             mode="MultiSelect"

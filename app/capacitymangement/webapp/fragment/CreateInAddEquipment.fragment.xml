@@ -6,7 +6,7 @@
     <Dialog
         id="idCreateInAddddEquipmentDialog"
         resizable="true"
-        draggable="true"  
+        draggable="true"
         contentWidth="20%"
         contentHeight="30%"
         title="Create Vehicle"
@@ -15,7 +15,7 @@
             <Button
                 id="idCreatnwwjkeButton"
                 text="Create"
-                press="onCreateStar"
+                press="onCreateVeh"
                 type="Success"
             />
         </beginButton>
@@ -46,54 +46,103 @@
                 columnsM="1"
                 singleContainerFullSize="false"
             >
-               
-                 <Label
-                    id="idIvCddVBDLnmabel"
-                    text="Vehicle"
-                />
-                <Input
-                    id="bnvbcmVB"
-                />
                 <Label
-                    id="idStFGvddbarnmNameLabel"
-                    text="vehicle Type"
+                    id="idTruckTypeLabel"
+                    text="Truck Type"
                 />
+
                 <Input
-                    id="idStaFbnGdrbnNameInput"
+                    id="idTruckTypeInput"
+                    value="{VehModel>/truckType}"
                 />
-                
+
                 <Label
-                    id="idConbnmsddtellationLabel"
-                    text="dimensions"
+                    id="idLengthLabelveh"
+                    text="Length"
                 />
+
                 <Input
-                    id="idCddonbnmstellationInput"
+                    id="idLengthInputVeh"
+                    value="{VehModel>/length}"
                 />
+
                 <Label
-                    id="idTypebddnmLabel"
-                    text="Weight"
+                    id="idWidthLabelVeh"
+                    text="Width"
                 />
+
                 <Input
-                    id="idTyddbnpeInput"
+                    id="idWidthInputveh"
+                    value="{VehModel>/width}"
                 />
+
                 <Label
-                    id="idDevbnddscriptionLabel"
+                    id="idHeightLabelveh"
+                    text="Height"
+                />
+
+                <Input
+                    id="idHeightInputveh"
+                    value="{VehModel>/height}"
+                />
+
+                <Label
+                    id="idUomLabelveh"
+                    text="Unit of Measure (UOM)"
+                />
+
+                <!-- <Input
+                    id="idUomInputveh"
+                    value="{VehModel>/uom}"
+                /> -->
+                <Select id="idvehtypeUOM">
+                    <core:Item
+                        id="id0"
+                        key=""
+                        text=""
+                    />
+                    <core:Item
+                        id="id1"
+                        key="KG"
+                        text="KG"
+                    />
+                    <core:Item
+                        id="id2"
+                        key="L"
+                        text="L"
+                    />
+                </Select>
+
+                <Label
+                    id="idVolumeLabelveh"
                     text="Volume"
                 />
+
                 <Input
-                    id="idDeghjscssriptionInput"
+                    id="idVolumeInputveh"
+                    value="{VehModel>/volume}"
                 />
+
                 <Label
-                    id="idDesssvhfvgbcriptionLabel"
+                    id="idTruckWeightLabel"
+                    text="Truck Weight"
+                />
+
+                <Input
+                    id="idTruckWeightInput"
+                    value="{VehModel>/truckWeight}"
+                />
+
+                <Label
+                    id="idCapacityLabel"
                     text="Capacity"
                 />
+
                 <Input
-                    id="idDescssrvbnghjkiptionInput"
+                    id="idCapacityInput"
+                    value="{VehModel>/capacity}"
                 />
- 
- 
             </form:SimpleForm>
         </content>
     </Dialog>
 </core:FragmentDefinition>
- 
