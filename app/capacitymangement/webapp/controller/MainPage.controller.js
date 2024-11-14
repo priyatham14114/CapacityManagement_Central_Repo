@@ -10,7 +10,7 @@ sap.ui.define(
     "sap/ui/model/odata/v2/ODataModel",
     "sap/m/MessageBox"
   ],
-  function (Controller, Fragment, Filter, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel,MessageBox) {
+  function (Controller, Fragment, Filter, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel, MessageBox) {
     "use strict";
 
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
@@ -261,12 +261,16 @@ sap.ui.define(
           oPayload = oPayloadModel.getProperty("/"),
           oModel = this.getView().getModel("ModelV2"),
           oPath = '/Materials';
+        // Get the selected item from the event parameters
+        var oSelectedItem = this.byId("idselectuom").getSelectedItem();
+        oPayload.uom = oSelectedItem ? oSelectedItem.getKey() : "";
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
         oPayload.volume = String(oVolume);
         try {
           await this.createData(oModel, oPayload, oPath);
           debugger
           this.getView().byId("ProductsTable").getBinding("items").refresh();
+          this.byId("idselectuom").setSelectedKey("");
           this.ClearingModel(true);
           MessageToast.show("Successfully Created!");
         } catch (error) {
@@ -292,17 +296,17 @@ sap.ui.define(
       },
       onProductDel: async function () {
         const oTable = this.byId("ProductsTable"),
-        aSelectedItems  = oTable.getSelectedItems(),
+          aSelectedItems = oTable.getSelectedItems(),
           oModel = this.getView().getModel("ModelV2");
-          if (aSelectedItems.length === 0) {
-             MessageBox.information("Please select at least one product to delete.");
-            return; // Exit the function if no items are selected
+        if (aSelectedItems.length === 0) {
+          MessageBox.information("Please select at least one product to delete.");
+          return; // Exit the function if no items are selected
         }
         try {
           await Promise.all(aSelectedItems.map(async (oItem) => {
             const oPath = oItem.getBindingContext().getPath();
             await this.deleteData(oModel, oPath);
-        }));
+          }));
           this.getView().byId("ProductsTable").getBinding("items").refresh();
           MessageToast.show('Successfully Deleted')
         } catch (error) {

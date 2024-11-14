@@ -277,8 +277,6 @@
                                     />
                                 </HBox>
 
-                            
-
                                 <HBox id="idhboxService_InitialView">
                                     <Label
                                         id="idLableService_InitialView"
@@ -286,13 +284,44 @@
                                         width="125px"
                                         class="sapUiTinyMarginTop"
                                     />
-                                    <Input
+                                    <Select
+                                        id="idselectuom"
+                                        width="200%"
+                                        maxWidth="200%"
+                                    >
+                                    <core:Item
+                                            id="idselit0"
+                                            key=""
+                                            text=""
+                                        />
+                                        <core:Item
+                                            id="idselit"
+                                            key="PC"
+                                            text="PC"
+                                        />
+                                        <core:Item
+                                            id="idselit1"
+                                            key="KG"
+                                            text="KG"
+                                        />
+                                        <core:Item
+                                            id="idselit2"
+                                            key="M"
+                                            text="M"
+                                        />
+                                        <core:Item
+                                            id="idselit3"
+                                            key="L"
+                                            text="L"
+                                        />
+                                    </Select>
+                                    <!-- <Input
                                         id="idServiceInput_InitialView"
                                         value="{ProductModel>/uom}"
                                         placeholder="Enter UOM"
                                         class="customInput"
                                         width="100%"
-                                    />
+                                    /> -->
                                 </HBox>
 
                                 <HBox id="idHboxWeight_InitialView">
