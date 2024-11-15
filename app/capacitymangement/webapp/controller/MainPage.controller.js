@@ -4,14 +4,45 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     "sap/m/IconTabBar",
-    "sap/m/IconTabFilter"
+    "sap/m/IconTabFilter",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast",
+    "sap/ui/model/odata/v2/ODataModel",
+    "sap/m/MessageBox"
   ],
-  function (BaseController, Fragment, Filter, IconTabBar, IconTabFilter) {
+  function (Controller, Fragment, Filter, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel, MessageBox) {
     "use strict";
 
-    return BaseController.extend("com.app.capacitymangement.controller.MainPage", {
+    return Controller.extend("com.app.capacitymangement.controller.MainPage", {
       onInit: function () {
 
+        /**Constructing Product Model */
+        const oJsonModel = new JSONModel({
+          sapProductno: "",
+          length: "",
+          width: "",
+          height: "",
+          volume: "",
+          uom: "",
+          mCategory: "",
+          description: "",
+          EANUPC: "",
+          weight: "",
+        })
+        this.getView().setModel(oJsonModel, "ProductModel");
+
+        /**Constructing JSON Model */
+        const oJsonModelVeh = new JSONModel({
+          truckType: "",
+          length: "",
+          width: "",
+          height: "",
+          uom: "",
+          volume: "",
+          truckWeight: "",
+          capacity: "",
+        });
+        this.getView().setModel(oJsonModelVeh,"VehModel");
 
       },
       handleValueHelp: function (oEvent) {
@@ -31,13 +62,6 @@ sap.ui.define(
         }
 
         this._pValueHelpDialog.then(function (oValueHelpDialog) {
-          // create a filter for the binding
-          // oValueHelpDialog.getBinding("items").filter([new Filter(
-          //   "Name",
-          //   FilterOperator.Contains,
-          //   sInputValue
-          // )]);
-          // open value help dialog filtered by the input value
           oValueHelpDialog.open(sInputValue);
         });
       },
@@ -67,14 +91,7 @@ sap.ui.define(
 
         var oTable = this.byId("ProductsTable");
         var aItems = oTable.getItems();
-
-        // if (aItems.length === 0) {
-        //     MessageToast.show("No data available to export.");
-        //     return;
-        // }
-
         var aData = [];
-
         // Push column headers as the first row
         var aHeaders = [
           "S.No",
@@ -112,12 +129,6 @@ sap.ui.define(
 
         var oTable = this.byId("idProductsTableEdit");
         var aItems = oTable.getItems();
-
-        // if (aItems.length === 0) {
-        //     MessageToast.show("No data available to export.");
-        //     return;
-        // }
-
         var aData = [];
 
         // Push column headers as the first row
@@ -157,12 +168,6 @@ sap.ui.define(
 
         var oTable = this.byId("idListTable");
         var aItems = oTable.getItems();
-
-        // if (aItems.length === 0) {
-        //     MessageToast.show("No data available to export.");
-        //     return;
-        // }
-
         var aData = [];
 
         // Push column headers as the first row
@@ -264,6 +269,115 @@ sap.ui.define(
       onCancelInListEditDialog: function () {
         this.byId("idListEdiwtDialog").close();
       },
+
+      /** Creating New Product  */
+      onCreateProduct: async function () {
+        const oPayloadModel = this.getView().getModel("ProductModel"),
+          oPayload = oPayloadModel.getProperty("/"),
+          oModel = this.getView().getModel("ModelV2"),
+          oPath = '/Materials';
+        // Get the selected item from the event parameters
+        var oSelectedItem = this.byId("idselectuom").getSelectedItem();
+        oPayload.uom = oSelectedItem ? oSelectedItem.getKey() : "";
+        var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
+        oPayload.volume = String(oVolume);
+        try {
+          await this.createData(oModel, oPayload, oPath);
+          debugger
+          this.getView().byId("ProductsTable").getBinding("items").refresh();
+          this.byId("idselectuom").setSelectedKey("");
+          this.ClearingModel(true);
+          MessageToast.show("Successfully Created!");
+        } catch (error) {
+          MessageToast.show("Error at the time of creation");
+        }
+      },
+
+      /**Clearing Properties after creation */
+      ClearingModel: function () {
+        const oPayloadModel = this.getView().getModel("ProductModel");
+        oPayloadModel.setProperty("/", {
+          sapProductno: "",
+          length: "",
+          width: "",
+          height: "",
+          volume: "",
+          uom: "",
+          mCategory: "",
+          description: "",
+          EANUPC: "",
+          weight: "",
+        })
+      },
+      onProductDel: async function () {
+        const oTable = this.byId("ProductsTable"),
+          aSelectedItems = oTable.getSelectedItems(),
+          oModel = this.getView().getModel("ModelV2");
+        if (aSelectedItems.length === 0) {
+          MessageBox.information("Please select at least one product to delete.");
+          return; // Exit the function if no items are selected
+        }
+        try {
+          await Promise.all(aSelectedItems.map(async (oItem) => {
+            const oPath = oItem.getBindingContext().getPath();
+            await this.deleteData(oModel, oPath);
+          }));
+          this.getView().byId("ProductsTable").getBinding("items").refresh();
+          MessageToast.show('Successfully Deleted')
+        } catch (error) {
+          MessageToast.show('Error Occurs');
+        }
+      },
+      onCreateVeh:async function(){
+        const oPayloadModel = this.getView().getModel("VehModel"),
+        oPayload = oPayloadModel.getProperty("/"),
+        oModel = this.getView().getModel("ModelV2"),
+        oPath = '/TruckTypes';
+        var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
+        oPayload.volume = String(oVolume);
+        // Get the selected item from the event parameters
+        var oSelectedItem = this.byId("idvehtypeUOM").getSelectedItem();
+        oPayload.uom = oSelectedItem ? oSelectedItem.getKey() : "";
+        try {
+          await this.createData(oModel, oPayload, oPath);
+          debugger
+          this.getView().byId("idTruckTypeTable").getBinding("items").refresh();
+          this.onCancelInCreateVehicleDialog();
+          this.byId("idvehtypeUOM").setSelectedKey("");
+          this.ClearVeh(true);
+         
+          MessageToast.show("Successfully Created!");
+        } catch (error) {
+          this.onCancelInCreateVehicleDialog();
+          MessageToast.show("Error at the time of creation");
+        }
+      },
+      /**Clearing Vehicle Model */
+      ClearVeh:function(){
+        const oPayloadModel = this.getView().getModel("VehModel");
+        oPayloadModel.setProperty("/", {
+          truckType: "",
+          length: "",
+          width: "",
+          height: "",
+          uom: "",
+          volume: "",
+          truckWeight: "",
+          capacity: "",
+        })
+      
+
+      },
+      onVehDel:function(oEvent){
+        var path = oEvent.getSource();
+      },
+      onRow:function(oEvent){
+        var path = oEvent.getSource();
+      }
     });
-  }
-);
+  });
+
+
+
+
+
