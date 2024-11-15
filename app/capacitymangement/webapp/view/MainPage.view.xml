@@ -135,6 +135,7 @@
                 expanded="true"
                 id="IconTabBar"
                 class="iconTabBar"
+                
             >
                 <items>
                     <!-- add product -->
@@ -142,6 +143,7 @@
                         id="IdpageScanning1"
                         visible="true"
                         key="info"
+                        interactionMode="Auto"
                         icon="Image/ProductInIconTabBar.png"
                         iconColor="Positive"
                         text="Add product"
@@ -157,14 +159,12 @@
                                         id="idLableDescription_InitialView"
                                         text="Product Number:"
                                         width="125px"
-                                        required="true"
                                         class="sapUiTinyMarginTop"
                                     />
                                     <Input
                                         id="idDescriptionInput_InitialView"
                                         value="{ProductModel>/sapProductno}"
                                         placeholder="Enter Productno"
-                                        required="true"
                                         class="customInput"
                                         width="100%"
                                     />
@@ -175,14 +175,12 @@
                                         id="idLabvbnleDescription_InitialView"
                                         text="EANUPC:"
                                         width="125px"
-                                        required="true"
                                         class="sapUiTinyMarginTop"
                                     />
                                     <Input
                                         id="idDesvbncriptionInput_InitialView"
                                         value="{ProductModel>/EANUPC}"
                                         placeholder="Eneter UAN"
-                                        required="true"
                                         class="customInput"
                                         width="100%"
                                     />
@@ -192,13 +190,11 @@
                                         id="idLabelDes_InitialView"
                                         text="Description:"
                                         width="125px"
-                                        required="true"
                                         class="sapUiTinyMarginTop"
                                     />
                                     <Input
                                         id="idInputDes_InitialView"
                                         value="{ProductModel>/description}"
-                                        required="true"
                                         placeholder="Enter Description"
                                         class="customInput"
                                         width="100%"
@@ -244,13 +240,11 @@
                                         id="idLableClient_InitialView"
                                         text="Width:"
                                         width="125px"
-                                        required="true"
                                         class="sapUiTinyMarginTop"
                                     />
                                     <Input
                                         id="idClientInput_InitialView"
                                         value="{ProductModel>/width}"
-                                        required="true"
                                         placeholder="Enter Width"
                                         maxLength="3"
                                         width="100%"
@@ -263,13 +257,11 @@
                                         id="idLableApplicationServer_InitialView"
                                         text="Height:"
                                         width="125px"
-                                        required="true"
                                         class="sapUiTinyMarginTop"
                                     />
                                     <Input
                                         id="idApplicationServerInput_InitialView"
                                         value="{ProductModel>/height}"
-                                        required="true"
                                         placeholder="Enter Height"
                                         class="customInput"
                                         width="100%"
@@ -286,10 +278,9 @@
                                     />
                                     <Select
                                         id="idselectuom"
-                                        width="200%"
-                                        maxWidth="200%"
+                                         width="auto"
                                     >
-                                    <core:Item
+                                        <core:Item
                                             id="idselit0"
                                             key=""
                                             text=""
@@ -329,13 +320,11 @@
                                         id="idLableWeight_InitialView"
                                         text="Weight:"
                                         width="125px"
-                                        required="true"
                                         class="sapUiTinyMarginTop"
                                     />
                                     <Input
                                         id="idWeightinput_InitialView"
                                         value="{ProductModel>/weight}"
-                                        required="true"
                                         placeholder="Enter Weight"
                                         class="customInput"
                                         width="100%"
@@ -705,7 +694,7 @@
                             <Button
                                 id="idBtghcvbnjnHUvbnContentBtn_AHUOBQ"
                                 text="Edit"
-                                press="onPressEditInAddEquipmentTable"
+                                press="onEdit"
                                 tooltip="Edit"
                                 class="line-md--pencil"
                             />
@@ -734,9 +723,8 @@
                         <!-- Vehicle types table -->
                         <Table
                             id="idTruckTypeTable"
-                            
                             growing="true"
-                        selectionChange="onRow"
+                            selectionChange="onRow"
                             items="{/TruckTypes}"
                             growingScrollToLoad="true"
                             mode="MultiSelect"
@@ -848,12 +836,10 @@
                                     id="idLableDvbnmescription_InitialView"
                                     text="Vehicle Type:"
                                     width="125px"
-                                    required="true"
                                     class="sapUiTinyMarginTop overlayLabel"
                                 />
 
                                 <MultiInput
-                                    required="true"
                                     class="customInput"
                                     width="100%"
                                     id="idDesvbnvbnnmmcriptionInput_InitialView"
@@ -875,11 +861,9 @@
                                     id="idLabvbnbhnjkleDescription_InitialView"
                                     text="Product"
                                     width="125px"
-                                    required="true"
                                     class="sapUiTinyMarginTop overlayLabel"
                                 />
                                 <MultiInput
-                                    required="true"
                                     class="customInput"
                                     width="100%"
                                     id="idDesvbnvbnmcriptionInput_InitialView"

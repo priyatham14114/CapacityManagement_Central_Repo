@@ -1,3 +1,4 @@
+ 
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/Fragment"
@@ -38,6 +39,19 @@ sap.ui.define([
                     }
                 })
             })
+        },
+        updateData:function(oModel,oPayload,sPath){
+            return new Promise((resolve, reject) => {
+                oModel.update(sPath,oPayload,{
+                    success:function(oSuccessData){
+                        resolve(oSuccessData);
+                    },
+                    error:function(oErrorData){
+                        reject(oErrorData);
+                    }
+                })
+            })
+
         },
         loadFragment: async function (sFragmentName) {
             const oFragment = await Fragment.load({

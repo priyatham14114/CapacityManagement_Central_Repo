@@ -16,7 +16,7 @@ sap.ui.define(
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
       onInit: function () {
 
-        /**Constructing Product Model */
+        /**Constructing Product Model and set the model to the view */
         const oJsonModel = new JSONModel({
           sapProductno: "",
           length: "",
@@ -31,7 +31,7 @@ sap.ui.define(
         })
         this.getView().setModel(oJsonModel, "ProductModel");
 
-        /**Constructing JSON Model */
+        /**Constructing JSON Model and set the model to the view*/
         const oJsonModelVeh = new JSONModel({
           truckType: "",
           length: "",
@@ -42,7 +42,7 @@ sap.ui.define(
           truckWeight: "",
           capacity: "",
         });
-        this.getView().setModel(oJsonModelVeh,"VehModel");
+        this.getView().setModel(oJsonModelVeh, "VehModel");
 
       },
       handleValueHelp: function (oEvent) {
@@ -69,7 +69,6 @@ sap.ui.define(
       handleValueHelpProductType: function (oEvent) {
         var sInputValue = oEvent.getSource().getValue(),
           oView = this.getView();
-
         // create value help dialog
         if (!this._pProductsDialog) {
           this._pProductsDialog = Fragment.load({
@@ -229,7 +228,7 @@ sap.ui.define(
         this.byId("idCreateInAddddEquipmentDialog").close();
       },
       // edit  fragment in products table
-      onPressEditInProductsTable: async function () {
+      oOpenProductEdit: async function () {
         if (!this.oEditDialog) {
           this.oEditDialog = await this.loadFragment("EditDialog");
         }
@@ -309,6 +308,8 @@ sap.ui.define(
           weight: "",
         })
       },
+
+      /**Deleting Products */
       onProductDel: async function () {
         const oTable = this.byId("ProductsTable"),
           aSelectedItems = oTable.getSelectedItems(),
@@ -328,11 +329,13 @@ sap.ui.define(
           MessageToast.show('Error Occurs');
         }
       },
-      onCreateVeh:async function(){
+
+      /**Creating Vehicles */
+      onCreateVeh: async function () {
         const oPayloadModel = this.getView().getModel("VehModel"),
-        oPayload = oPayloadModel.getProperty("/"),
-        oModel = this.getView().getModel("ModelV2"),
-        oPath = '/TruckTypes';
+          oPayload = oPayloadModel.getProperty("/"),
+          oModel = this.getView().getModel("ModelV2"),
+          oPath = '/TruckTypes';
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
         oPayload.volume = String(oVolume);
         // Get the selected item from the event parameters
@@ -345,15 +348,16 @@ sap.ui.define(
           this.onCancelInCreateVehicleDialog();
           this.byId("idvehtypeUOM").setSelectedKey("");
           this.ClearVeh(true);
-         
+
           MessageToast.show("Successfully Created!");
         } catch (error) {
           this.onCancelInCreateVehicleDialog();
           MessageToast.show("Error at the time of creation");
         }
       },
+
       /**Clearing Vehicle Model */
-      ClearVeh:function(){
+      ClearVeh: function () {
         const oPayloadModel = this.getView().getModel("VehModel");
         oPayloadModel.setProperty("/", {
           truckType: "",
@@ -365,14 +369,154 @@ sap.ui.define(
           truckWeight: "",
           capacity: "",
         })
-      
+      },
+
+      /**Deleting Vehicles */
+      onVehDel: async function () {
+        const oTable = this.byId("idTruckTypeTable"),
+          aSelectedItems = oTable.getSelectedItems(),
+          oModel = this.getView().getModel("ModelV2");
+        if (aSelectedItems.length === 0) {
+          MessageBox.information("Please select at least one product to delete.");
+          return; // Exit the function if no items are selected
+        }
+        try {
+          await Promise.all(aSelectedItems.map(async (oItem) => {
+            const oPath = oItem.getBindingContext().getPath();
+            await this.deleteData(oModel, oPath);
+          }));
+          this.getView().byId("idTruckTypeTable").getBinding("items").refresh();
+          MessageToast.show('Successfully Deleted')
+        } catch (error) {
+          MessageToast.show('Error Occurs');
+        }
+      },
+      onRow: function (oEvent) {
+        var path = oEvent.getSource();
+      },
+
+      /**Editing vehical types */
+      onEdit: async function () {
+        var oSelectedItem = this.byId("idTruckTypeTable").getSelectedItem();
+        if (!oSelectedItem) {
+          MessageBox.information("Please select at least one Row for edit!");
+          return;
+        }
+        const oData = oSelectedItem.getBindingContext().getObject();
+        await this.onPressEditInAddEquipmentTable();
+        this.byId("editTruckTypeInput").setValue(oData.truckType);
+        this.byId("editLengthInput").setValue(oData.length);
+        this.byId("editWidthInput").setValue(oData.width);
+        this.byId("editHeightInput").setValue(oData.height);
+        this.byId("editTruckWeightInput").setValue(oData.truckWeight);
+        this.byId("editCapacityInput").setValue(oData.capacity);
+      },
+
+      /**Updading Edited Values */
+      onSave: async function () {
+        const updatedData = {
+          truckType: this.byId("editTruckTypeInput").getValue(),
+          length: this.byId("editLengthInput").getValue(),
+          width: this.byId("editWidthInput").getValue(),
+          height: this.byId("editHeightInput").getValue(),
+          volume: "",
+          truckWeight: this.byId("editTruckWeightInput").getValue(),
+          capacity: this.byId("editCapacityInput").getValue()
+        };
+        const oPayload = updatedData;
+        var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
+        oPayload.volume = String(oVolume);
+        const truckType = this.byId("editTruckTypeInput").getValue();
+        const oModel = this.getView().getModel("ModelV2");
+        const oPath = `/TruckTypes('${truckType}')`;
+        try {
+          await this.updateData(oModel, oPayload, oPath);
+          this.getView().byId("idTruckTypeTable").getBinding("items").refresh();
+          this.onCancelInEditVehicleDialog();
+          this.onClearEditDialog();
+          MessageToast.show('Successfully Updated');
+        } catch (error) {
+          this.onCancelInEditVehicleDialog();
+          this.onClearEditDialog();
+          MessageToast.show('Error');
+        }
+      },
+
+      /**Clearing Vehicle Editing Values */
+      onClearEditDialog: function () {
+        this.byId("editTruckTypeInput").setValue(""); // Set to empty string
+        this.byId("editLengthInput").setValue(""); // Set to empty string
+        this.byId("editWidthInput").setValue(""); // Set to empty string
+        this.byId("editHeightInput").setValue(""); // Set to empty strin
+        this.byId("editTruckWeightInput").setValue(""); // Set to empty string
+        this.byId("editCapacityInput").setValue("");
+      },
+
+      /**Editing Product Details */
+      onPressEditInProductsTable: async function () {
+        var oSelectedItem = this.byId("ProductsTable").getSelectedItem();
+        if (!oSelectedItem) {
+          MessageBox.information("Please select at least one Row for edit!");
+          return;
+        }
+        const oData = oSelectedItem.getBindingContext().getObject();
+        await this.oOpenProductEdit();
+        this.byId("editProductNoInput").setValue(oData.sapProductno); // SAP Product Number
+        this.byId("editDescriptionInput").setValue(oData.description); // Description
+        this.byId("editEANUPCInput").setValue(oData.EANUPC); // EAN/UPC Code
+        this.byId("editCategoryInput").setValue(oData.mCategory); // Material Category
+        this.byId("editproLengthInput").setValue(oData.length); // Length
+        this.byId("editprodWidthInput").setValue(oData.width); // Width
+        this.byId("editprodHeightInput").setValue(oData.height); // Height
+        // this.byId("editVolumeInput").setValue(oData.volume); // Volume
+        this.byId("editUOMInput").setValue(oData.uom); // Unit of Measure (UOM)
+        this.byId("editWeightInput").setValue(oData.weight); // Weight
+      },
+      /**Updadting the Changed Product Value */
+      onSaveProduct: async function () {
+        const updatedData = {
+          sapProductno: this.byId("editProductNoInput").getValue(), // SAP Product Number
+          description: this.byId("editDescriptionInput").getValue(), // Description
+          EANUPC: this.byId("editEANUPCInput").getValue(),          // EAN/UPC Code
+          mCategory: this.byId("editCategoryInput").getValue(),      // Material Category
+          length: this.byId("editproLengthInput").getValue(),        // Length
+          width: this.byId("editprodWidthInput").getValue(),         // Width
+          height: this.byId("editprodHeightInput").getValue(),       // Height
+          volume: "",                                                // Volume (currently set to an empty string)
+          uom: this.byId("editUOMInput").getValue(),                                                   // Unit of Measure (UOM, currently set to an empty string)
+          weight: this.byId("editWeightInput").getValue()           // Weight
+        };
+        const oPayload = updatedData;
+        var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
+        oPayload.volume = String(oVolume);
+        const sapProductno = this.byId("editProductNoInput").getValue();
+        const oModel = this.getView().getModel("ModelV2");
+        const oPath = `/Materials('${sapProductno}')`;
+        try {
+          await this.updateData(oModel, oPayload, oPath);
+          this.getView().byId("ProductsTable").getBinding("items").refresh();
+          this.onCancelInEditProductDialog();
+          this.onClearEditProdDialog();
+          MessageToast.show('Successfully Updated');
+        } catch (error) {
+          this.onCancelInEditProductDialog();
+          this.onClearEditProdDialog();
+          MessageToast.show('Error');
+        }
 
       },
-      onVehDel:function(oEvent){
-        var path = oEvent.getSource();
-      },
-      onRow:function(oEvent){
-        var path = oEvent.getSource();
+      /**Clear Product Editing Dialog */
+      onClearEditProdDialog: function () {
+        this.byId("editProductNoInput").setValue(""); // SAP Product Number
+        this.byId("editDescriptionInput").setValue(""); // Description
+        this.byId("editEANUPCInput").setValue(""); // EAN/UPC Code
+        this.byId("editCategoryInput").setValue(""); // Material Category
+        this.byId("editproLengthInput").setValue(""); // Length
+        this.byId("editprodWidthInput").setValue(""); // Width
+        this.byId("editprodHeightInput").setValue(""); // Height
+        // this.byId("editVolumeInput").setValue(""); // Volume (currently commented out)
+         this.byId("editUOMInput").setValue(""); // Unit of Measure (UOM, currently commented out)
+        this.byId("editWeightInput").setValue(""); // Weight
       }
     });
   });
