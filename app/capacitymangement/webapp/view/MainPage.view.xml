@@ -133,9 +133,9 @@
         <content>
             <IconTabBar
                 expanded="true"
+                expandable="false"
                 id="IconTabBar"
                 class="iconTabBar"
-                
             >
                 <items>
                     <!-- add product -->

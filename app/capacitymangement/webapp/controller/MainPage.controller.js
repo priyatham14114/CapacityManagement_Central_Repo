@@ -15,6 +15,7 @@ sap.ui.define(
 
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
       onInit: function () {
+        
 
         /**Constructing Product Model and set the model to the view */
         const oJsonModel = new JSONModel({
@@ -517,7 +518,7 @@ sap.ui.define(
         // this.byId("editVolumeInput").setValue(""); // Volume (currently commented out)
          this.byId("editUOMInput").setValue(""); // Unit of Measure (UOM, currently commented out)
         this.byId("editWeightInput").setValue(""); // Weight
-      }
+      },
     });
   });
 
