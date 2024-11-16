@@ -278,7 +278,7 @@
                                     />
                                     <Select
                                         id="idselectuom"
-                                         width="auto"
+                                        width="auto"
                                     >
                                         <core:Item
                                             id="idselit0"
@@ -839,7 +839,13 @@
                                     class="sapUiTinyMarginTop overlayLabel"
                                 />
 
-                                <MultiInput
+                                <Input
+                                    id="idcdsse"
+                                    value=""
+                                    submit="onTruckDetails"
+                                    width="100%"
+                                />
+                                <!-- <MultiInput
                                     class="customInput"
                                     width="100%"
                                     id="idDesvbnvbnnmmcriptionInput_InitialView"
@@ -854,7 +860,7 @@
                                         key="fghjk"
                                         text="fghj"
                                     />
-                                </MultiInput>
+                                </MultiInput> -->
                             </HBox>
                             <HBox id="idhboxvghDescription">
                                 <Label
@@ -863,7 +869,13 @@
                                     width="125px"
                                     class="sapUiTinyMarginTop overlayLabel"
                                 />
-                                <MultiInput
+                                <Input
+                                    id="idproducthelp"
+                                    value=""
+                                    submit="onProdDetails"
+                                    width="100%"
+                                />
+                                <!-- <MultiInput
                                     class="customInput"
                                     width="100%"
                                     id="idDesvbnvbnmcriptionInput_InitialView"
@@ -878,7 +890,7 @@
                                         key="fghjk"
                                         text="fghj"
                                     />
-                                </MultiInput>
+                                </MultiInput> -->
                             </HBox>
                             <HBox id="iDhboxSystemghjk_InitialView">
                                 <Label
@@ -903,6 +915,48 @@
                                     width="100px"
                                 />
                             </HBox>
+                            <HBox id="iDhboxSystem1ghjk_InitialView">
+                                <Label
+                                    id="idLableSyst1emId_InitialView"
+                                    text="Capacity"
+                                    width="125px"
+                                    class="sapUiTinyMarginTop overlayLabel"
+                                />
+                                <Input
+                                    id="idSystemvgwhjkIdInput_InitialView"
+                                    value=""
+                                    placeholder="Available"
+                                    width="100px"
+                                    editable="false"
+                                />
+                                <Input
+                                    id="idSystemvgehjdfghkIdIhjnput_InitialView"
+                                    value=""
+                                    placeholder="Total capacity"
+                                    width="100px"
+                                />
+                            </HBox>
+                            <HBox id="iDhbox11System1ghjk_InitialView">
+                                <Label
+                                    id="idLabl11eSyst1emId_InitialView"
+                                    text="Volume"
+                                    width="125px"
+                                    class="sapUiTinyMarginTop overlayLabel"
+                                />
+                                <Input
+                                    id="idSystemvgwddshjkIdInput_InitialView"
+                                    value=""
+                                    placeholder="Available"
+                                    width="100px"
+                                    editable="false"
+                                />
+                                <Input
+                                    id="idSystemvddsgehjdfghkIdIhjnput_InitialView"
+                                    value=""
+                                    placeholder="TotalVolume"
+                                    width="100px"
+                                />
+                            </HBox>
                             <VBox
                                 id="_IDGenVBox4"
                                 alignContent="Center"
@@ -912,7 +966,7 @@
                                     <Button
                                         id="idconnecghjktsapcancelButton_InitialView"
                                         text="save"
-                                        press="onClearconnectSAPPress"
+                                        press="onSimulate"
                                         type="Emphasized"
                                         class="dialogButton_sapconnect sapUiSmallMarginEnd"
                                     />

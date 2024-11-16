@@ -3,6 +3,7 @@ sap.ui.define(
     "./BaseController",
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
+    "sap/ui/model/FilterOperator",
     "sap/m/IconTabBar",
     "sap/m/IconTabFilter",
     "sap/ui/model/json/JSONModel",
@@ -10,12 +11,12 @@ sap.ui.define(
     "sap/ui/model/odata/v2/ODataModel",
     "sap/m/MessageBox"
   ],
-  function (Controller, Fragment, Filter, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel, MessageBox) {
+  function (Controller, Fragment, Filter, FilterOperator, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel, MessageBox) {
     "use strict";
 
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
       onInit: function () {
-        
+
 
         /**Constructing Product Model and set the model to the view */
         const oJsonModel = new JSONModel({
@@ -516,9 +517,59 @@ sap.ui.define(
         this.byId("editprodWidthInput").setValue(""); // Width
         this.byId("editprodHeightInput").setValue(""); // Height
         // this.byId("editVolumeInput").setValue(""); // Volume (currently commented out)
-         this.byId("editUOMInput").setValue(""); // Unit of Measure (UOM, currently commented out)
+        this.byId("editUOMInput").setValue(""); // Unit of Measure (UOM, currently commented out)
         this.byId("editWeightInput").setValue(""); // Weight
       },
+
+      /**Product Simulation */
+      onTruckDetails: function () {
+        const oVehType = this.byId("idcdsse").getValue(),
+          oModel = this.getView().getModel("ModelV2"),
+          sPath = "/TruckTypes";
+        /**constructing Filter */
+        const oFilter = new Filter("truckType", FilterOperator.EQ, oVehType);
+        var that = this;
+        /**Reading data */
+        oModel.read(sPath, {
+          filters: [oFilter], success: function (odata) {
+            const oVolume = odata.results[0].volume,
+              oCapacity = odata.results[0].capacity;
+            that.byId("idSystemvddsgehjdfghkIdIhjnput_InitialView").setValue(oVolume);
+            that.byId("idSystemvgwhjkIdInput_InitialView").setValue(oCapacity);
+            /**total */
+            that.byId("idSystemvgwddshjkIdInput_InitialView").setValue(oVolume);
+            that.byId("idSystemvgehjdfghkIdIhjnput_InitialView").setValue(oCapacity);
+          },
+          error: function (oError) {
+
+          }
+        })
+      },
+      /**Product details submit event */
+      onProdDetails:function(){
+        const oProduct = this.byId("idproducthelp").getValue(),
+        oModel = this.getView().getModel("ModelV2"),
+          sPath = "/Materials";
+        /**constructing Filter */
+        const oFilter = new Filter("sapProductno", FilterOperator.EQ, oProduct);
+        var that = this;
+        /**Reading data */
+        oModel.read(sPath, {
+          filters: [oFilter], success: function (odata) {
+            const oVolume = odata.results[0].volume;
+            //   oCapacity = odata.results[0].capacity;
+            // that.byId("idSystemvddsgehjdfghkIdIhjnput_InitialView").setValue(oVolume);
+            // that.byId("idSystemvgwhjkIdInput_InitialView").setValue(oCapacity);
+            // /**total */
+            const tVolume = that.byId("idSystemvgwddshjkIdInput_InitialView").getValue();
+            const oCVole = tVolume/oVolume;
+            that.byId("idSystemvghjdfghkIdIhjnput_InitialView").setValue(oCVole);
+          },
+          error: function (oError) {
+
+          }
+        })
+      }
     });
   });
 
