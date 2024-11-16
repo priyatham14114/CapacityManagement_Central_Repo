@@ -546,9 +546,9 @@ sap.ui.define(
         })
       },
       /**Product details submit event */
-      onProdDetails:function(){
+      onProdDetails: function () {
         const oProduct = this.byId("idproducthelp").getValue(),
-        oModel = this.getView().getModel("ModelV2"),
+          oModel = this.getView().getModel("ModelV2"),
           sPath = "/Materials";
         /**constructing Filter */
         const oFilter = new Filter("sapProductno", FilterOperator.EQ, oProduct);
@@ -562,7 +562,7 @@ sap.ui.define(
             // that.byId("idSystemvgwhjkIdInput_InitialView").setValue(oCapacity);
             // /**total */
             const tVolume = that.byId("idSystemvgwddshjkIdInput_InitialView").getValue();
-            const oCVole = tVolume/oVolume;
+            const oCVole = tVolume / oVolume;
             that.byId("idSystemvghjdfghkIdIhjnput_InitialView").setValue(oCVole);
           },
           error: function (oError) {
