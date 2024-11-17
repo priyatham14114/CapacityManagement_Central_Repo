@@ -602,7 +602,7 @@ sap.ui.define(
           reader.readAsBinaryString(file);
         }
       },
-      /**Simulating excel sheet products */
+      /** Simulating excel sheet products */
       onClickSimulate: function () {
         var oTable = this.byId("myTable");
         var aSelectedItems = oTable.getSelectedItems(); // Get selected items
@@ -624,6 +624,9 @@ sap.ui.define(
                 Volume: oTable.getModel("localModel").getProperty("Volume", oContext)
               };
 
+              // Calculate total volume for the current row
+              rowData.TotalVolume = rowData.Quantity * rowData.Volume;
+
               // Push the row data into the selectedData array
               selectedData.push(rowData);
             } else {
@@ -633,11 +636,29 @@ sap.ui.define(
 
           // Log the data of all selected items
           console.log("Selected Items Data:", selectedData);
+
+          // Calculate overall total volume across all rows
+          const overallTotalVolume = selectedData.reduce((accumulator, item) => {
+            return accumulator + item.TotalVolume; // Use TotalVolume calculated for each row
+          }, 0);
+
+          console.log("Overall Total Volume:", overallTotalVolume);
+
+          // Construct JSON model for storing overall total volume and product details
+          const jsonModelData = {
+            OverallTotalVolume: overallTotalVolume,
+            Products: selectedData
+          };
+
+          // Assuming you want to set this data to a model named "resultModel"
+          const resultModel = new sap.ui.model.json.JSONModel(jsonModelData);
+
+          // Set the model to your view or component
+          this.getView().setModel(resultModel, "resultModel");
+
         } else {
           console.log("No items are selected.");
         }
-
-
       }
     });
   });
