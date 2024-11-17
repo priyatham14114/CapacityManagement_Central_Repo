@@ -17,7 +17,8 @@ sap.ui.define(
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
       onInit: function () {
 
-
+        this.localModel = new sap.ui.model.json.JSONModel();
+        this.getView().setModel(this.localModel, "localModel");
         /**Constructing Product Model and set the model to the view */
         const oJsonModel = new JSONModel({
           sapProductno: "",
@@ -557,10 +558,6 @@ sap.ui.define(
         oModel.read(sPath, {
           filters: [oFilter], success: function (odata) {
             const oVolume = odata.results[0].volume;
-            //   oCapacity = odata.results[0].capacity;
-            // that.byId("idSystemvddsgehjdfghkIdIhjnput_InitialView").setValue(oVolume);
-            // that.byId("idSystemvgwhjkIdInput_InitialView").setValue(oCapacity);
-            // /**total */
             const tVolume = that.byId("idSystemvgwddshjkIdInput_InitialView").getValue();
             const oCVole = tVolume / oVolume;
             that.byId("idSystemvghjdfghkIdIhjnput_InitialView").setValue(oCVole);
@@ -569,6 +566,78 @@ sap.ui.define(
 
           }
         })
+      },
+
+      /**Uploading excel sheet,reading data and displaying data into table  */
+      onUpload: function (e) {
+        this._import(e.getParameter("files") && e.getParameter("files")[0]);
+      },
+
+      _import: function (file) {
+        var that = this;
+
+        var excelData = {};
+        if (file && window.FileReader) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+              type: 'binary'
+            });
+            workbook.SheetNames.forEach(function (sheetName) {
+              // Here is your object for every sheet in workbook
+              excelData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+            });
+            console.log(excelData);
+            // Setting the data to the local model 
+            that.localModel.setData({
+              items: excelData
+            });
+            that.localModel.refresh(true);
+          };
+          reader.onerror = function (ex) {
+            console.log(ex);
+          };
+          reader.readAsBinaryString(file);
+        }
+      },
+      /**Simulating excel sheet products */
+      onClickSimulate: function () {
+        var oTable = this.byId("myTable");
+        var aSelectedItems = oTable.getSelectedItems(); // Get selected items
+
+        // Check if there are any selected items
+        if (aSelectedItems.length > 0) {
+          var selectedData = []; // Array to hold data of all selected items
+
+          // Iterate over each selected item
+          aSelectedItems.forEach(function (oItem) {
+            var oContext = oItem.getBindingContext("localModel"); // Get the binding context for each item
+
+            if (oContext) {
+              // Retrieve properties from the context
+              var rowData = {
+                Product: oTable.getModel("localModel").getProperty("Product", oContext),
+                Description: oTable.getModel("localModel").getProperty("Description", oContext),
+                Quantity: oTable.getModel("localModel").getProperty("Quantity", oContext),
+                Volume: oTable.getModel("localModel").getProperty("Volume", oContext)
+              };
+
+              // Push the row data into the selectedData array
+              selectedData.push(rowData);
+            } else {
+              console.error("Binding context is undefined for a selected item.");
+            }
+          });
+
+          // Log the data of all selected items
+          console.log("Selected Items Data:", selectedData);
+        } else {
+          console.log("No items are selected.");
+        }
+
+
       }
     });
   });
