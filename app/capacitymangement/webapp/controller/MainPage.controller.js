@@ -644,22 +644,76 @@ sap.ui.define(
 
           console.log("Overall Total Volume:", overallTotalVolume);
 
-          // Construct JSON model for storing overall total volume and product details
-          const jsonModelData = {
-            OverallTotalVolume: overallTotalVolume,
-            Products: selectedData
-          };
+          // Load truck details
+          this.onTruckDetailsLoad().then(Trucks => {
+            let requiredTrucks = [];
+            Trucks.forEach(truck => {
+              const numberOfTrucksNeeded = Math.ceil(overallTotalVolume / truck.volume);
+              requiredTrucks.push({
+                truckType: truck.truckType,
+                volume: truck.volume,
+                numberOfTrucksNeeded: numberOfTrucksNeeded
+              });
+            });
 
-          // Assuming you want to set this data to a model named "resultModel"
-          const resultModel = new sap.ui.model.json.JSONModel(jsonModelData);
+            console.log("Required Trucks for Loading:");
+            requiredTrucks.forEach(truck => {
+              console.log(`- ${truck.truckType}: ${truck.numberOfTrucksNeeded} truck(s) needed (Capacity: ${truck.volume} Kgs)`);
+            });
 
-          // Set the model to your view or component
-          this.getView().setModel(resultModel, "resultModel");
+            // Construct JSON model for storing overall total volume and product details
+            const jsonModelData = {
+              OverallTotalVolume: overallTotalVolume,
+              Products: selectedData,
+              RequiredTrucks: requiredTrucks
+            };
+
+            // Assuming you want to set this data to a model named "resultModel"
+            const resultModel = new sap.ui.model.json.JSONModel(jsonModelData);
+
+            // Set the model to your view or component
+            this.getView().setModel(resultModel, "resultModel");
+            this.onLoadRequiredTrucks();
+
+          }).catch(error => {
+            console.error("Error loading truck details:", error);
+          });
 
         } else {
           console.log("No items are selected.");
         }
-      }
+      },
+
+      /** Truck Details reading */
+      onTruckDetailsLoad: function () {
+        return new Promise((resolve, reject) => {
+          const oPath = "/TruckTypes";
+          const oModel = this.getView().getModel("ModelV2");
+
+          oModel.read(oPath, {
+            success: function (odata) {
+              resolve(odata.results); // Resolve with the truck data array
+            },
+            error: function (oError) {
+              reject(oError); // Reject with error information
+            }
+          });
+        });
+      },
+
+      /**Loading Required Trucks */
+
+      onLoadRequiredTrucks: async function () {
+        if (!this.oReqTruckDialog) {
+          this.oReqTruckDialog = await this.loadFragment("RequiredTruck");
+        }
+        this.oReqTruckDialog.setModel(this.getView().getModel("resultModel"), "resultModel")
+        this.oReqTruckDialog.open();
+      },
+
+      onTruckDialogClose: function () {
+        this.byId("truckLoadingDialog").close();
+      },
     });
   });
 
