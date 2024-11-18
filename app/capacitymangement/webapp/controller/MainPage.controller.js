@@ -665,6 +665,7 @@ sap.ui.define(
             const jsonModelData = {
               OverallTotalVolume: overallTotalVolume,
               Products: selectedData,
+              TProducts: selectedData.length,
               RequiredTrucks: requiredTrucks
             };
 
@@ -673,6 +674,8 @@ sap.ui.define(
 
             // Set the model to your view or component
             this.getView().setModel(resultModel, "resultModel");
+            const modelData = this.getView().getModel("resultModel").getData();
+            console.log(modelData);
             this.onLoadRequiredTrucks();
 
           }).catch(error => {
@@ -708,7 +711,16 @@ sap.ui.define(
           this.oReqTruckDialog = await this.loadFragment("RequiredTruck");
         }
         this.oReqTruckDialog.setModel(this.getView().getModel("resultModel"), "resultModel")
+        // Get the count of trucks
+        const products = this.getView().getModel("resultModel").getProperty("/Products");
+        const productCount = products ? products.length : 0;
+
         this.oReqTruckDialog.open();
+        // // Use afterOpen event to set the title text
+        // this.oReqTruckDialog.attachAfterOpen(() => {
+        //   const titleText = `Selected Products Count = ${productCount}`;
+        //   this.byId("_IDGenTitle").setText(titleText);
+        // });
       },
 
       onTruckDialogClose: function () {

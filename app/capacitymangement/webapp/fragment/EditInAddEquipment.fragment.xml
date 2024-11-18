@@ -46,25 +46,37 @@
                 columnsM="1"
                 singleContainerFullSize="false"
             >
-                <Label id="_IDGenLabel1" text="Truck Type" />
+                <Label
+                    id="_IDGenLabel1"
+                    text="Truck Type"
+                />
                 <Input
                     id="editTruckTypeInput"
                     value=" "
                 />
 
-                <Label id="_IDGenLabel2" text="Length" />
+                <Label
+                    id="_IDGenLabel2"
+                    text="Length"
+                />
                 <Input
                     id="editLengthInput"
                     value=" "
                 />
 
-                <Label id="_IDGenLabel3" text="Width" />
+                <Label
+                    id="_IDGenLabel3"
+                    text="Width"
+                />
                 <Input
                     id="editWidthInput"
                     value=""
                 />
 
-                <Label id="_IDGenLabel4" text="Height" />
+                <Label
+                    id="_IDGenLabel4"
+                    text="Height"
+                />
                 <Input
                     id="editHeightInput"
                     value=" "
@@ -82,13 +94,19 @@
                     value=" "
                 /> -->
 
-                <Label id="_IDGenLabel7" text="Truck Weight" />
+                <Label
+                    id="_IDGenLabel7"
+                    text="Truck Weight"
+                />
                 <Input
                     id="editTruckWeightInput"
                     value=" "
                 />
 
-                <Label id="_IDGenLabel8" text="Capacity" />
+                <Label
+                    id="_IDGenLabel8"
+                    text="Capacity"
+                />
                 <Input
                     id="editCapacityInput"
                     value=" "

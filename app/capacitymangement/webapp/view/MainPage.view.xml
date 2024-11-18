@@ -214,7 +214,6 @@
                                         id="idSystemIdInput_InitialView"
                                         value="{ProductModel>/mCategory}"
                                         placeholder="Material Category"
-                                        maxLength="3"
                                         width="100%"
                                         liveChange="ongetSAPPress"
                                     />
