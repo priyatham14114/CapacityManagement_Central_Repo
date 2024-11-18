@@ -133,7 +133,14 @@
           "target": [
             "TargetMainPage"
           ]
+        },  {
+          "name": "ReqTruck",
+          "pattern": "ReqTruck",
+          "target": [
+            "TargetReqTruck"
+          ]
         }
+
       ],
       "targets": {
         "TargetHome": {
@@ -149,6 +156,13 @@
           "clearControlAggregation": false,
           "viewId": "MainPage",
           "viewName": "MainPage"
+        },
+        "TargetReqTruck": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "ReqTruck",
+          "viewName": "ReqTruck"
         }
       }
     },

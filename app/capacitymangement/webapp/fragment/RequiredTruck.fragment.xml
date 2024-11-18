@@ -3,40 +3,36 @@
     xmlns:form="sap.ui.layout.form"
     xmlns="sap.m"
 >
-    <Dialog
-        id="truckLoadingDialog"
-        title="Truck Loading Details"
-        class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
-    >
-        <content>
+  
             <VBox id="_IDGenVBox1">
-                <Text
-                    id="_IDGenText7"
-                    text="Overall Total Volume: {resultModel>/OverallTotalVolume}"
-                />
-
                 <Title
                     id="_IDGenTitle"
                     text="Selected Products:{resultModel>/TProducts}"
                     level="H2"
                 />
+                <Text
+                    id="_IDGenText7"
+                    text="Total Volume : {resultModel>/OverallTotalVolume}m3"
+                />
+
                 <List
                     id="_IDGenList"
                     items="{resultModel>/Products}"
+                    growing="true"
                 >
                     <items>
                         <StandardListItem
                             id="_IDGenStandardListItem"
                             title="{resultModel>Product}"
                             description="{resultModel>Description}"
-                            info="{resultModel>Quantity} units, Volume: {resultModel>Volume} "
+                            info="{resultModel>Quantity} units, Volume: {resultModel>Volume}"
                         />
                     </items>
                 </List>
 
                 <Title
                     id="_IDGenTitle1"
-                    text="Required Trucks"
+                    text="Required Trucks For Loading Products"
                     level="H2"
                 />
                 <List
@@ -52,13 +48,6 @@
                     </items>
                 </List>
             </VBox>
-        </content>
-        <beginButton>
-            <Button
-                id="_IDGenButton1"
-                text="Close"
-                press="onTruckDialogClose"
-            />
-        </beginButton>
-    </Dialog>
+         
+     
 </core:FragmentDefinition>

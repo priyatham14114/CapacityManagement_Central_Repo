@@ -1,0 +1,15 @@
+<mvc:View
+    controllerName="com.app.capacitymangement.controller.ReqTruck"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+<Page id="_IDGenPage3" title="Required Trucks">
+        <content>
+         <core:Fragment type="XML" fragmentName="com.app.capacitymangement.fragment.RequiredTruck" />
+        </content>
+    </Page>
+</mvc:View>
+

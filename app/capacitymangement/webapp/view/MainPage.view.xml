@@ -1004,6 +1004,8 @@
                                             id="myTable"
                                             mode="MultiSelect"
                                             width="100%"
+                                            growing="true"
+                                            growingThreshold="100"
                                             items="{localModel>/items}"
                                         >
                                             <columns>
@@ -1019,18 +1021,19 @@
                                                         text="Material Description"
                                                     />
                                                 </Column>
+                                                 <Column id="_IDGenColumn4">
+                                                    <Text
+                                                        id="_IDGsdfenText3"
+                                                        text="Quantity"
+                                                    />
+                                                </Column>
                                                 <Column id="_IDGenColumn3">
                                                     <Text
                                                         id="_IDGesdfnText2"
                                                         text="Volume"
                                                     />
                                                 </Column>
-                                                <Column id="_IDGenColumn4">
-                                                    <Text
-                                                        id="_IDGsdfenText3"
-                                                        text="Quantity"
-                                                    />
-                                                </Column>
+                                               
                                                 <!-- 
                                                 <Column id="_IDGenColumn5">
                                                     <Text

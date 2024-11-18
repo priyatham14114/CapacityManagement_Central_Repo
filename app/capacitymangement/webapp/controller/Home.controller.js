@@ -38,7 +38,6 @@ sap.ui.define([
                 }
             },
             onLoginBtnPressInLoginDialog: function () {
-
                 var oRouter = UIComponent.getRouterFor(this);
                 oRouter.navTo("MainPage");
 

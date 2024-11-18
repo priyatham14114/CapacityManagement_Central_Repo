@@ -9,9 +9,10 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/ui/model/odata/v2/ODataModel",
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+     "sap/ui/core/UIComponent"
   ],
-  function (Controller, Fragment, Filter, FilterOperator, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel, MessageBox) {
+  function (Controller, Fragment, Filter, FilterOperator, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel, MessageBox,UIComponent) {
     "use strict";
 
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
@@ -282,7 +283,7 @@ sap.ui.define(
         var oSelectedItem = this.byId("idselectuom").getSelectedItem();
         oPayload.uom = oSelectedItem ? oSelectedItem.getKey() : "";
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
-        oPayload.volume = String(oVolume);
+        oPayload.volume = (parseFloat(oVolume)).toFixed(2);
         try {
           await this.createData(oModel, oPayload, oPath);
           debugger
@@ -340,7 +341,7 @@ sap.ui.define(
           oModel = this.getView().getModel("ModelV2"),
           oPath = '/TruckTypes';
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
-        oPayload.volume = String(oVolume);
+        oPayload.volume = (parseFloat(oVolume)).toFixed(2);
         // Get the selected item from the event parameters
         var oSelectedItem = this.byId("idvehtypeUOM").getSelectedItem();
         oPayload.uom = oSelectedItem ? oSelectedItem.getKey() : "";
@@ -428,7 +429,7 @@ sap.ui.define(
         };
         const oPayload = updatedData;
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
-        oPayload.volume = String(oVolume);
+        oPayload.volume = (parseFloat(oVolume)).toFixed(2);
         const truckType = this.byId("editTruckTypeInput").getValue();
         const oModel = this.getView().getModel("ModelV2");
         const oPath = `/TruckTypes('${truckType}')`;
@@ -491,7 +492,7 @@ sap.ui.define(
         };
         const oPayload = updatedData;
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
-        oPayload.volume = String(oVolume);
+        oPayload.volume = (parseFloat(oVolume)).toFixed(2);
         const sapProductno = this.byId("editProductNoInput").getValue();
         const oModel = this.getView().getModel("ModelV2");
         const oPath = `/Materials('${sapProductno}')`;
@@ -674,9 +675,13 @@ sap.ui.define(
 
             // Set the model to your view or component
             this.getView().setModel(resultModel, "resultModel");
+            this.getOwnerComponent().setModel(resultModel, "resultModel"); 
+            // this.byId("idReq").setModel(resultModel, "resultModel");
             const modelData = this.getView().getModel("resultModel").getData();
             console.log(modelData);
-            this.onLoadRequiredTrucks();
+           
+            // this.onLoadRequiredTrucks();
+              this.MoveToNextScreen();
 
           }).catch(error => {
             console.error("Error loading truck details:", error);
@@ -726,6 +731,15 @@ sap.ui.define(
       onTruckDialogClose: function () {
         this.byId("truckLoadingDialog").close();
       },
+      MoveToNextScreen:function(){
+        const oRouter = UIComponent.getRouterFor(this);
+    //       // Assuming resultModel is already created and set in the previous function
+    // const resultModel = this.getView().getModel("resultModel"); // Get the model you want to pass
+
+    // // Set the model to the component level so it's accessible in the next view
+    // this.getOwnerComponent().setModel(resultModel, "resultModel"); 
+        oRouter.navTo("ReqTruck");
+      }
     });
   });
 
