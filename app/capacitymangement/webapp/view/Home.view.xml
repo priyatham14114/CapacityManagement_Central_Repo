@@ -31,13 +31,13 @@
                         >
                             <Button
                                 id="_IDGenButton"
-                                text="Login"
+                                text="{i18n>LoginButton}"
                                 type="Transparent"
                                 press="onLogin"
                             />
                             <Button
                                 id="_IDG34enButton1"
-                                text="Signup"
+                                text="{i18n>SignupButton}"
                                 type="Transparent"
                                 press="onSignup"
                             />
@@ -55,7 +55,7 @@
                         >
                             <Text
                                 id="_IDGe33nText"
-                                text="Hi"
+                                text="{i18n>HI}"
                                 class="Hi"
                             />
                             <VBox id="_IDGenV33Box">
@@ -65,17 +65,17 @@
                                 />
                                 <Text
                                     id="_IDG44enText1"
-                                    text="Welcome to Effortless"
+                                    text="{i18n>Welcome}"
                                     class="welcome"
                                 />
                                 <Text
                                     id="_IDGenTeeext2"
-                                    text="Capacity"
+                                    text="{i18n>Capacity}"
                                     class="capacityTitle"
                                 />
                                 <Text
                                     id="_IDGenTeeext3"
-                                    text="Management"
+                                    text="{i18n>Management}"
                                     class="capacityTitle"
                                 />
                             </VBox>
