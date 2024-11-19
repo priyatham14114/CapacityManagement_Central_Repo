@@ -113,7 +113,7 @@
                     /> -->
                 </Select>
 
-                <Label
+                <!-- <Label
                     id="idVolumeLabelveh"
                     text="Volume"
                 />
@@ -121,7 +121,7 @@
                 <Input
                     id="idVolumeInputveh"
                     value="{VehModel>/volume}"
-                />
+                /> -->
 
                 <Label
                     id="idTruckWeightLabel"

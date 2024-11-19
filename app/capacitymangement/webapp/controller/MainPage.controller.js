@@ -10,9 +10,9 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/ui/model/odata/v2/ODataModel",
     "sap/m/MessageBox",
-     "sap/ui/core/UIComponent"
+    "sap/ui/core/UIComponent"
   ],
-  function (Controller, Fragment, Filter, FilterOperator, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel, MessageBox,UIComponent) {
+  function (Controller, Fragment, Filter, FilterOperator, IconTabBar, IconTabFilter, JSONModel, MessageToast, ODataModel, MessageBox, UIComponent) {
     "use strict";
 
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
@@ -279,8 +279,29 @@ sap.ui.define(
           oPayload = oPayloadModel.getProperty("/"),
           oModel = this.getView().getModel("ModelV2"),
           oPath = '/Materials';
+        // Check if oPayload is empty
+        if (
+          !oPayload.sapProductno ||
+          !oPayload.length ||
+          !oPayload.width ||
+          !oPayload.height ||
+
+
+          !oPayload.mCategory ||
+          !oPayload.description ||
+
+          !oPayload.weight
+        ) {
+          console.log("Please Enter All Values");
+          MessageBox.information("Please Enter All Values");
+          return;
+        }
         // Get the selected item from the event parameters
         var oSelectedItem = this.byId("idselectuom").getSelectedItem();
+        if (oSelectedItem.getKey() === '') {
+          MessageBox.error("Please Select UOM!!");
+          return;
+        }
         oPayload.uom = oSelectedItem ? oSelectedItem.getKey() : "";
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
         oPayload.volume = (parseFloat(oVolume)).toFixed(2);
@@ -340,6 +361,7 @@ sap.ui.define(
           oPayload = oPayloadModel.getProperty("/"),
           oModel = this.getView().getModel("ModelV2"),
           oPath = '/TruckTypes';
+
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
         oPayload.volume = (parseFloat(oVolume)).toFixed(2);
         // Get the selected item from the event parameters
@@ -675,13 +697,13 @@ sap.ui.define(
 
             // Set the model to your view or component
             this.getView().setModel(resultModel, "resultModel");
-            this.getOwnerComponent().setModel(resultModel, "resultModel"); 
+            this.getOwnerComponent().setModel(resultModel, "resultModel");
             // this.byId("idReq").setModel(resultModel, "resultModel");
             const modelData = this.getView().getModel("resultModel").getData();
             console.log(modelData);
-           
+
             // this.onLoadRequiredTrucks();
-              this.MoveToNextScreen();
+            this.MoveToNextScreen();
 
           }).catch(error => {
             console.error("Error loading truck details:", error);
@@ -731,14 +753,21 @@ sap.ui.define(
       onTruckDialogClose: function () {
         this.byId("truckLoadingDialog").close();
       },
-      MoveToNextScreen:function(){
+      MoveToNextScreen: function () {
         const oRouter = UIComponent.getRouterFor(this);
-    //       // Assuming resultModel is already created and set in the previous function
-    // const resultModel = this.getView().getModel("resultModel"); // Get the model you want to pass
-
-    // // Set the model to the component level so it's accessible in the next view
-    // this.getOwnerComponent().setModel(resultModel, "resultModel"); 
         oRouter.navTo("ReqTruck");
+      },
+      onLiveBinNumberTAble: function (oEvent) {
+        let aFilter = [];
+        let sQuery = oEvent.getParameter("newValue");
+        sQuery = sQuery.replace(/\s+/g, '');
+        sQuery=sQuery.toUpperCase();
+        if (sQuery && sQuery.length > 1) {
+          aFilter.push(new Filter("sapProductno", FilterOperator.EQ, sQuery));
+        }
+        var oTable = this.byId("ProductsTable");
+        var oBinding = oTable.getBinding("items");
+        oBinding.filter(aFilter);
       }
     });
   });
