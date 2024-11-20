@@ -97,14 +97,16 @@ sap.ui.define(
         var aData = [];
         // Push column headers as the first row
         var aHeaders = [
-          "S.No",
-          "Product",
-          "Product Type",
-          "Product Description",
-          "Dimensions",
+          "SAP Productno",
+          "Description",
+          "EANUPC",
+          "Material Category",
+          "Length",
+          "Width",
+          "Height",
           "Volume",
-          "Weights",
-          "Product Codes"
+          "UOM",
+          "Weight",
         ];
         aData.push(aHeaders);
 
@@ -130,19 +132,19 @@ sap.ui.define(
       //print in add Equipment 
       onPressDownloadInAddVehicleTable: function () {
 
-        var oTable = this.byId("idProductsTableEdit");
+        var oTable = this.byId("idTruckTypeTable");
         var aItems = oTable.getItems();
         var aData = [];
 
         // Push column headers as the first row
         var aHeaders = [
-          "S.No",
-          "Vehicle",
-          "Vehicle Type",
-          "Dimensions",
-          "Volume",
-          "Weight",
-          "Capacity"
+          "TruckType",
+          "Length(M)",
+          "Width(M)",
+          "Height(M)",
+          "Volume(M)",
+          "Capacity",
+          "TruckWeight",
         ];
         aData.push(aHeaders);
 
@@ -743,11 +745,7 @@ sap.ui.define(
         const productCount = products ? products.length : 0;
 
         this.oReqTruckDialog.open();
-        // // Use afterOpen event to set the title text
-        // this.oReqTruckDialog.attachAfterOpen(() => {
-        //   const titleText = `Selected Products Count = ${productCount}`;
-        //   this.byId("_IDGenTitle").setText(titleText);
-        // });
+
       },
 
       onTruckDialogClose: function () {
@@ -757,18 +755,128 @@ sap.ui.define(
         const oRouter = UIComponent.getRouterFor(this);
         oRouter.navTo("ReqTruck");
       },
+      /**Filtering Based on Material number */
       onLiveBinNumberTAble: function (oEvent) {
         let aFilter = [];
         let sQuery = oEvent.getParameter("newValue");
         sQuery = sQuery.replace(/\s+/g, '');
-        sQuery=sQuery.toUpperCase();
+        sQuery = sQuery.toUpperCase();
         if (sQuery && sQuery.length > 1) {
           aFilter.push(new Filter("sapProductno", FilterOperator.EQ, sQuery));
         }
         var oTable = this.byId("ProductsTable");
         var oBinding = oTable.getBinding("items");
         oBinding.filter(aFilter);
-      }
+      },
+
+      /**For creating n number of products at a time */
+      onUploadMaterialCreation: function (e) {
+        this._import1(e.getParameter("files") && e.getParameter("files")[0]);
+      },
+
+      _import1: function (file) {
+        var that = this;
+
+        if (file && window.FileReader) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var data = e.target.result;
+            var workbook = XLSX.read(data, { type: 'binary' });
+            var excelData = []; // Initialize an array to hold the data
+
+            workbook.SheetNames.forEach(function (sheetName) {
+              // Convert each sheet to an array of objects
+              const sheetData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+              excelData = excelData.concat(sheetData); // Combine data from all sheets
+            });
+
+            console.log(excelData);
+            // Call createProducts with the parsed excel data
+            that.createProducts(excelData);
+
+            // Refresh the local model if necessary
+            that.localModel.refresh(true);
+          };
+
+          reader.onerror = function (ex) {
+            console.error("Error reading file:", ex);
+          };
+
+          reader.readAsBinaryString(file);
+        } else {
+          console.error("No file selected or FileReader not supported.");
+        }
+      },
+
+      createProducts: async function (data) {
+        const oModel = this.getView().getModel("ModelV2");
+        const oPath = "/Materials";
+        const errorMessages = [];
+        for (const product of data) {
+          try {
+            // Check if the product already exists
+            const exists = this.checkProductExists(product['SAP Productno']);
+            if (exists) {
+              console.warn(`Product with SAP Productno ${product['SAP Productno']} already exists. Skipping creation.`);
+              continue; // Skip to the next product
+            }
+
+            const oPayload = {
+              sapProductno: String(product['SAP Productno']), // Ensure it's a string
+              length: String(product.Length),                  // Ensure it's a string
+              width: String(product.Width),                    // Ensure it's a string
+              height: String(product.Height),                  // Ensure it's a string
+              volume: String(product.Volume),                                      // Set volume if needed
+              uom: String(product.UOM),                        // Ensure it's a string
+              mCategory: String(product['Material Category']), // Ensure it's a string
+              description: String(product.Description),        // Ensure it's a string
+              EANUPC: String(product.EANUPC),                  // Ensure it's a string
+              weight: String(product.Weight)                    // Ensure it's a string
+            };
+
+            await this.createData(oModel, oPayload, oPath);
+            console.log(`Product created successfully: ${product.Description}`);
+            this.byId("ProductsTable").getBinding("items").refresh();
+          } catch (error) {
+            const errorMessage = `Error creating product ${product['SAP Productno']}: ${error.message}`;
+            console.error(errorMessage);
+            errorMessages.push(errorMessage); // Store the error message in the array
+
+            // Optionally show an error message box for immediate feedback to the user
+            MessageBox.error(errorMessage);
+
+          }
+        }
+      },
+
+      // Function to check if the product already exists in memory
+      checkProductExists: function (sapProductNo) {
+        if (!this.existingProducts || !Array.isArray(this.existingProducts)) {
+          console.error("existingProducts is not initialized or not an array.");
+          return false; // If not initialized, assume it doesn't exist.
+        }
+        return this.existingProducts.some(product => product.sapProductno === sapProductNo);
+      },
+
+
+      // Function to load existing products from the OData service into memory
+      loadExistingProducts: async function () {
+        const oModel = this.getView().getModel("ModelV2");
+        const oPath = "/Materials";
+
+        return new Promise((resolve, reject) => {
+          oModel.read(oPath, {
+            success: (odata) => {
+              this.existingProducts = odata.results; // Store existing products in memory
+              resolve();
+            },
+            error: (oError) => {
+              console.error('Error loading existing products:', oError);
+              reject(oError);
+            }
+          });
+        });
+      },
     });
   });
 

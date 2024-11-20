@@ -381,13 +381,6 @@
                                 tooltip="Print"
                                 class="line-md--download-outline-loop"
                             />
-                            <Button
-                                id="idBtdfghfghjfghjkghnHUContentBtn_AHUOBQ"
-                                text="Upload"
-                                press="onPressUploadInAddVehicleTable"
-                                tooltip="Upload"
-                                icon="sap-icon://upload"
-                            />
                         </Toolbar>
                         <!-- Vehicle types table -->
                         <Table
@@ -395,51 +388,71 @@
                             growing="true"
                             selectionChange="onRow"
                             items="{/TruckTypes}"
-                            growingScrollToLoad="true"
                             mode="MultiSelect"
                         >
                             <columns>
-                                <Column id="_IcvbnmvbnDGenC">
+                                <Column
+                                    id="_IcvbnmvbnDGenC"
+                                    width="100px"
+                                >
+                                    <!-- Set specific widths -->
                                     <Text
                                         id="_IghjklDcvbnGe1"
                                         text="TruckType"
                                     />
                                 </Column>
-                                <Column id="_IcfgvbgbnmhnDGenC">
+                                <Column
+                                    id="_IcfgvbgbnmhnDGenC"
+                                    width="100px"
+                                >
                                     <Text
                                         id="_IvbhcfvghDcvbvbnnGe1"
                                         text="Length(M)"
                                     />
                                 </Column>
-                                <Column id="_IcvbgbnmhnDGenC">
+                                <Column
+                                    id="_IcvbgbnmhnDGenC"
+                                    width="100px"
+                                >
                                     <Text
                                         id="_IvbhDcvbvbnnGe1"
                                         text="Width(M)"
                                     />
                                 </Column>
-
-                                <Column id="_IDvbnvgbnmGenCo">
+                                <Column
+                                    id="_IDvbnvgbnmGenCo"
+                                    width="100px"
+                                >
                                     <Text
                                         id="_IDvghjbnmGen"
                                         text="Height(M)"
                                     />
                                 </Column>
-                                <Column id="_IDvbnmvbnmGenCrtyuo">
+                                <Column
+                                    id="_IDvbnmvbnmGenCrtyuo"
+                                    width="100px"
+                                >
                                     <Text
                                         id="_IDvbnmvbnGecvn"
                                         text="Volume(M)"
                                     />
                                 </Column>
-                                <Column id="_IvbnDbnmvbnGenCo">
-                                    <Text
-                                        id="_IcvbnmDbvbnmnGen"
-                                        text="TruckWeight"
-                                    />
-                                </Column>
-                                <Column id="_IvbnDGbnmenCcvbnmo">
+                                <Column
+                                    id="_IvbnDGbnmenCcvbnmo"
+                                    width="100px"
+                                >
                                     <Text
                                         id="_IvbnmDwedfGenxcvj"
                                         text="Capacity"
+                                    />
+                                </Column>
+                                <Column
+                                    id="_IvbnDbnmvbnGenCo"
+                                    width="100px"
+                                >
+                                    <Text
+                                        id="_IcvbnmDbvbnmnGen"
+                                        text="TruckWeight"
                                     />
                                 </Column>
                             </columns>
@@ -471,13 +484,14 @@
                                             id="_ID2vghsdfv3Gt9"
                                             text="{volume}"
                                         />
-                                        <Text
-                                            id="_IDsvbdfvG10"
-                                            text="{truckWeight}"
-                                        />
+
                                         <Text
                                             id="_IDsvcvbnmdfG3310"
                                             text="{capacity}"
+                                        />
+                                        <Text
+                                            id="_IDsvbdfvG10"
+                                            text="{truckWeight}"
                                         />
                                     </cells>
                                 </ColumnListItem>
@@ -757,7 +771,7 @@
                     </IconTabFilter>
 
                     <!-- list table -->
-                   
+
                     <IconTabFilter
                         id="icon4"
                         text="Products List"
@@ -831,12 +845,17 @@
                                         tooltip="Print"
                                         class="line-md--download-outline-loop"
                                     />
-                                    <Button
-                                        id="idBtfghjfghnHUContentBtn_AHUOBQ"
-                                        text="Upload"
-                                        press="onPressHUContentBtn"
-                                        tooltip="Upload"
+
+                                    <u:FileUploader
+                                        id="FileUploaderIds"
+                                        sameFilenameAllowed="true"
+                                        iconOnly="false"
+                                        buttonOnly="true"
+                                        fileType="XLSX,xlsx"
                                         icon="sap-icon://upload"
+                                        iconFirst="true"
+                                        style="Emphasized"
+                                        change="onUploadMaterialCreation"
                                     />
                                 </OverflowToolbar>
                             </headerToolbar>
