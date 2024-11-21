@@ -11,6 +11,7 @@ define entity Materials {
         height       : String;
         volume       : String;
         vuom         : String;
+        muom         : String;
         uom          : String;
         mCategory    : string;
         description  : String;

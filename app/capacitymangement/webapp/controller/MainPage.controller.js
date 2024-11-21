@@ -30,6 +30,7 @@ sap.ui.define(
           uom: "",
           vuom: "",
           wuom: "",
+          muom: "",
           mCategory: "",
           description: "",
           EANUPC: "",
@@ -44,8 +45,8 @@ sap.ui.define(
           width: "",
           height: "",
           uom: "",
-          tvuom: "",
-          tuom: "",
+          tvuom: "M³",
+          tuom: "M",
           volume: "",
           truckWeight: "",
           capacity: "",
@@ -288,7 +289,7 @@ sap.ui.define(
         this.byId("idListEdiwtDialog").close();
       },
 
-      /** Creating New Product  */
+      /** ************************Creating New Product  ***************************************************/
       onCreateProduct: async function () {
         const oPayloadModel = this.getView().getModel("ProductModel"),
           oPayload = oPayloadModel.getProperty("/"),
@@ -300,11 +301,8 @@ sap.ui.define(
           !oPayload.length ||
           !oPayload.width ||
           !oPayload.height ||
-
-
           !oPayload.mCategory ||
           !oPayload.description ||
-
           !oPayload.weight
         ) {
           console.log("Please Enter All Values");
@@ -324,6 +322,8 @@ sap.ui.define(
           MessageBox.error("Please Select UOM!!");
           return;
         }
+        oPayload.muom = 'PC';
+        oPayload.vuom="M³"; 
         oPayload.wuom = oSelectedItem1 ? oSelectedItem1.getKey() : "";
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
         oPayload.volume = (parseFloat(oVolume)).toFixed(2);
@@ -332,6 +332,7 @@ sap.ui.define(
           debugger
           this.getView().byId("ProductsTable").getBinding("items").refresh();
           this.byId("idselectuom").setSelectedKey("");
+          this.byId("uomSelect").setSelectedKey("");
           this.ClearingModel(true);
           MessageToast.show("Successfully Created!");
         } catch (error) {
@@ -395,6 +396,7 @@ sap.ui.define(
           this.getView().byId("idTruckTypeTable").getBinding("items").refresh();
           this.onCancelInCreateVehicleDialog();
           this.byId("idvehtypeUOM").setSelectedKey("");
+          this.byId("parkingLotSelect").getBinding("items").refresh();
           this.ClearVeh(true);
 
           MessageToast.show("Successfully Created!");
@@ -434,6 +436,7 @@ sap.ui.define(
             await this.deleteData(oModel, oPath);
           }));
           this.getView().byId("idTruckTypeTable").getBinding("items").refresh();
+          this.byId("parkingLotSelect").getBinding("items").refresh();
           MessageToast.show('Successfully Deleted')
         } catch (error) {
           MessageToast.show('Error Occurs');
