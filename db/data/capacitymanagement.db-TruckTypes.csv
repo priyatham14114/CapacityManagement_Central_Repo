@@ -1,4 +1,1 @@
-truckType,length,width,height,uom,volume,truckWeight,capacity
-T001,600cm,250cm,300cm,cm³,45000000cm³,5000kg,"2000kg"
-T002,800cm,300cm,400cm,cm³,96000000cm³,8000kg,"5000kg"
-T003,500cm,200cm,250cm,cm³,25000000cm³,4000kg,"1500kg"
+truckType,length,width,height,uom,volume,truckWeight,capacity,tuom

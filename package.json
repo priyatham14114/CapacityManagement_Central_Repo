@@ -9,6 +9,7 @@
     "@cap-js-community/odata-v2-adapter": "^1.13.7",
     "@cap-js/hana": "^1",
     "@sap/cds": "^8.4.1",
+    "@sap/hdi-deploy": "^5.3.2",
     "express": "^4.21.1"
   },
   "devDependencies": {

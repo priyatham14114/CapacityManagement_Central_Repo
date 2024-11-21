@@ -28,6 +28,8 @@ sap.ui.define(
           height: "",
           volume: "",
           uom: "",
+          vuom: "",
+          wuom: "",
           mCategory: "",
           description: "",
           EANUPC: "",
@@ -42,12 +44,23 @@ sap.ui.define(
           width: "",
           height: "",
           uom: "",
+          tvuom: "",
+          tuom: "",
           volume: "",
           truckWeight: "",
           capacity: "",
         });
         this.getView().setModel(oJsonModelVeh, "VehModel");
 
+        /**Creating JSON Model data */
+        const oJsonModelProd = new JSONModel({
+          Product: "",
+          MaterialDescription: "",
+          Quantity: "",
+          Volume: "",
+          Weight: ""
+        })
+        this.getView().setModel(oJsonModelProd, "oJsonModelProd");
       },
       handleValueHelp: function (oEvent) {
         var sInputValue = oEvent.getSource().getValue(),
@@ -213,12 +226,12 @@ sap.ui.define(
 
 
       // Create fragment in products table
-      onPressAddInProductsTable: async function () {
-        if (!this.oCreateStarDialog) {
-          this.oCreateStarDialog = await this.loadFragment("CreateDialog");
-        }
-        this.oCreateStarDialog.open();
-      },
+      // onPressAddInProductsTable: async function () {
+      //   if (!this.oCreateStarDialog) {
+      //     this.oCreateStarDialog = await this.loadFragment("CreateDialog");
+      //   }
+      //   this.oCreateStarDialog.open();
+      // },
 
       onCancelInCreateProductDialog: function () {
         this.byId("idCreateProduc33tDialog").close();
@@ -305,6 +318,13 @@ sap.ui.define(
           return;
         }
         oPayload.uom = oSelectedItem ? oSelectedItem.getKey() : "";
+        //get the selected item
+        var oSelectedItem1 = this.byId("uomSelect").getSelectedItem();
+        if (oSelectedItem1.getKey() === '') {
+          MessageBox.error("Please Select UOM!!");
+          return;
+        }
+        oPayload.wuom = oSelectedItem1 ? oSelectedItem1.getKey() : "";
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
         oPayload.volume = (parseFloat(oVolume)).toFixed(2);
         try {
@@ -560,11 +580,11 @@ sap.ui.define(
           filters: [oFilter], success: function (odata) {
             const oVolume = odata.results[0].volume,
               oCapacity = odata.results[0].capacity;
-            that.byId("idSystemvddsgehjdfghkIdIhjnput_InitialView").setValue(oVolume);
-            that.byId("idSystemvgwhjkIdInput_InitialView").setValue(oCapacity);
+            // that.byId("idSystemvddsgehjdfghkIdIhjnput_InitialView").setValue(oVolume);
+            // that.byId("idSystemvgwhjkIdInput_InitialView").setValue(oCapacity);
             /**total */
-            that.byId("idSystemvgwddshjkIdInput_InitialView").setValue(oVolume);
-            that.byId("idSystemvgehjdfghkIdIhjnput_InitialView").setValue(oCapacity);
+            // that.byId("idSystemvgwddshjkIdInput_InitialView").setValue(oVolume);
+            // that.byId("idSystemvgehjdfghkIdIhjnput_InitialView").setValue(oCapacity);
           },
           error: function (oError) {
 
@@ -877,6 +897,68 @@ sap.ui.define(
           });
         });
       },
+      /***modified by viswam */
+      onClickSimulate: function () {
+        this.byId("Productarea").setVisible(false);
+        this.byId("3dSimulator").setVisible(true);
+      },
+      onPressBacktomaterialupload: function () {
+        this.byId("3dSimulator").setVisible(false);
+        this.byId("Productarea").setVisible(true);
+      },
+      /*** -------------------------------------------------*/
+
+      /**Simulating single products with simulations */
+      onSimulate: function () {
+        var oSelKey = this.byId("parkingLotSelect").getSelectedKey();
+        if (!oSelKey) {
+          MessageBox.error("Please enter Key");
+          return;
+        }
+        var oMat = this.byId("idproducthelp").getValue(),
+          oQuan = this.byId('idSystemvghjdfghkIdIhjnput_InitialView').getValue();
+        this.oProductRead(oMat, oQuan);
+      },
+
+      /**reading material */
+
+      oProductRead: async function (oMat, oQuan) {
+        const oPath = "/Materials",
+          oModel = this.getView().getModel("ModelV2");
+        const sFilter = new Filter("sapProductno", FilterOperator.EQ, oMat);
+        try {
+          const oSuccessData = await this.readData(oModel, oPath, sFilter);
+          console.log("success");
+          console.log(oSuccessData)
+          const oTemp = oSuccessData.results[0].volume;
+          const oTempW = oSuccessData.results[0].weight;
+          const oNews = parseFloat(oTempW);
+          const oWeight = oNews * oQuan + "KG";
+          const oVolume = oTemp * oQuan;
+          const oTempJSon = this.getView().getModel("oJsonModelProd");
+
+          // Update the JSON model with product details
+          const newProduct = {
+            Product: oMat,
+            MaterialDescription: oSuccessData.results[0].description,
+            Quantity: oQuan,
+            Volume: oVolume,
+            Weight: oWeight
+          };
+
+          // Assuming you want to store multiple products in an array
+          let products = oTempJSon.getProperty("/products") || []; // Get existing products or initialize an empty array
+          products.push(newProduct); // Add new product to the array
+          oTempJSon.setProperty("/products", products); // Update the model with the new array
+          MessageToast.show("Materials read successfully!");
+        } catch (oErrorData) {
+          MessageToast.show("Error Occcurs ")
+        }
+
+      }
+
+
+
     });
   });
 

@@ -23,7 +23,9 @@
     <Page
         id="_IDGenPage1"
         showHeader="false"
+        backgroundDesign="Transparent"
         class="PageBackground"
+        enableScrolling="true"
     >
         <tnt:ToolHeader
             id="shellLikeToolHeader"
@@ -293,14 +295,43 @@
                                             width="125px"
                                             class="sapUiTinyMarginTop"
                                         />
+                                        <HBox id="idks">
                                         <Input
                                             id="idWeightinput_InitialView"
                                             value="{ProductModel>/weight}"
                                             placeholder="Enter Weight"
-                                            class="customInput"
-                                            width="100%"
-                                            maxLength="200"
+                                            width="70px"
+                                          
                                         />
+                                        <ComboBox
+                                            id="uomSelect"
+                                            width="50%"
+                                        >
+                                            <items>
+                                                <core:Item
+                                                    id="_IDGenItem1"
+                                                    key="KG"
+                                                    text="Kilograms"
+                                                />
+                                                <core:Item
+                                                    id="_IDGenItem2"
+                                                    key="G"
+                                                    text="Grams"
+                                                />
+                                                <!-- <core:Item
+                                                    id="_IDGenItem4"
+                                                    key="LB"
+                                                    text="Pounds"
+                                                />
+                                                <core:Item
+                                                    id="_IDGenItem5"
+                                                    key="OZ"
+                                                    text="Ounces"
+                                                /> -->
+                                                <!-- Add more UOM options as needed -->
+                                            </items>
+                                        </ComboBox>
+                                        </HBox>
                                     </HBox>
 
                                     <HBox
@@ -311,7 +342,7 @@
                                     >
                                         <Button
                                             id="idconnectsapcancelButton_InitialView"
-                                            text="save"
+                                            text="Save"
                                             width="150px"
                                             press="onCreateProduct"
                                             type="Emphasized"
@@ -386,6 +417,7 @@
                         <Table
                             id="idTruckTypeTable"
                             growing="true"
+                            backgroundDesign="Transparent"
                             selectionChange="onRow"
                             items="{/TruckTypes}"
                             mode="MultiSelect"
@@ -500,7 +532,6 @@
                     </IconTabFilter>
 
                     <!-- simulation -->
-
                     <IconTabFilter
                         id="iconTabBarSimulate"
                         visible="true"
@@ -509,188 +540,186 @@
                         text="Simulate"
                         class="iconTabBar"
                     >
-                        <!-- Overlay content (Label + Input + Centered Image) -->
-                        <VBox
-                            id="_IDGenVBox3"
-                            class="sapUiTinyMargin"
+                        <HBox
+                            id="Productarea"
+                            visible="true"
                         >
-                            <HBox id="idhboxDebnscription">
-                                <Label
-                                    id="idLableDvbnmescription_InitialView"
-                                    text="Vehicle Type:"
-                                    width="125px"
-                                    class="sapUiTinyMarginTop overlayLabel"
-                                />
-
-                                <Input
-                                    id="idcdsse"
-                                    value=""
-                                    submit="onTruckDetails"
-                                    width="100%"
-                                />
-                                <!-- <MultiInput
-                                    class="customInput"
-                                    width="100%"
-                                    id="idDesvbnvbnnmmcriptionInput_InitialView"
-                                    suggestionItems="{
-                path: '',
-                sorter: { path: 'Name' }
-            }"
-                                    valueHelpRequest="handleValueHelpProductType"
-                                >
-                                    <core:Item
-                                        id="_IDGenItem"
-                                        key="fghjk"
-                                        text="fghj"
-                                    />
-                                </MultiInput> -->
-                            </HBox>
-                            <HBox id="idhboxvghDescription">
-                                <Label
-                                    id="idLabvbnbhnjkleDescription_InitialView"
-                                    text="Product"
-                                    width="125px"
-                                    class="sapUiTinyMarginTop overlayLabel"
-                                />
-                                <Input
-                                    id="idproducthelp"
-                                    value=""
-                                    submit="onProdDetails"
-                                    width="100%"
-                                />
-                                <!-- <MultiInput
-                                    class="customInput"
-                                    width="100%"
-                                    id="idDesvbnvbnmcriptionInput_InitialView"
-                                    suggestionItems="{
-                path: '',
-                sorter: { path: 'Name' }
-            }"
-                                    valueHelpRequest="handleValueHelp"
-                                >
-                                    <core:Item
-                                        id="_IDGenItem1"
-                                        key="fghjk"
-                                        text="fghj"
-                                    />
-                                </MultiInput> -->
-                            </HBox>
-                            <HBox id="iDhboxSystemghjk_InitialView">
-                                <Label
-                                    id="idLableSystemId_InitialView"
-                                    text="Quantity"
-                                    width="125px"
-                                    class="sapUiTinyMarginTop overlayLabel"
-                                />
-                                <Input
-                                    id="idSystemvghjkIdInput_InitialView"
-                                    value=""
-                                    placeholder=""
-                                    maxLength="3"
-                                    width="100px"
-                                    editable="false"
-                                />
-                                <Input
-                                    id="idSystemvghjdfghkIdIhjnput_InitialView"
-                                    value=""
-                                    placeholder=""
-                                    maxLength="3"
-                                    width="100px"
-                                />
-                            </HBox>
-                            <HBox id="iDhboxSystem1ghjk_InitialView">
-                                <Label
-                                    id="idLableSyst1emId_InitialView"
-                                    text="Capacity"
-                                    width="125px"
-                                    class="sapUiTinyMarginTop overlayLabel"
-                                />
-                                <Input
-                                    id="idSystemvgwhjkIdInput_InitialView"
-                                    value=""
-                                    placeholder="Available"
-                                    width="100px"
-                                    editable="false"
-                                />
-                                <Input
-                                    id="idSystemvgehjdfghkIdIhjnput_InitialView"
-                                    value=""
-                                    placeholder="Total capacity"
-                                    width="100px"
-                                />
-                            </HBox>
-                            <HBox id="iDhbox11System1ghjk_InitialView">
-                                <Label
-                                    id="idLabl11eSyst1emId_InitialView"
-                                    text="Volume"
-                                    width="125px"
-                                    class="sapUiTinyMarginTop overlayLabel"
-                                />
-                                <Input
-                                    id="idSystemvgwddshjkIdInput_InitialView"
-                                    value=""
-                                    placeholder="Available"
-                                    width="100px"
-                                    editable="false"
-                                />
-                                <Input
-                                    id="idSystemvddsgehjdfghkIdIhjnput_InitialView"
-                                    value=""
-                                    placeholder="TotalVolume"
-                                    width="100px"
-                                />
-                            </HBox>
-                            <VBox
-                                id="_IDGenVBox4"
-                                alignContent="Center"
-                                alignItems="Center"
+                            <HBox
+                                id="_IDGenHBox2"
+                                width="30%"
                             >
-                                <HBox id="iDgenhboghjxcontainer_InitialView">
-                                    <Button
-                                        id="idconnecghjktsapcancelButton_InitialView"
-                                        text="save"
-                                        press="onSimulate"
-                                        type="Emphasized"
-                                        class="dialogButton_sapconnect sapUiSmallMarginEnd"
+                                <VBox
+                                    id="_IDGenVBox3"
+                                    class="sapUiTinyMargin"
+                                >
+                                    <HBox id="idhboxDebnscription">
+                                        <Label
+                                            id="idLableDvbnmescription_InitialView"
+                                            text="Vehicle Type:"
+                                            width="125px"
+                                            class="sapUiTinyMarginTop overlayLabel"
+                                        />
+                                        <!-- <Input
+                                            id="idcdsse"
+                                            value=""
+                                            submit="onTruckDetails"
+                                            width="100%"
+                                        /> -->
+                                        <ComboBox
+                                            id="parkingLotSelect"
+                                            items="{path: '/TruckTypes'}"
+                                            placeholder="Select"
+                                        >
+                                            <core:Item
+                                                id="_IDGenItem3"
+                                                key="{truckType}"
+                                                text="{truckType}"
+                                            />
+                                        </ComboBox>
+                                    </HBox>
+                                    <HBox id="idhboxvghDescription">
+                                        <Label
+                                            id="idLabvbnbhnjkleDescription_InitialView"
+                                            text="Product"
+                                            width="125px"
+                                            class="sapUiTinyMarginTop overlayLabel"
+                                        />
+                                        <Input
+                                            id="idproducthelp"
+                                            value=""
+                                            submit="onProdDetails"
+                                            width="100%"
+                                        />
+                                    </HBox>
+                                    <HBox id="iDhboxSystemghjk_InitialView">
+                                        <Label
+                                            id="idLableSystemId_InitialView"
+                                            text="Quantity"
+                                            width="125px"
+                                            class="sapUiTinyMarginTop overlayLabel"
+                                        />
+                                        <!-- <Input
+                                        id="idSystemvghjkIdInput_InitialView"
+                                        value=""
+                                        placeholder=""
+                                        maxLength="3"
+                                        width="100px"
+                                        editable="false"
+                                    /> -->
+                                        <Input
+                                            id="idSystemvghjdfghkIdIhjnput_InitialView"
+                                            value=""
+                                            placeholder=""
+                                            maxLength="3"
+                                            width="100px"
+                                        />
+                                    </HBox>
+                                    <!-- <HBox id="iDhboxSystem1ghjk_InitialView">
+                                    <Label
+                                        id="idLableSyst1emId_InitialView"
+                                        text="Capacity"
+                                        width="125px"
+                                        class="sapUiTinyMarginTop overlayLabel"
                                     />
-                                    <Button
-                                        id="idconnechjktsapeditButton_InitialView"
-                                        text="Simulate"
-                                        press="onClickSimulate"
-                                        type="Emphasized"
-                                        visible="true"
-                                        class="dialogButton_sapconnect sapUiSmallMarginEnd"
+                                    <Input
+                                        id="idSystemvgwhjkIdInput_InitialView"
+                                        value=""
+                                        placeholder="Available"
+                                        width="100px"
+                                        editable="false"
                                     />
-                                    <u:FileUploader
-                                        id="FileUploaderId"
-                                        sameFilenameAllowed="true"
-                                        iconOnly="false"
-                                        buttonOnly="true"
-                                        fileType="XLSX,xlsx"
-                                        icon="sap-icon://upload"
-                                        iconFirst="true"
-                                        style="Emphasized"
-                                        change="onUpload"
+                                    <Input
+                                        id="idSystemvgehjdfghkIdIhjnput_InitialView"
+                                        value=""
+                                        placeholder="Total capacity"
+                                        width="100px"
                                     />
                                 </HBox>
-                                <!-- New HBox for the table and container -->
-                                <HBox
-                                    id="_IDGenHBox1"
-                                    class="sapUiSmallMarginTop"
-                                >
+                                <HBox id="iDhbox11System1ghjk_InitialView">
+                                    <Label
+                                        id="idLabl11eSyst1emId_InitialView"
+                                        text="Volume"
+                                        width="125px"
+                                        class="sapUiTinyMarginTop overlayLabel"
+                                    />
+                                    <Input
+                                        id="idSystemvgwddshjkIdInput_InitialView"
+                                        value=""
+                                        placeholder="Available"
+                                        width="100px"
+                                        editable="false"
+                                    />
+                                    <Input
+                                        id="idSystemvddsgehjdfghkIdIhjnput_InitialView"
+                                        value=""
+                                        placeholder="TotalVolume"
+                                        width="100px"
+                                    />
+                                    </HBox> -->
+                                </VBox>
+                            </HBox>
+                            <HBox
+                                id="_IDGenVdfgBox3"
+                                class="EmptyHBoxforgap"
+                            />
+                            <HBox id="iDgenhboghjxcontainer_InitialView">
+                                <VBox id="_IDGenVBox">
+                                    <HBox id="_IDGenHBox3">
+                                        <Button
+                                            id="idconnecghjktsapcancelButton_InitialView"
+                                            text="Save"
+                                            press="onSimulate"
+                                            type="Emphasized"
+                                            class="dialogButton_sapconnect sapUiSmallMarginEnd"
+                                            visible="true"
+                                        />
+                                        <Button
+                                            id="idconnechjktsapeditButton_InitialView"
+                                            text="Simulate"
+                                            press="onClickSimulate"
+                                            type="Emphasized"
+                                            visible="true"
+                                            class="dialogButton_sapconnect sapUiSmallMarginEnd"
+                                        />
+                                        <u:FileUploader
+                                            id="FileUploaderId"
+                                            sameFilenameAllowed="true"
+                                            iconOnly="false"
+                                            buttonOnly="true"
+                                            fileType="XLSX,xlsx"
+                                            icon="sap-icon://upload"
+                                            iconFirst="true"
+                                            style="Emphasized"
+                                            change="onUpload"
+                                        />
+                                    </HBox>
+                                    <!-- <VBox
+                                id="_IDGenVBoasdx4"
+                                class="rightContainer"
+                                width="50%"
+                            >
+                                <TextArea
+                                    id="_IDGenTextArea"
+                                    rows="22"
+                                    cols="110"
+                                />
+                            </VBox> -->
                                     <VBox
                                         id="_IDGenVBox2"
                                         class="leftContainer"
-                                        width="30%"
+                                        width="60%"
                                     >
                                         <Table
                                             id="myTable"
                                             mode="MultiSelect"
                                             width="100%"
                                             growing="true"
+                                            backgroundDesign="Transparent"
                                             growingThreshold="100"
-                                            items="{localModel>/items}"
+                                            items="{oJsonModelProd>/products}"
                                         >
+                                            <!-- Assuming 'products' is the array in your JSON model -->
+
                                             <columns>
                                                 <Column id="_IDGenColumn1">
                                                     <Text
@@ -716,60 +745,91 @@
                                                         text="Volume"
                                                     />
                                                 </Column>
-
-                                                <!-- 
                                                 <Column id="_IDGenColumn5">
                                                     <Text
-                                                        id="_IDGasdenText4"
-                                                        text="Material No"
+                                                        id="_IDGesdfnText3"
+                                                        text="Weight"
                                                     />
-                                                </Column> -->
+                                                </Column>
                                             </columns>
+
                                             <items>
                                                 <ColumnListItem id="idcolistes">
                                                     <cells>
                                                         <Text
+                                                            id="_IDGenText5"
+                                                            text="{oJsonModelProd>Product}"
+                                                        />
+                                                        <Text
+                                                            id="_IDGenText6"
+                                                            text="{oJsonModelProd>MaterialDescription}"
+                                                        />
+                                                        <Text
                                                             id="_IDGenText8"
-                                                            text="{localModel>Product}"
+                                                            text="{oJsonModelProd>Quantity}"
                                                         />
                                                         <Text
                                                             id="_IDGenText9"
-                                                            text="{localModel>Description}"
+                                                            text="{oJsonModelProd>Volume}"
                                                         />
                                                         <Text
                                                             id="_IDGenText10"
-                                                            text="{localModel>Quantity}"
-                                                        />
-                                                        <Text
-                                                            id="_IDGenText11"
-                                                            text="{localModel>Volume}"
+                                                            text="{oJsonModelProd>Weight}"
                                                         />
                                                     </cells>
                                                 </ColumnListItem>
                                             </items>
                                         </Table>
                                     </VBox>
-                                    <VBox
-                                        id="_IDGenVdfgBox3"
-                                        width="3%"
-                                    />
-                                    <VBox
-                                        id="_IDGenVBoasdx4"
-                                        class="rightContainer"
-                                        width="50%"
-                                    >
-                                        <TextArea
-                                            id="_IDGenTextArea"
-                                            rows="22"
-                                            cols="110"
-                                        />
-                                    </VBox>
-                                </HBox>
-                            </VBox>
-                            <!-- </VBox> -->
+                                </VBox>
+                            </HBox>
+                        </HBox>
+
+                        <VBox
+                            id="_IDGenVBox4"
+                            alignContent="Center"
+                            alignItems="Center"
+                        >
+                            <!-- New HBox for the table and container -->
+                            <HBox
+                                id="_IDGenHBox1"
+                                class="sapUiSmallMarginTop"
+                            />
+                        </VBox>
+                        <!-- </VBox> -->
+                        <VBox
+                            id="3dSimulator"
+                            visible="false"
+                        >
+                            <Text
+                                id="_IDGenText"
+                                text="Truck Type"
+                            />
+                            <Text
+                                id="_IDGenText1"
+                                text="Capacity"
+                            />
+                            <Text
+                                id="_IDGenText2"
+                                text="Remaining space"
+                            />
+                            <Text
+                                id="_IDGenText3"
+                                text="Total Product Weight"
+                            />
+                            <Button
+                                id="_IDGenButton1"
+                                text="Back"
+                                press="onPressBacktomaterialupload"
+                            />
+                            <TextArea
+                                id="_IDGenTextArea"
+                                width="100%"
+                                cols="110"
+                                class="3dSimulator"
+                            />
                         </VBox>
                     </IconTabFilter>
-
                     <!-- list table -->
 
                     <IconTabFilter
@@ -784,7 +844,7 @@
                         <Table
                             id="ProductsTable"
                             mode="MultiSelect"
-                            inset="false"
+                            backgroundDesign="Transparent"
                             items="{/Materials}"
                             width="80%"
                             growing="true"
@@ -817,13 +877,13 @@
                                         width="25%"
                                     />
 
-                                    <Button
+                                    <!-- <Button
                                         id="idBtnHUContentBtn_AHUOBQ"
                                         text="Add"
                                         press="onPressAddInProductsTable"
                                         tooltip="Add"
                                         icon="sap-icon://add"
-                                    />
+                                    /> -->
                                     <Button
                                         id="idBtghjnHUContentBtn_AHUOBQ"
                                         text="Edit"
@@ -840,7 +900,6 @@
                                     />
                                     <Button
                                         id="idBtfghnHUContentBtn_AHUOBQ"
-                                        text="Print"
                                         press="onPrintPressInProductsTable"
                                         tooltip="Print"
                                         class="line-md--download-outline-loop"

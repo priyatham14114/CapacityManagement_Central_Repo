@@ -1,4 +1,1 @@
-sapProductno,length,width,height,volume,uom,mCategory,description,EANUPC,weight
-P001,100cm,50cm,30cm,150000cm³,cm²,Electronics,"Smartphone Model A","1234567890123",200g
-P002,200cm,100cm,50cm,1000000cm³,cm²,Furniture,"Office Desk","9876543210987",2500g
-P003,50cm,25cm,20cm,25000cm³,cm²,Toys,"Action Figure","1122334455667",300g
+sapProductno,length,width,height,volume,uom,mCategory,description,EANUPC,weight,wuom
