@@ -85,6 +85,12 @@
           "fallbackLocale": ""
         }
       },
+      "oJsonModelProd": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+            "data": {}
+        }
+    },
       "": {
         "dataSource": "mainService",
         "preload": true,

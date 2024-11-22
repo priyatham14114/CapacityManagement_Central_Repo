@@ -17,6 +17,11 @@ sap.ui.define(
 
     return Controller.extend("com.app.capacitymangement.controller.MainPage", {
       onInit: function () {
+        // Initialize your JSON model
+        const oJsonModel1 = new sap.ui.model.json.JSONModel({ products: [] });
+        this.getView().setModel(oJsonModel1, "oJsonModelProd");
+        /***storing table  */
+        this.loadProductsFromLocalStorage();
 
         this.localModel = new sap.ui.model.json.JSONModel();
         this.getView().setModel(this.localModel, "localModel");
@@ -52,16 +57,6 @@ sap.ui.define(
           capacity: "",
         });
         this.getView().setModel(oJsonModelVeh, "VehModel");
-
-        /**Creating JSON Model data */
-        const oJsonModelProd = new JSONModel({
-          Product: "",
-          MaterialDescription: "",
-          Quantity: "",
-          Volume: "",
-          Weight: ""
-        })
-        this.getView().setModel(oJsonModelProd, "oJsonModelProd");
       },
       handleValueHelp: function (oEvent) {
         var sInputValue = oEvent.getSource().getValue(),
@@ -323,7 +318,7 @@ sap.ui.define(
           return;
         }
         oPayload.muom = 'PC';
-        oPayload.vuom="M³"; 
+        oPayload.vuom = "M³";
         oPayload.wuom = oSelectedItem1 ? oSelectedItem1.getKey() : "";
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
         oPayload.volume = (parseFloat(oVolume)).toFixed(2);
@@ -384,6 +379,16 @@ sap.ui.define(
           oPayload = oPayloadModel.getProperty("/"),
           oModel = this.getView().getModel("ModelV2"),
           oPath = '/TruckTypes';
+        if (!oPayload.truckType ||
+          !oPayload.length ||
+          !oPayload.width ||
+          !oPayload.height ||
+          !oPayload.truckWeight ||
+          !oPayload.capacity) {
+          MessageBox.warning("Please Enter all Values");
+          return;
+
+        }
 
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
         oPayload.volume = (parseFloat(oVolume)).toFixed(2);
@@ -953,15 +958,110 @@ sap.ui.define(
           let products = oTempJSon.getProperty("/products") || []; // Get existing products or initialize an empty array
           products.push(newProduct); // Add new product to the array
           oTempJSon.setProperty("/products", products); // Update the model with the new array
+          this.byId("idproducthelp").setValue();
+          this.byId('idSystemvghjdfghkIdIhjnput_InitialView').setValue();
+          this.Blocking();
+          // Save updated products to local storage
+          localStorage.setItem("productsData", JSON.stringify(products));
           MessageToast.show("Materials read successfully!");
+
         } catch (oErrorData) {
           MessageToast.show("Error Occcurs ")
         }
 
+      },
+
+      /***Blocking the truck type in simulations */
+      Blocking: function () {
+        var oLength = this.byId("myTable").getItems().length;
+        if (oLength > 0) {
+          this.byId("parkingLotSelect").setEditable(false);
+        }
+      },
+      // Call this method on initialization to load products from local storage
+      loadProductsFromLocalStorage: function () {
+        const oTempJSon = this.getView().getModel("oJsonModelProd");
+
+        if (!oTempJSon) {
+          console.error("JSON Model 'oJsonModelProd' is not defined.");
+          return; // Exit if model is not available
+        }
+
+        const savedProducts = localStorage.getItem("productsData");
+        if (savedProducts) {
+          const products = JSON.parse(savedProducts);
+          console.log("Loaded products from local storage:", products);
+
+          // Ensure the structure is correct
+          if (Array.isArray(products)) {
+            oTempJSon.setProperty("/products", products);
+            console.log("Products set in model:", oTempJSon.getProperty("/products"));
+
+            // Refresh the table binding
+            this.getView().byId("myTable").getBinding("items").refresh();
+            this.getView().getModel("oJsonModelProd").refresh(true);
+          } else {
+            console.error("Loaded data is not an array:", products);
+          }
+        } else {
+          console.log("No products found in local storage.");
+        }
+      },
+      /**Removing all Products i.e local storage */
+      onRemoveSelectedProducts: function () {
+        // Get the current model
+        const oTempJSon = this.getView().getModel("oJsonModelProd");
+
+        // Get the table and selected items
+        const oTable = this.getView().byId("myTable");
+        const aSelectedItems = oTable.getSelectedItems();
+
+        // If there are selected items, remove them
+        if (aSelectedItems.length > 0) {
+          const aProducts = oTempJSon.getProperty("/products");
+
+          // Create a set of selected product keys for easier lookup
+          const aSelectedKeys = aSelectedItems.map(item => {
+            return item.getBindingContext("oJsonModelProd").getProperty("Product");
+          });
+
+          console.log("Selected Keys:", aSelectedKeys); // Log selected keys
+          console.log("All Products:", aProducts); // Log all products
+
+          // Filter out products that are in the selected keys
+          const aFilteredProducts = aProducts.filter(product => {
+            const isSelected = aSelectedKeys.includes(product.Product);
+            console.log(`Checking product: ${product.Product}, is selected: ${isSelected}`); // Log each check
+            return !isSelected; // Keep products that are not selected
+          });
+
+          console.log("Filtered Products:", aFilteredProducts); // Log filtered products
+
+          // Update the model with filtered products
+          oTempJSon.setProperty("/products", aFilteredProducts);
+
+          // Update local storage with the new array
+          localStorage.setItem("productsData", JSON.stringify(aFilteredProducts));
+
+          // Refresh table binding to reflect changes
+          oTable.getBinding("items").refresh();
+
+          // Inform the user that selected products have been removed
+          sap.m.MessageToast.show("Selected products have been removed.");
+        } else {
+          // If no items are selected, remove all products
+          oTempJSon.setProperty("/products", []);
+
+          // Clear local storage
+          localStorage.removeItem("productsData");
+
+          // Refresh table binding to reflect changes
+          oTable.getBinding("items").refresh();
+
+          // Inform the user that all products have been removed
+          sap.m.MessageToast.show("All products have been removed.");
+        }
       }
-
-
-
     });
   });
 

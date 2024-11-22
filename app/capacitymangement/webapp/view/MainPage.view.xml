@@ -681,6 +681,14 @@
                                             visible="true"
                                             class="dialogButton_sapconnect sapUiSmallMarginEnd"
                                         />
+                                           <Button
+                                            id="idconnecghjktsapcanc21elButton_InitialView"
+                                           icon="sap-icon://clear"
+                                            press="onRemoveSelectedProducts"
+                                             
+                                            class="dialogButton_sapconnect sapUiSmallMarginEnd"
+                                            visible="true"
+                                        />
                                         <u:FileUploader
                                             id="FileUploaderId"
                                             sameFilenameAllowed="true"
@@ -714,6 +722,7 @@
                                             mode="MultiSelect"
                                             width="100%"
                                             growing="true"
+                                            noDataText="No products available"
                                             backgroundDesign="Transparent"
                                             growingThreshold="100"
                                             items="{oJsonModelProd>/products}"
