@@ -310,7 +310,7 @@ sap.ui.define(
           MessageBox.error("Please Select UOM!!");
           return;
         }
-        oPayload.uom = oSelectedItem ? oSelectedItem.getKey() : "";
+        oPayload.uom = oSelectedItem.getKey();
         //get the selected item
         var oSelectedItem1 = this.byId("uomSelect").getSelectedItem();
         if (oSelectedItem1.getKey() === '') {
@@ -320,8 +320,17 @@ sap.ui.define(
         oPayload.muom = 'PC';
         oPayload.vuom = "M³";
         oPayload.wuom = oSelectedItem1 ? oSelectedItem1.getKey() : "";
-        var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
-        oPayload.volume = (parseFloat(oVolume)).toFixed(2);
+        var oVolume;
+
+        if (oPayload.uom === 'CM') {
+          // If UOM is in meters, calculate normally
+          oVolume = String((oPayload.length) / 100) * String((oPayload.width) / 100) * String((oPayload.height) / 100);
+          oPayload.volume = String(oVolume.toFixed(7));
+        } else {
+          // If UOM is in centimeters, convert to meters before calculating
+          oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
+          oPayload.volume = String((Math.round(oVolume)));
+        }
         try {
           await this.createData(oModel, oPayload, oPath);
           debugger
@@ -387,7 +396,6 @@ sap.ui.define(
           !oPayload.capacity) {
           MessageBox.warning("Please Enter all Values");
           return;
-
         }
 
         var oVolume = String(oPayload.length) * String(oPayload.width) * String(oPayload.height);
@@ -403,7 +411,6 @@ sap.ui.define(
           this.byId("idvehtypeUOM").setSelectedKey("");
           this.byId("parkingLotSelect").getBinding("items").refresh();
           this.ClearVeh(true);
-
           MessageToast.show("Successfully Created!");
         } catch (error) {
           this.onCancelInCreateVehicleDialog();
@@ -628,7 +635,8 @@ sap.ui.define(
 
       _import: function (file) {
         var that = this;
-
+        let oTempProduct = that.getView().getModel("oJsonModelProd"),
+        existData = oTempProduct.getData().products;
         var excelData = {};
         if (file && window.FileReader) {
           var reader = new FileReader();
@@ -643,20 +651,26 @@ sap.ui.define(
 
             });
             console.log(excelData);
+            excelData.forEach(record => {
+              if (record.Weight) { // Check if Weight field exists
+                  record.Weight += 'KG'; // Concatenate 'kg' to the Weight field
+              }
+          });
+          localStorage.setItem("productsData", JSON.stringify(excelData));
             // Setting the data to the local model 
-            that.localModel.setData({
-              items: excelData
-            });
-            that.localModel.refresh(true);
+            //concatnation through spread operator
+            oTempProduct.setData({"products":[...existData,...excelData]});
+            oTempProduct.refresh(true);
           };
           reader.onerror = function (ex) {
             console.log(ex);
+            
           };
           reader.readAsBinaryString(file);
         }
       },
       /** Simulating excel sheet products */
-      onClickSimulate: function () {
+      onClickSimulate:async function () {
         var oTable = this.byId("myTable");
         var aSelectedItems = oTable.getSelectedItems(); // Get selected items
 
@@ -666,20 +680,17 @@ sap.ui.define(
 
           // Iterate over each selected item
           aSelectedItems.forEach(function (oItem) {
-            var oContext = oItem.getBindingContext("localModel"); // Get the binding context for each item
+            var oContext = oItem.getBindingContext("oJsonModelProd"); // Get the binding context for each item
 
             if (oContext) {
               // Retrieve properties from the context
               var rowData = {
-                Product: oTable.getModel("localModel").getProperty("Product", oContext),
-                Description: oTable.getModel("localModel").getProperty("Description", oContext),
-                Quantity: oTable.getModel("localModel").getProperty("Quantity", oContext),
-                Volume: oTable.getModel("localModel").getProperty("Volume", oContext)
+                Product: oTable.getModel("oJsonModelProd").getProperty("Product", oContext),
+                MaterialDescription: oTable.getModel("oJsonModelProd").getProperty("MaterialDescription", oContext),
+                Quantity: oTable.getModel("oJsonModelProd").getProperty("Quantity", oContext),
+                Volume: oTable.getModel("oJsonModelProd").getProperty("Volume", oContext),
+                Weight: oTable.getModel("oJsonModelProd").getProperty("Weight", oContext)
               };
-
-              // Calculate total volume for the current row
-              rowData.TotalVolume = rowData.Quantity * rowData.Volume;
-
               // Push the row data into the selectedData array
               selectedData.push(rowData);
             } else {
@@ -692,20 +703,34 @@ sap.ui.define(
 
           // Calculate overall total volume across all rows
           const overallTotalVolume = selectedData.reduce((accumulator, item) => {
-            return accumulator + item.TotalVolume; // Use TotalVolume calculated for each row
+            return accumulator + item.Volume; // Use TotalVolume calculated for each row
           }, 0);
+          function extractWeight(weightString) {
+            // Use regex to match the numeric part of the string
+            let match = weightString.match(/(\d+\.?\d*)/);
+            // Return the parsed float or 0 if no match is found
+            return match ? parseFloat(match[0]) : 0;
+        }
+        
+        // Calculate overall total weight
+        const overallTotalWeight = selectedData.reduce((accumulator, item) => {
+            return accumulator + extractWeight(item.Weight); // Extract numeric weight and add to accumulator
+        }, 0);
+        
+        console.log("Overall Total Weight:", overallTotalWeight); // Output the total weight
 
           console.log("Overall Total Volume:", overallTotalVolume);
-
+          console.log("Overall Total Volume:", overallTotalWeight);
           // Load truck details
-          this.onTruckDetailsLoad().then(Trucks => {
+         await this.onTruckDetailsLoad().then(Trucks => {
             let requiredTrucks = [];
             Trucks.forEach(truck => {
               const numberOfTrucksNeeded = Math.ceil(overallTotalVolume / truck.volume);
+              const trucksToUse= numberOfTrucksNeeded > 0?numberOfTrucksNeeded:1;
               requiredTrucks.push({
                 truckType: truck.truckType,
                 volume: truck.volume,
-                numberOfTrucksNeeded: numberOfTrucksNeeded
+                numberOfTrucksNeeded:trucksToUse
               });
             });
 
@@ -717,6 +742,7 @@ sap.ui.define(
             // Construct JSON model for storing overall total volume and product details
             const jsonModelData = {
               OverallTotalVolume: overallTotalVolume,
+              overallTotalWeight:overallTotalWeight,
               Products: selectedData,
               TProducts: selectedData.length,
               RequiredTrucks: requiredTrucks
@@ -734,7 +760,8 @@ sap.ui.define(
 
             // this.onLoadRequiredTrucks();
             this.MoveToNextScreen();
-
+            this.getView().byId("myTable").getBinding("items").refresh();
+            this.getView().getModel("resultModel").refresh();
           }).catch(error => {
             console.error("Error loading truck details:", error);
           });
@@ -771,9 +798,7 @@ sap.ui.define(
         // Get the count of trucks
         const products = this.getView().getModel("resultModel").getProperty("/Products");
         const productCount = products ? products.length : 0;
-
         this.oReqTruckDialog.open();
-
       },
 
       onTruckDialogClose: function () {
@@ -906,7 +931,7 @@ sap.ui.define(
         });
       },
       /***modified by viswam */
-      onClickSimulate: function () {
+      onClickSimulate11: function () {
         this.byId("Productarea").setVisible(false);
         this.byId("3dSimulator").setVisible(true);
       },
@@ -920,11 +945,19 @@ sap.ui.define(
       onSimulate: function () {
         var oSelKey = this.byId("parkingLotSelect").getSelectedKey();
         if (!oSelKey) {
-          MessageBox.error("Please enter Key");
+          MessageBox.warning("Please Select Truck Type");
           return;
         }
         var oMat = this.byId("idproducthelp").getValue(),
           oQuan = this.byId('idSystemvghjdfghkIdIhjnput_InitialView').getValue();
+        if (!oMat) {
+          MessageBox.information("Please Enter Material!");
+          return;
+        }
+        if (!oQuan) {
+          MessageBox.information("Please Enter  Quantity!");
+          return;
+        }
         this.oProductRead(oMat, oQuan);
       },
 
@@ -964,13 +997,10 @@ sap.ui.define(
           // Save updated products to local storage
           localStorage.setItem("productsData", JSON.stringify(products));
           MessageToast.show("Materials read successfully!");
-
         } catch (oErrorData) {
-          MessageToast.show("Error Occcurs ")
+          MessageBox.warning("Please Enter Valid Material");
         }
-
       },
-
       /***Blocking the truck type in simulations */
       Blocking: function () {
         var oLength = this.byId("myTable").getItems().length;
@@ -1048,6 +1078,7 @@ sap.ui.define(
 
           // Inform the user that selected products have been removed
           sap.m.MessageToast.show("Selected products have been removed.");
+          this.Blocking();
         } else {
           // If no items are selected, remove all products
           oTempJSon.setProperty("/products", []);
@@ -1068,4 +1099,10 @@ sap.ui.define(
 
 
 
+  
 
+
+
+
+
+ 

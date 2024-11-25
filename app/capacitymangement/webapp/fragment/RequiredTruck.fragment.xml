@@ -14,6 +14,7 @@
                     id="_IDGenText7"
                     text="Total Volume : {resultModel>/OverallTotalVolume}m3"
                 />
+                <Text id="idkekke" text="Total Weight:{resultModel>/overallTotalWeight}KG" />
 
                 <List
                     id="_IDGenList"

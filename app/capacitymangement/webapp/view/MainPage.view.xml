@@ -278,6 +278,11 @@
                                                 key="L"
                                                 text="L"
                                             />
+                                            <core:Item
+                                                id="idselit4"
+                                                key="CM"
+                                                text="CM"
+                                            />
                                         </Select>
                                         <!-- <Input
                                         id="idServiceInput_InitialView"
@@ -296,29 +301,28 @@
                                             class="sapUiTinyMarginTop"
                                         />
                                         <HBox id="idks">
-                                        <Input
-                                            id="idWeightinput_InitialView"
-                                            value="{ProductModel>/weight}"
-                                            placeholder="Enter Weight"
-                                            width="70px"
-                                          
-                                        />
-                                        <ComboBox
-                                            id="uomSelect"
-                                            width="50%"
-                                        >
-                                            <items>
-                                                <core:Item
-                                                    id="_IDGenItem1"
-                                                    key="KG"
-                                                    text="Kilograms"
-                                                />
-                                                <core:Item
-                                                    id="_IDGenItem2"
-                                                    key="G"
-                                                    text="Grams"
-                                                />
-                                                <!-- <core:Item
+                                            <Input
+                                                id="idWeightinput_InitialView"
+                                                value="{ProductModel>/weight}"
+                                                placeholder="Enter Weight"
+                                                width="70px"
+                                            />
+                                            <ComboBox
+                                                id="uomSelect"
+                                                width="50%"
+                                            >
+                                                <items>
+                                                    <core:Item
+                                                        id="_IDGenItem1"
+                                                        key="KG"
+                                                        text="Kilograms"
+                                                    />
+                                                    <core:Item
+                                                        id="_IDGenItem2"
+                                                        key="G"
+                                                        text="Grams"
+                                                    />
+                                                    <!-- <core:Item
                                                     id="_IDGenItem4"
                                                     key="LB"
                                                     text="Pounds"
@@ -328,9 +332,9 @@
                                                     key="OZ"
                                                     text="Ounces"
                                                 /> -->
-                                                <!-- Add more UOM options as needed -->
-                                            </items>
-                                        </ComboBox>
+                                                    <!-- Add more UOM options as needed -->
+                                                </items>
+                                            </ComboBox>
                                         </HBox>
                                     </HBox>
 
@@ -681,13 +685,11 @@
                                             visible="true"
                                             class="dialogButton_sapconnect sapUiSmallMarginEnd"
                                         />
-                                           <Button
+                                        <Button
                                             id="idconnecghjktsapcanc21elButton_InitialView"
-                                           icon="sap-icon://clear"
-                                            press="onRemoveSelectedProducts"
-                                             
+                                            text="Clear"
                                             class="dialogButton_sapconnect sapUiSmallMarginEnd"
-                                            visible="true"
+                                            press="onRemoveSelectedProducts"
                                         />
                                         <u:FileUploader
                                             id="FileUploaderId"
@@ -697,6 +699,7 @@
                                             fileType="XLSX,xlsx"
                                             icon="sap-icon://upload"
                                             iconFirst="true"
+                                            buttonText="Upload"
                                             style="Emphasized"
                                             change="onUpload"
                                         />
@@ -1047,3 +1050,6 @@
         </content>
     </Page>
 </mvc:View>
+
+
+

@@ -38,7 +38,12 @@ sap.ui.define(
             //             info: "{resultModel>numberOfTrucksNeeded} truck(s) needed, Volume: {resultModel>volume} Kgs"
             //         })
             //     });
-             }
+
+            
+             },
+            
         });
     }
 );
+
+
