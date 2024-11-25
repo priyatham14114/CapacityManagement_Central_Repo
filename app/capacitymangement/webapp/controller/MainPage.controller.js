@@ -636,7 +636,7 @@ sap.ui.define(
       _import: function (file) {
         var that = this;
         let oTempProduct = that.getView().getModel("oJsonModelProd"),
-        existData = oTempProduct.getData().products;
+          existData = oTempProduct.getData().products;
         var excelData = {};
         if (file && window.FileReader) {
           var reader = new FileReader();
@@ -653,26 +653,29 @@ sap.ui.define(
             console.log(excelData);
             excelData.forEach(record => {
               if (record.Weight) { // Check if Weight field exists
-                  record.Weight += 'KG'; // Concatenate 'kg' to the Weight field
+                record.Weight += 'KG'; // Concatenate 'kg' to the Weight field
               }
-          });
-          localStorage.setItem("productsData", JSON.stringify(excelData));
+            });
+            localStorage.setItem("productsData", JSON.stringify(excelData));
             // Setting the data to the local model 
             //concatnation through spread operator
-            oTempProduct.setData({"products":[...existData,...excelData]});
+            oTempProduct.setData({ "products": [...existData, ...excelData] });
             oTempProduct.refresh(true);
           };
           reader.onerror = function (ex) {
             console.log(ex);
-            
+
           };
           reader.readAsBinaryString(file);
         }
       },
       /** Simulating excel sheet products */
-      onClickSimulate:async function () {
+      onClickSimulate: async function () {
         var oTable = this.byId("myTable");
         var aSelectedItems = oTable.getSelectedItems(); // Get selected items
+        var aSelectedItems = oTable.getSelectedItems(); // Get selected items
+        console.log("Selected Items Count:", aSelectedItems.length);
+        console.log("Selected Items:", aSelectedItems); // Log selected items for debugging
 
         // Check if there are any selected items
         if (aSelectedItems.length > 0) {
@@ -710,27 +713,27 @@ sap.ui.define(
             let match = weightString.match(/(\d+\.?\d*)/);
             // Return the parsed float or 0 if no match is found
             return match ? parseFloat(match[0]) : 0;
-        }
-        
-        // Calculate overall total weight
-        const overallTotalWeight = selectedData.reduce((accumulator, item) => {
+          }
+
+          // Calculate overall total weight
+          const overallTotalWeight = selectedData.reduce((accumulator, item) => {
             return accumulator + extractWeight(item.Weight); // Extract numeric weight and add to accumulator
-        }, 0);
-        
-        console.log("Overall Total Weight:", overallTotalWeight); // Output the total weight
+          }, 0);
+
+          console.log("Overall Total Weight:", overallTotalWeight); // Output the total weight
 
           console.log("Overall Total Volume:", overallTotalVolume);
           console.log("Overall Total Volume:", overallTotalWeight);
           // Load truck details
-         await this.onTruckDetailsLoad().then(Trucks => {
+          await this.onTruckDetailsLoad().then(Trucks => {
             let requiredTrucks = [];
             Trucks.forEach(truck => {
               const numberOfTrucksNeeded = Math.ceil(overallTotalVolume / truck.volume);
-              const trucksToUse= numberOfTrucksNeeded > 0?numberOfTrucksNeeded:1;
+              const trucksToUse = numberOfTrucksNeeded > 0 ? numberOfTrucksNeeded : 1;
               requiredTrucks.push({
                 truckType: truck.truckType,
                 volume: truck.volume,
-                numberOfTrucksNeeded:trucksToUse
+                numberOfTrucksNeeded: trucksToUse
               });
             });
 
@@ -742,7 +745,7 @@ sap.ui.define(
             // Construct JSON model for storing overall total volume and product details
             const jsonModelData = {
               OverallTotalVolume: overallTotalVolume,
-              overallTotalWeight:overallTotalWeight,
+              overallTotalWeight: overallTotalWeight,
               Products: selectedData,
               TProducts: selectedData.length,
               RequiredTrucks: requiredTrucks
@@ -1099,10 +1102,9 @@ sap.ui.define(
 
 
 
-  
 
 
 
 
 
- 
+
