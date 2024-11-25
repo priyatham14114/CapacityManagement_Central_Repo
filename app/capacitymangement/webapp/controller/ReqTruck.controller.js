@@ -7,10 +7,10 @@ sap.ui.define(
 
         return Controller.extend("com.app.capacitymangement.controller.ReqTruck", {
             onInit: function () {
-                const oModel = this.getOwnerComponent().getModel("resultModel");
-                debugger
-                console.log(oModel) // Get the model set in previous view
-                this.getView().setModel(oModel,"resultModel"); // Set the model to this view
+                // const oModel = this.getOwnerComponent().getModel("resultModel");
+                // debugger
+                // console.log(oModel) // Get the model set in previous view
+                // this.getView().setModel(oModel,"resultModel"); // Set the model to this view
             //     // Optionally, bind data to controls if needed
             //     const products = oModel.getProperty("/Products");
 
@@ -41,6 +41,11 @@ sap.ui.define(
 
             
              },
+             onBackPress:function(){
+                const oRouter = this.getOwnerComponent().getRouter();
+                oRouter.navTo("MainPage")
+                this.getView().getModel("resultModel").refresh();
+             }
             
         });
     }

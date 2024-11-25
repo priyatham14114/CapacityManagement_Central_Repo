@@ -676,7 +676,8 @@ sap.ui.define(
         var aSelectedItems = oTable.getSelectedItems(); // Get selected items
         console.log("Selected Items Count:", aSelectedItems.length);
         console.log("Selected Items:", aSelectedItems); // Log selected items for debugging
-
+        const oDropdown = this.byId("parkingLotSelect");
+        const oSelectedKey = oDropdown.getSelectedKey();
         // Check if there are any selected items
         if (aSelectedItems.length > 0) {
           var selectedData = []; // Array to hold data of all selected items
@@ -724,17 +725,20 @@ sap.ui.define(
 
           console.log("Overall Total Volume:", overallTotalVolume);
           console.log("Overall Total Volume:", overallTotalWeight);
+
           // Load truck details
           await this.onTruckDetailsLoad().then(Trucks => {
             let requiredTrucks = [];
             Trucks.forEach(truck => {
-              const numberOfTrucksNeeded = Math.ceil(overallTotalVolume / truck.volume);
-              const trucksToUse = numberOfTrucksNeeded > 0 ? numberOfTrucksNeeded : 1;
-              requiredTrucks.push({
-                truckType: truck.truckType,
-                volume: truck.volume,
-                numberOfTrucksNeeded: trucksToUse
-              });
+              if (!oSelectedKey || truck.truckType === oSelectedKey) {
+                const numberOfTrucksNeeded = Math.ceil(overallTotalVolume / truck.volume);
+                const trucksToUse = numberOfTrucksNeeded > 0 ? numberOfTrucksNeeded : 1;
+                requiredTrucks.push({
+                  truckType: truck.truckType,
+                  volume: truck.volume,
+                  numberOfTrucksNeeded: trucksToUse
+                });
+              }
             });
 
             console.log("Required Trucks for Loading:");
@@ -762,6 +766,9 @@ sap.ui.define(
             console.log(modelData);
 
             // this.onLoadRequiredTrucks();
+
+            this.getView().byId("myTable").getBinding("items").refresh();
+            this.getView().getModel("resultModel").refresh();
             this.MoveToNextScreen();
             this.getView().byId("myTable").getBinding("items").refresh();
             this.getView().getModel("resultModel").refresh();
