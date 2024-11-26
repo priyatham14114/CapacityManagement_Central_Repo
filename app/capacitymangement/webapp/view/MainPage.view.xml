@@ -356,7 +356,7 @@
                                 </VBox>
                             </form:SimpleForm>
                             <!-- sample -->
-                            <Image id="rtyu"  height="1.5rem" src="Image/productInBox.gif"/>
+                            <Image id="rtyu"  height="70%" src="Image/productInBox.gif"/>
 
                             <!-- ghjk -->
                         </HBox>
@@ -421,6 +421,7 @@
                         <Table
                             id="idTruckTypeTable"
                             growing="true"
+                            noDataText="No Vehicle Types Available"
                             backgroundDesign="Transparent"
                             selectionChange="onRow"
                             items="{/TruckTypes}"
@@ -554,6 +555,7 @@
                             backgroundDesign="Transparent"
                             items="{/Materials}"
                             width="80%"
+                             noDataText="No Products Available"
                             growing="true"
                             growingScrollToLoad="true"
                         >

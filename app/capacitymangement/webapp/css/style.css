@@ -223,3 +223,6 @@ height: 125%;
     margin-left: 8rem !important;
     width: 10.5rem;
 }
+.backgroundColour{
+    background-image: linear-gradient(to bottom, #FFC0CB, #87CEEB);
+}
