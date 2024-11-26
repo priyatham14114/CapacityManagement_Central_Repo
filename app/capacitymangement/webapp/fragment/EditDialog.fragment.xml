@@ -6,7 +6,7 @@
     <Dialog
         id="idEditProductDssialog"
         resizable="true"
-        draggable="true"  
+        draggable="true"
         contentWidth="20%"
         contentHeight="30%"
         title="Edit Product"
@@ -15,7 +15,7 @@
             <Button
                 id="idCreatssevgbhjkButton"
                 text="Save"
-                press="onSave"
+                press="onSaveProduct"
                 type="Success"
             />
         </beginButton>
@@ -46,60 +46,96 @@
                 columnsM="1"
                 singleContainerFullSize="false"
             >
-                 <Label
-                    id="idIDssLasdabel"
-                    text="product"
-                />
-                <Input
-                    id="idIDddasdInput"
-                />
                 <Label
-                    id="idStarddsdNameLabel"
-                    text="product description"
+                    id="editProductNoLabel"
+                    text="Product Number"
                 />
                 <Input
-                    id="idStarddasdNameInput"
+                    id="editProductNoInput"
+                    value=" "
                 />
-                 <Label
-                    id="idStaasdddrNamvbl"
-                    text="product Type"
-                />
-                <Input
-                    id="idStasdddrNabnmeInput"
-                />
+
                 <Label
-                    id="idConsddddstellationLabel"
-                    text="dimensions"
+                    id="editLengthLabel"
+                    text="Length"
                 />
                 <Input
-                    id="idConddsdstellationInput"
+                    id="editproLengthInput"
+                    value=" "
                 />
+
                 <Label
-                    id="idTysdddpeLabel"
-                    text="Weight"
+                    id="editWidthLabel"
+                    text="Width"
                 />
                 <Input
-                    id="idTasdddypeInput"
+                    id="editprodWidthInput"
+                    value=" "
                 />
+
                 <Label
-                    id="idDxcvbesddcriptionLabel"
-                    text="product Code"
+                    id="editHeightLabel"
+                    text="Height"
                 />
                 <Input
-                    id="idDfghjeddscriptionInput"
+                    id="editprodHeightInput"
+                    value=" "
                 />
-                <Label
-                    id="idDefghsfddvgbcriptionLabel"
+
+                <!-- <Label
+                    id="editVolumeLabel"
                     text="Volume"
                 />
                 <Input
-                    id="idDcvbesddcrvbniptionInput"
+                    id="editVolumeInput"
+                    value=" "
+                /> -->
+
+                <Label
+                    id="editUOMLabel"
+                    text="Unit of Measure (UOM)"
                 />
- 
- 
- 
+                <Input
+                    id="editUOMInput"
+                    value=" "
+                />
+
+                <Label
+                    id="editCategoryLabel"
+                    text="Product Category"
+                />
+                <Input
+                    id="editCategoryInput"
+                    value=" "
+                />
+
+                <Label
+                    id="editDescriptionLabel"
+                    text="Description"
+                />
+                <Input
+                    id="editDescriptionInput"
+                    value=" "
+                />
+
+                <Label
+                    id="editEANUPCLabel"
+                    text="EAN/UPC Code"
+                />
+                <Input
+                    id="editEANUPCInput"
+                    value=" "
+                />
+
+                <Label
+                    id="editWeightLabel"
+                    text="Weight"
+                />
+                <Input
+                    id="editWeightInput"
+                    value=" "
+                />
             </form:SimpleForm>
         </content>
     </Dialog>
 </core:FragmentDefinition>
- 

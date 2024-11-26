@@ -39,6 +39,31 @@ sap.ui.define([
                 })
             })
         },
+        updateData: function (oModel, oPayload, sPath) {
+            return new Promise((resolve, reject) => {
+                oModel.update(sPath, oPayload, {
+                    success: function (oSuccessData) {
+                        resolve(oSuccessData);
+                    },
+                    error: function (oErrorData) {
+                        reject(oErrorData);
+                    }
+                })
+            })
+        },
+        readData: function (oModel, oPath, oFilter) {
+            return new Promise((resolve, reject) => {
+                oModel.read(oPath, {
+                    filters: [oFilter],
+                    success: function (oSuccessData) {
+                        resolve(oSuccessData)
+                    }, error: function (oErrorData) {
+                        reject(oErrorData)
+                    }
+
+                })
+            })
+        },
         loadFragment: async function (sFragmentName) {
             const oFragment = await Fragment.load({
                 id: this.getView().getId(),

@@ -6,7 +6,7 @@
     <Dialog
         id="idEditInssAddEquipmentDialog"
         resizable="true"
-        draggable="true"  
+        draggable="true"
         contentWidth="20%"
         contentHeight="30%"
         title="Edit Vehicle"
@@ -46,54 +46,72 @@
                 columnsM="1"
                 singleContainerFullSize="false"
             >
-               <Label
-                    id="idICssVBDLnmabel"
-                    text="Vehicle"
+                <Label
+                    id="_IDGenLabel1"
+                    text="Truck Type"
                 />
                 <Input
-                    id="bnssmVB"
+                    id="editTruckTypeInput"
+                    value=" "
                 />
+
                 <Label
-                    id="idStFGssarnmNameLabel"
-                    text="vehicle Type"
+                    id="_IDGenLabel2"
+                    text="Length"
                 />
                 <Input
-                    id="idStaFGssrbnNameInput"
+                    id="editLengthInput"
+                    value=" "
                 />
-              
+
                 <Label
-                    id="idConVssBNbnmstellationLabel"
-                    text="dimensions"
+                    id="_IDGenLabel3"
+                    text="Width"
                 />
                 <Input
-                    id="idConssGHJbnmstellationInput"
+                    id="editWidthInput"
+                    value=""
                 />
+
                 <Label
-                    id="idTypssFGHebnmLabel"
-                    text="Weight"
+                    id="_IDGenLabel4"
+                    text="Height"
                 />
                 <Input
-                    id="GssH"
+                    id="editHeightInput"
+                    value=" "
                 />
+
+                <!-- <Label id="_IDGenLabel5" text="Unit of Measurement (UOM)" />
+                <Input
+                    id="editUomInput"
+                    value=" "
+                /> -->
+
+                <!-- <Label id="_IDGenLabel6" text="Volume" />
+                <Input
+                    id="editVolumeInput"
+                    value=" "
+                /> -->
+
                 <Label
-                    id="idDevbFssGHnscriptionLabel"
-                    text="Volume"
+                    id="_IDGenLabel7"
+                    text="Truck Weight"
                 />
                 <Input
-                    id="idDegVBssNhjscriptionInput"
+                    id="editTruckWeightInput"
+                    value=" "
                 />
+
                 <Label
-                    id="idDesssFGHvhfvgbcriptionLabel"
+                    id="_IDGenLabel8"
                     text="Capacity"
                 />
                 <Input
-                    id="idDeFGssscrvbnghjkiptionInput"
+                    id="editCapacityInput"
+                    value=" "
                 />
- 
- 
- 
             </form:SimpleForm>
         </content>
     </Dialog>
 </core:FragmentDefinition>
- 

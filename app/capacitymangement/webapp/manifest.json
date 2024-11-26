@@ -80,9 +80,17 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "com.app.capacitymangement.i18n.i18n"
+          "bundleName": "com.app.capacitymangement.i18n.i18n",
+          "supportedLocales": ["en","de"],
+          "fallbackLocale": ""
         }
       },
+      "oJsonModelProd": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+            "data": {}
+        }
+    },
       "": {
         "dataSource": "mainService",
         "preload": true,
@@ -133,7 +141,14 @@
           "target": [
             "TargetMainPage"
           ]
+        },  {
+          "name": "ReqTruck",
+          "pattern": "ReqTruck",
+          "target": [
+            "TargetReqTruck"
+          ]
         }
+
       ],
       "targets": {
         "TargetHome": {
@@ -149,6 +164,13 @@
           "clearControlAggregation": false,
           "viewId": "MainPage",
           "viewName": "MainPage"
+        },
+        "TargetReqTruck": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "ReqTruck",
+          "viewName": "ReqTruck"
         }
       }
     },

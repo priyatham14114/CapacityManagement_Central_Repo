@@ -103,17 +103,17 @@
                     />
                     <core:Item
                         id="id1"
-                        key="KG"
-                        text="KG"
+                        key="M"
+                        text="M"
                     />
-                    <core:Item
+                    <!-- <core:Item
                         id="id2"
                         key="L"
                         text="L"
-                    />
+                    /> -->
                 </Select>
 
-                <Label
+                <!-- <Label
                     id="idVolumeLabelveh"
                     text="Volume"
                 />
@@ -121,7 +121,7 @@
                 <Input
                     id="idVolumeInputveh"
                     value="{VehModel>/volume}"
-                />
+                /> -->
 
                 <Label
                     id="idTruckWeightLabel"

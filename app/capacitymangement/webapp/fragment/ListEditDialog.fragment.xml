@@ -6,7 +6,7 @@
     <Dialog
         id="idListEdiwtDialog"
         resizable="true"
-        draggable="true"  
+        draggable="true"
         contentWidth="20%"
         contentHeight="30%"
         title="Edit List"
@@ -46,82 +46,59 @@
                 columnsM="1"
                 singleContainerFullSize="false"
             >
-             <Label
+                <Label
                     id="idIvCsdVsvbnBDLnmabel"
                     text="Vehicle"
                 />
-                <Input
-                    id="bnvbsvbnsdmVB"
-                />
+                <Input id="bnvbsvbnsdmVB" />
                 <Label
                     id="idStFGssvbnmdvbarnmNameLabel"
                     text="vehicle Type"
                 />
-                <Input
-                    id="idStasddbnmFbnGrbnNameInput"
-                />
+                <Input id="idStasddbnmFbnGrbnNameInput" />
                 <Label
                     id="idIDLddghadfbel"
                     text="product"
                 />
-                <Input
-                    id="idIDssIvbnndfput"
-                />
-                 <Label
+                <Input id="idIDssIvbnndfput" />
+                <Label
                     id="idStvbdfdnmarNamxcvbl"
                     text="product Type"
                 />
-                <Input
-                    id="idStaveebnxcrNabnmeInput"
-                />
+                <Input id="idStaveebnxcrNabnmeInput" />
                 <Label
                     id="idStdfwwgharNdfameLabel"
                     text="product description"
                 />
-                <Input
-                    id="idStvwwjarNdfgameInput"
-                />
-                 
+                <Input id="idStvwwjarNdfgameInput" />
+
                 <Label
                     id="idCwwoghjnsdftellationLabel"
                     text="dimensions"
                 />
-                <Input
-                    id="idCwwobnmndfstellationInput"
-                />
+                <Input id="idCwwobnmndfstellationInput" />
                 <Label
                     id="idTyeevbnmpedfgLabel"
                     text="Weight"
                 />
-                <Input
-                    id="idbne3mTypdfgeInput"
-                />
-               
+                <Input id="idbne3mTypdfgeInput" />
+
                 <Label
                     id="idDe22bnmsffgvgbcriptionLabel"
                     text="Volume"
                 />
-                <Input
-                    id="idDe2bnscrfgvbniptionInput"
-                />
-                 <Label
+                <Input id="idDe2bnscrfgvbniptionInput" />
+                <Label
                     id="idDevb3nmsfghffgvgbcriptionLabel"
                     text="Capacity used"
                 />
-                <Input
-                    id="idDvbn3escvbnrfgvbniptionInput"
-                />
-                 <Label
+                <Input id="idDvbn3escvbnrfgvbniptionInput" />
+                <Label
                     id="idDhjesf54vbnghffgvgbcriptionLabel"
                     text="Remaining Capacity"
                 />
-                <Input
-                    id="idDesccvbnddbnmvbnrfgvbniptionInput"
-                />
- 
- 
+                <Input id="idDesccvbnddbnmvbnrfgvbniptionInput" />
             </form:SimpleForm>
         </content>
     </Dialog>
 </core:FragmentDefinition>
- 
