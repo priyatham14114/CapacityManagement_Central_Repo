@@ -211,5 +211,15 @@ height: 125%;
 .EmptyHBoxforgap{
     margin-left: 10rem;
 }
-
- 
+.requiredtrucktabhead{
+    color: rgb(248, 119, 7);
+}
+.HeaderToolBar {
+    background-color: gold !important;
+    border-radius: 0.5rem !important;
+}
+.addProductSaveButton{
+    
+    margin-left: 8rem !important;
+    width: 10.5rem;
+}

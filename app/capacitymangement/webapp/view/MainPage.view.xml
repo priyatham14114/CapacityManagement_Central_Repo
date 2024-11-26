@@ -338,24 +338,25 @@
                                         </HBox>
                                     </HBox>
 
-                                    <HBox
+                                    <!-- <HBox
                                         id="iDgenhboxcontainer_InitialView"
                                         class=""
                                         justifyContent="Center"
                                         width="85%"
-                                    >
+                                    > -->
+                                    <Label id="idEmptyLabel"></Label>
                                         <Button
                                             id="idconnectsapcancelButton_InitialView"
                                             text="Save"
-                                            width="150px"
                                             press="onCreateProduct"
                                             type="Emphasized"
-                                            class="dialogButton_sapconnect sapUiSmallMargin"
+                                            class="dialogButton_sapconnect addProductSaveButton"
                                         />
-                                    </HBox>
+                                    <!-- </HBox> -->
                                 </VBox>
                             </form:SimpleForm>
                             <!-- sample -->
+                            <Image id="rtyu"  height="1.5rem" src="Image/productInBox.gif"/>
 
                             <!-- ghjk -->
                         </HBox>
@@ -365,7 +366,7 @@
 
                     <IconTabFilter
                         id="icon2"
-                        text="vehicle Type"
+                        text="Vehicle Type"
                         iconColor="Critical"
                         visible="true"
                         key="info1"
@@ -411,7 +412,6 @@
                             />
                             <Button
                                 id="idBtbnmfghnHUCcvbnontentBtn_AHUOBQ"
-                                text="Print"
                                 press="onPressDownloadInAddVehicleTable"
                                 tooltip="Print"
                                 class="line-md--download-outline-loop"
@@ -535,6 +535,213 @@
                         </Table>
                     </IconTabFilter>
 
+                    
+                    <!-- list table -->
+
+                    <IconTabFilter
+                        id="icon4"
+                        text="Products List"
+                        iconColor="Neutral"
+                        visible="true"
+                        key="info1"
+                        interactionMode="Auto"
+                        icon="Image/listIcon.png"
+                    >
+                        <!-- Materials Table in the Creation Screen -->
+                        <Table
+                            id="ProductsTable"
+                            mode="MultiSelect"
+                            backgroundDesign="Transparent"
+                            items="{/Materials}"
+                            width="80%"
+                            growing="true"
+                            growingScrollToLoad="true"
+                        >
+                            <headerToolbar >
+                                <OverflowToolbar id="_IDGenOverflowToolbar" class="HeaderToolBar">
+                                    <Title
+                                        id="Titlesd1455896_AHUOBQ"
+                                        text="Products Table:"
+                                    />
+
+                                    <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+
+                                    <layoutData>
+                                        <OverflowToolbarLayoutData
+                                            id="_IDGenOverflowToolbarLayoutData6"
+                                            priority="NeverOverflow"
+                                        />
+                                    </layoutData>
+
+                                    <ToolbarSpacer
+                                        id="IDGenTooedlbar345_AHUOBQ"
+                                    />
+
+                                    <SearchField
+                                        id="idSearchFieldBinnumberTable_AHUOBQ"
+                                        liveChange="onLiveBinNumberTAble"
+                                        placeholder="Search Anything..."
+                                        width="25%"
+                                    />
+
+                                    <!-- <Button
+                                        id="idBtnHUContentBtn_AHUOBQ"
+                                        text="Add"
+                                        press="onPressAddInProductsTable"
+                                        tooltip="Add"
+                                        icon="sap-icon://add"
+                                    /> -->
+                                    <Button
+                                        id="idBtghjnHUContentBtn_AHUOBQ"
+                                        text="Edit"
+                                        press="onPressEditInProductsTable"
+                                        class="line-md--pencil"
+                                        tooltip="Edit"
+                                    />
+                                    <Button
+                                        id="idBtnProductDescription_AHUOBQ"
+                                        text="Delete"
+                                        press="onProductDel"
+                                        tooltip="Delete"
+                                        icon="sap-icon://delete"
+                                    />
+                                    <Button
+                                        id="idBtfghnHUContentBtn_AHUOBQ"
+                                        press="onPrintPressInProductsTable"
+                                        tooltip="Print"
+                                        class="line-md--download-outline-loop"
+                                    />
+
+                                    <u:FileUploader
+                                        id="FileUploaderIds"
+                                        sameFilenameAllowed="true"
+                                        iconOnly="false"
+                                        buttonOnly="true"
+                                        fileType="XLSX,xlsx"
+                                        icon="sap-icon://upload"
+                                        iconFirst="true"
+                                        style="Emphasized"
+                                        buttonText="Upload"
+                                        change="onUploadMaterialCreation"
+                                    />
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column id="_IDGenn2">
+                                    <Text
+                                        id="_IDGnText2"
+                                        text="SAP Productno"
+                                    />
+                                </Column>
+                                <Column id="_IDGenCumn3">
+                                    <Text
+                                        id="_IDGet3"
+                                        text="Description"
+                                    />
+                                </Column>
+                                <Column id="_IDGenColun4">
+                                    <Text
+                                        id="_IDGe4"
+                                        text="EANUPC"
+                                    />
+                                </Column>
+
+                                <Column id="_IDGenCcvbnmo">
+                                    <Text
+                                        id="_IDGenxcvj"
+                                        text="Material Category"
+                                    />
+                                </Column>
+                                <Column id="_IDGenCrtyuo">
+                                    <Text
+                                        id="_IDGecvn"
+                                        text="Length"
+                                    />
+                                </Column>
+
+                                <Column id="_IDGenCo">
+                                    <Text
+                                        id="_IDGen"
+                                        text="Width"
+                                    />
+                                </Column>
+
+                                <Column id="_IDvbnGenCo">
+                                    <Text
+                                        id="_IDbnGen"
+                                        text="Height"
+                                    />
+                                </Column>
+                                <Column id="_IDGenC">
+                                    <Text
+                                        id="_IDGe1"
+                                        text="Volume"
+                                    />
+                                </Column>
+                                <Column id="_IDGenC1">
+                                    <Text
+                                        id="_IDGe21"
+                                        text="UOM"
+                                    />
+                                </Column>
+                                <Column id="_IDGenC2">
+                                    <Text
+                                        id="_IDGe12"
+                                        text="Weight"
+                                    />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem id="_IDGColumnListItem1">
+                                    <cells>
+                                        <Text
+                                            id="_ID"
+                                            text="{sapProductno}"
+                                        />
+                                        <Text
+                                            id="_Iexte8"
+                                            text="{description}"
+                                        />
+                                        <Text
+                                            id="_Iedfxte8"
+                                            text="{EANUPC}"
+                                        />
+                                        <Text
+                                            id="_Iext8"
+                                            text="{mCategory}"
+                                        />
+
+                                        <Text
+                                            id="_IDGt9"
+                                            text="{length}"
+                                        />
+                                        <Text
+                                            id="_IDG10"
+                                            text="{width}"
+                                        />
+                                        <Text
+                                            id="_IDG3310"
+                                            text="{height}"
+                                        />
+                                        <Text
+                                            id="_ID23Gt9"
+                                            text="{volume}"
+                                        />
+                                        <Text
+                                            id="idkjlee"
+                                            text="{uom}"
+                                        />
+                                        <Text
+                                            id="okd"
+                                            text="{weight}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+
                     <!-- simulation -->
                     <IconTabFilter
                         id="iconTabBarSimulate"
@@ -542,7 +749,9 @@
                         key="info21"
                         icon="Image/SimulateIconTabBar.gif"
                         text="Simulate"
+                        iconColor="Neutral"
                         class="iconTabBar"
+                         interactionMode="Auto"
                     >
                         <HBox
                             id="Productarea"
@@ -668,7 +877,7 @@
                             />
                             <HBox id="iDgenhboghjxcontainer_InitialView">
                                 <VBox id="_IDGenVBox">
-                                    <HBox id="_IDGenHBox3">
+                                    <HBox id="_IDGenHBox3" class="sapUiSmallMarginBottom">
                                         <Button
                                             id="idconnecghjktsapcancelButton_InitialView"
                                             text="Save"
@@ -841,209 +1050,6 @@
                                 class="3dSimulator"
                             />
                         </VBox>
-                    </IconTabFilter>
-                    <!-- list table -->
-
-                    <IconTabFilter
-                        id="icon4"
-                        text="Products List"
-                        iconColor="Marker"
-                        visible="true"
-                        key="info1"
-                        icon="Image/listIcon.png"
-                    >
-                        <!-- Materials Table in the Creation Screen -->
-                        <Table
-                            id="ProductsTable"
-                            mode="MultiSelect"
-                            backgroundDesign="Transparent"
-                            items="{/Materials}"
-                            width="80%"
-                            growing="true"
-                            growingScrollToLoad="true"
-                        >
-                            <headerToolbar>
-                                <OverflowToolbar id="_IDGenOverflowToolbar">
-                                    <Title
-                                        id="Titlesd1455896_AHUOBQ"
-                                        text="Products Table:"
-                                    />
-
-                                    <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-
-                                    <layoutData>
-                                        <OverflowToolbarLayoutData
-                                            id="_IDGenOverflowToolbarLayoutData6"
-                                            priority="NeverOverflow"
-                                        />
-                                    </layoutData>
-
-                                    <ToolbarSpacer
-                                        id="IDGenTooedlbar345_AHUOBQ"
-                                    />
-
-                                    <SearchField
-                                        id="idSearchFieldBinnumberTable_AHUOBQ"
-                                        liveChange="onLiveBinNumberTAble"
-                                        placeholder="Search Anything..."
-                                        width="25%"
-                                    />
-
-                                    <!-- <Button
-                                        id="idBtnHUContentBtn_AHUOBQ"
-                                        text="Add"
-                                        press="onPressAddInProductsTable"
-                                        tooltip="Add"
-                                        icon="sap-icon://add"
-                                    /> -->
-                                    <Button
-                                        id="idBtghjnHUContentBtn_AHUOBQ"
-                                        text="Edit"
-                                        press="onPressEditInProductsTable"
-                                        class="line-md--pencil"
-                                        tooltip="Edit"
-                                    />
-                                    <Button
-                                        id="idBtnProductDescription_AHUOBQ"
-                                        text="Delete"
-                                        press="onProductDel"
-                                        tooltip="Delete"
-                                        icon="sap-icon://delete"
-                                    />
-                                    <Button
-                                        id="idBtfghnHUContentBtn_AHUOBQ"
-                                        press="onPrintPressInProductsTable"
-                                        tooltip="Print"
-                                        class="line-md--download-outline-loop"
-                                    />
-
-                                    <u:FileUploader
-                                        id="FileUploaderIds"
-                                        sameFilenameAllowed="true"
-                                        iconOnly="false"
-                                        buttonOnly="true"
-                                        fileType="XLSX,xlsx"
-                                        icon="sap-icon://upload"
-                                        iconFirst="true"
-                                        style="Emphasized"
-                                        change="onUploadMaterialCreation"
-                                    />
-                                </OverflowToolbar>
-                            </headerToolbar>
-                            <columns>
-                                <Column id="_IDGenn2">
-                                    <Text
-                                        id="_IDGnText2"
-                                        text="SAP Productno"
-                                    />
-                                </Column>
-                                <Column id="_IDGenCumn3">
-                                    <Text
-                                        id="_IDGet3"
-                                        text="Description"
-                                    />
-                                </Column>
-                                <Column id="_IDGenColun4">
-                                    <Text
-                                        id="_IDGe4"
-                                        text="EANUPC"
-                                    />
-                                </Column>
-
-                                <Column id="_IDGenCcvbnmo">
-                                    <Text
-                                        id="_IDGenxcvj"
-                                        text="Material Category"
-                                    />
-                                </Column>
-                                <Column id="_IDGenCrtyuo">
-                                    <Text
-                                        id="_IDGecvn"
-                                        text="Length"
-                                    />
-                                </Column>
-
-                                <Column id="_IDGenCo">
-                                    <Text
-                                        id="_IDGen"
-                                        text="Width"
-                                    />
-                                </Column>
-
-                                <Column id="_IDvbnGenCo">
-                                    <Text
-                                        id="_IDbnGen"
-                                        text="Height"
-                                    />
-                                </Column>
-                                <Column id="_IDGenC">
-                                    <Text
-                                        id="_IDGe1"
-                                        text="Volume"
-                                    />
-                                </Column>
-                                <Column id="_IDGenC1">
-                                    <Text
-                                        id="_IDGe21"
-                                        text="UOM"
-                                    />
-                                </Column>
-                                <Column id="_IDGenC2">
-                                    <Text
-                                        id="_IDGe12"
-                                        text="Weight"
-                                    />
-                                </Column>
-                            </columns>
-
-                            <items>
-                                <ColumnListItem id="_IDGColumnListItem1">
-                                    <cells>
-                                        <Text
-                                            id="_ID"
-                                            text="{sapProductno}"
-                                        />
-                                        <Text
-                                            id="_Iexte8"
-                                            text="{description}"
-                                        />
-                                        <Text
-                                            id="_Iedfxte8"
-                                            text="{EANUPC}"
-                                        />
-                                        <Text
-                                            id="_Iext8"
-                                            text="{mCategory}"
-                                        />
-
-                                        <Text
-                                            id="_IDGt9"
-                                            text="{length}"
-                                        />
-                                        <Text
-                                            id="_IDG10"
-                                            text="{width}"
-                                        />
-                                        <Text
-                                            id="_IDG3310"
-                                            text="{height}"
-                                        />
-                                        <Text
-                                            id="_ID23Gt9"
-                                            text="{volume}"
-                                        />
-                                        <Text
-                                            id="idkjlee"
-                                            text="{uom}"
-                                        />
-                                        <Text
-                                            id="okd"
-                                            text="{weight}"
-                                        />
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
-                        </Table>
                     </IconTabFilter>
                 </items>
             </IconTabBar>

@@ -19,16 +19,35 @@
                     id="_IDGenTitle"
                     text="Selected Products:{resultModel>/TProducts}"
                     level="H1"
+                    class="sapUiTinyMargin"
                 />
-                <Text
-                    id="_IDGenText7"
-                    text="Total Volume : {resultModel>/OverallTotalVolume}m3"
-                />
-                <Text
-                    id="idkekke"
-                    text="Total Weight:{resultModel>/overallTotalWeight}KG"
-                />
+                <HBox id="_IDGenHBox4">
+                    <Label
+                        id="_IDGenLabel5"
+                        text="Total Volume:"
+                        class="sapUiTinyMarginTop sapUiTinyMarginBegin"
+                        labelFor="_IDGenText7"
+                    />
+                    <Text
+                        id="_IDGenText7"
+                        class="sapUiTinyMargin"
+                        text="{resultModel>/OverallTotalVolume} m³"
+                    />
+                </HBox>
 
+                <HBox id="_IDGenHBox5">
+                    <Label
+                        id="_IDGenLabel6"
+                        text="Total Weight:"
+                        labelFor="idkekke"
+                        class="sapUiTinyMarginTop sapUiTinyMarginBegin"
+                    />
+                    <Text
+                        id="idkekke"
+                        class="sapUiTinyMargin"
+                        text="{resultModel>/overallTotalWeight} KG"
+                    />
+                </HBox>
                 <!-- <List
                     id="_IDGenList"
                     items="{resultModel>/Products}"
@@ -63,9 +82,11 @@
 
                 <Title
                     id="_IDGenTitle1"
-                    text="Required Trucks For Loading Products"
+                    class="sapUiTinyMargin requiredtrucktabhead"
+                    text="Required Trucks For Loading Products 📦"
                     level="H2"
                 />
+
                 <List
                     id="_IDGenList1"
                     items="{resultModel>/RequiredTrucks}"
