@@ -656,11 +656,15 @@ sap.ui.define(
                 record.Weight += 'KG'; // Concatenate 'kg' to the Weight field
               }
             });
-            localStorage.setItem("productsData", JSON.stringify(excelData));
-            // Setting the data to the local model 
-            //concatnation through spread operator
-            oTempProduct.setData({ "products": [...existData, ...excelData] });
-            oTempProduct.refresh(true);
+            var uniqueData = [...new Set(excelData)];
+            console.log(uniqueData)
+            // Step 2: Store new Excel data in local storage
+            const combinedData = [...existData, ...uniqueData]; // Combine existing and new data
+            localStorage.setItem("productsData", JSON.stringify(combinedData)); // Store combined data back in local storage
+
+            // Step 3: Set the combined data to the local model
+            oTempProduct.setData({ "products": combinedData }); // Update model with combined products
+            oTempProduct.refresh(true); // Refresh the model to update UI bindings
           };
           reader.onerror = function (ex) {
             console.log(ex);

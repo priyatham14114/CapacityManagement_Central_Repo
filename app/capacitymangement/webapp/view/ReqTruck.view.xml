@@ -18,15 +18,18 @@
                 <Title
                     id="_IDGenTitle"
                     text="Selected Products:{resultModel>/TProducts}"
-                    level="H2"
+                    level="H1"
                 />
                 <Text
                     id="_IDGenText7"
                     text="Total Volume : {resultModel>/OverallTotalVolume}m3"
                 />
-                <Text id="idkekke" text="Total Weight:{resultModel>/overallTotalWeight}KG" />
+                <Text
+                    id="idkekke"
+                    text="Total Weight:{resultModel>/overallTotalWeight}KG"
+                />
 
-                <List
+                <!-- <List
                     id="_IDGenList"
                     items="{resultModel>/Products}"
                     growing="true"
@@ -34,7 +37,7 @@
                     class="sapUiTinyMargin"
                 >
                     <items>
-                    <!-- <CustomListItem id="idcustomlist" class="sapUiTinyMargin">
+                    <CustomListItem id="idcustomlist" class="sapUiTinyMargin">
                     <HBox id="idcusthbox" class="sapUiTinyMargin" alignItems="Start">
                     <items>
                     <Text id="_IDGenText13" text="{resultModel>Product}" class="sapUiTinyMargin"></Text>
@@ -44,7 +47,7 @@
                     
                     </items>
                     </HBox>
-                    </CustomListItem> -->
+                    </CustomListItem>
                         <StandardListItem
                             id="_IDGenStandardListItem"
                             title="{resultModel>Product}"
@@ -56,7 +59,7 @@
                             wrapping="true"
                         />
                     </items>
-                </List>
+                </List> -->
 
                 <Title
                     id="_IDGenTitle1"
@@ -69,7 +72,7 @@
                 >
                     <items>
                         <StandardListItem
-                             type="Active"
+                            type="Active"
                             id="_IDGenStandardListItem1"
                             title="{resultModel>truckType}"
                             info="{resultModel>numberOfTrucksNeeded} truck(s) needed, Volume: {resultModel>volume}"

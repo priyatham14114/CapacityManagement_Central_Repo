@@ -2,9 +2,4 @@
     xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form"
     xmlns="sap.m"
->
-  
-           
-         
-     
-</core:FragmentDefinition>
+/>
