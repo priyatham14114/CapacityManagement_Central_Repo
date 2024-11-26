@@ -24,7 +24,7 @@
         id="_IDGenPage1"
         showHeader="false"
         backgroundDesign="Transparent"
-        class="PageBackground"
+        class="PageBackground backgroundColour"
         enableScrolling="true"
     >
         <tnt:ToolHeader
@@ -443,7 +443,7 @@
                                 >
                                     <Text
                                         id="_IvbhcfvghDcvbvbnnGe1"
-                                        text="Length(M)"
+                                        text="Length (M)"
                                     />
                                 </Column>
                                 <Column
@@ -452,7 +452,7 @@
                                 >
                                     <Text
                                         id="_IvbhDcvbvbnnGe1"
-                                        text="Width(M)"
+                                        text="Width (M)"
                                     />
                                 </Column>
                                 <Column
@@ -461,7 +461,7 @@
                                 >
                                     <Text
                                         id="_IDvghjbnmGen"
-                                        text="Height(M)"
+                                        text="Height (M)"
                                     />
                                 </Column>
                                 <Column
@@ -470,7 +470,7 @@
                                 >
                                     <Text
                                         id="_IDvbnmvbnGecvn"
-                                        text="Volume(M)"
+                                        text="Volume (m³)"
                                     />
                                 </Column>
                                 <Column
@@ -479,7 +479,7 @@
                                 >
                                     <Text
                                         id="_IvbnmDwedfGenxcvj"
-                                        text="Capacity"
+                                        text="Capacity (KG)"
                                     />
                                 </Column>
                                 <Column
@@ -957,13 +957,13 @@
                                                 <Column id="_IDGenColumn4">
                                                     <Text
                                                         id="_IDGsdfenText3"
-                                                        text="Quantity"
+                                                        text="Quantity (PC)"
                                                     />
                                                 </Column>
                                                 <Column id="_IDGenColumn3">
                                                     <Text
                                                         id="_IDGesdfnText2"
-                                                        text="Volume"
+                                                        text="Volume (m³)"
                                                     />
                                                 </Column>
                                                 <Column id="_IDGenColumn5">
