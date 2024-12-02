@@ -224,5 +224,23 @@ height: 125%;
     width: 10.5rem;
 }
 .backgroundColour{
-    background-image: linear-gradient(to bottom, #FFC0CB, #87CEEB);
+    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa,#fff5ea, #fff2e4) !important;
+
 }
+.sapMITH{
+
+    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa,#fff5ea,#fff5ea, #fff2e4);
+    
+    }
+.sapMITBFilter .sapMITBFilterIcon, .sapMITBFilter .sapMITBInlineIcon {
+        cursor:pointer;
+    }
+    .sapMITBItem .sapMITBFilterIcon {
+
+        overflow:hidden;
+       
+       }
+/* .sapMITBSelected .sapMITBFilterCritical {
+        background:none;
+        /* color: var(--sapContent_ContrastIconColor); */
+    
